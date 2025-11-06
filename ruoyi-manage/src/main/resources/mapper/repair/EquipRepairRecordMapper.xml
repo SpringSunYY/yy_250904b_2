@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.repair.mapper.EquipRepairRecordMapper">
+
+    <resultMap type="EquipRepairRecord" id="EquipRepairRecordResult">
+        <result property="recordId" column="record_id"/>
+        <result property="recordNo" column="record_no"/>
+        <result property="planId" column="plan_id"/>
+        <result property="planNo" column="plan_no"/>
+        <result property="sourceType" column="source_type"/>
+        <result property="equipId" column="equip_id"/>
+        <result property="equipName" column="equip_name"/>
+        <result property="equipCode" column="equip_code"/>
+        <result property="equipLevels" column="equip_levels"/>
+        <result property="responId" column="respon_id"/>
+        <result property="responName" column="respon_name"/>
+        <result property="faultDisc" column="fault_disc"/>
+        <result property="repairContent" column="repair_content"/>
+        <result property="repairTime" column="repair_time"/>
+        <result property="appendix" column="appendix"/>
+        <result property="finishTime" column="finish_time"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="applyUserId" column="apply_user_id"/>
+        <result property="applyUserName" column="apply_user_name"/>
+        <result property="taskId" column="task_id"/>
+        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="deployId" column="deploy_id"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <resultMap id="EquipRepairRecordEquipRepairDetailResult" type="EquipRepairRecord" extends="EquipRepairRecordResult">
+        <collection property="equipRepairDetailList" ofType="EquipRepairDetail" column="record_id"
+                    select="selectEquipRepairDetailList"/>
+    </resultMap>
+
+    <resultMap type="EquipRepairDetail" id="EquipRepairDetailResult">
+        <result property="detailId" column="detail_id"/>
+        <result property="recordId" column="record_id"/>
+        <result property="assignedId" column="assigned_id"/>
+        <result property="assignedName" column="assigned_name"/>
+        <result property="startTime" column="start_time"/>
+        <result property="finishTime" column="finish_time"/>
+        <result property="menHours" column="men_hours"/>
+        <result property="repairContent" column="repair_content"/>
+        <result property="repairResult" column="repair_result"/>
+        <result property="usedMaterials" column="used_materials"/>
+        <result property="checkResult" column="check_result"/>
+        <result property="checkOpinion" column="check_opinion"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectEquipRepairRecordVo">
+        select record_id,
+               record_no,
+               plan_id,
+               plan_no,
+               source_type,
+               equip_id,
+               equip_name,
+               equip_code,
+               equip_levels,
+               respon_id,
+               respon_name,
+               fault_disc,
+               repair_content,
+               repair_time,
+               appendix,
+               finish_time,
+               dept_id,
+               dept_name,
+               apply_user_id,
+               apply_user_name,
+               task_id,
+               process_instance_id,
+               deploy_id,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_repair_record
+    </sql>
+
+    <select id="selectEquipRepairRecordList" parameterType="EquipRepairRecord" resultMap="EquipRepairRecordResult">
+        <include refid="selectEquipRepairRecordVo"/>
+        <where>
+            <if test="sourceType != null  and sourceType != ''">and source_type = #{sourceType}</if>
+            <if test="equipName != null  and equipName != ''">and equip_name like concat('%', #{equipName}, '%')</if>
+            <if test="equipLevels != null  and equipLevels != ''">and equip_levels = #{equipLevels}</if>
+        </where>
+    </select>
+
+    <select id="selectEquipRepairRecordByRecordId" parameterType="Long"
+            resultMap="EquipRepairRecordEquipRepairDetailResult">
+        select record_id,
+               record_no,
+               plan_id,
+               plan_no,
+               source_type,
+               equip_id,
+               equip_name,
+               equip_code,
+               equip_levels,
+               respon_id,
+               respon_name,
+               fault_disc,
+               repair_content,
+               repair_time,
+               appendix,
+               finish_time,
+               dept_id,
+               dept_name,
+               apply_user_id,
+               apply_user_name,
+               task_id,
+               process_instance_id,
+               deploy_id,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_repair_record
+        where record_id = #{recordId}
+    </select>
+
+    <select id="selectEquipRepairDetailList" resultMap="EquipRepairDetailResult">
+        select detail_id,
+               record_id,
+               assigned_id,
+               assigned_name,
+               start_time,
+               finish_time,
+               men_hours,
+               repair_content,
+               repair_result,
+               used_materials,
+               check_result,
+               check_opinion,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_repair_detail
+        where record_id = #{record_id}
+    </select>
+    <insert id="insertEquipRepairRecord" parameterType="EquipRepairRecord" useGeneratedKeys="true"
+            keyProperty="recordId">
+        insert into equip_repair_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordNo != null and recordNo != ''">record_no,</if>
+            <if test="planId != null">plan_id,</if>
+            <if test="planNo != null">plan_no,</if>
+            <if test="sourceType != null">source_type,</if>
+            <if test="equipId != null">equip_id,</if>
+            <if test="equipName != null">equip_name,</if>
+            <if test="equipCode != null">equip_code,</if>
+            <if test="equipLevels != null">equip_levels,</if>
+            <if test="responId != null">respon_id,</if>
+            <if test="responName != null">respon_name,</if>
+            <if test="faultDisc != null">fault_disc,</if>
+            <if test="repairContent != null">repair_content,</if>
+            <if test="repairTime != null">repair_time,</if>
+            <if test="appendix != null">appendix,</if>
+            <if test="finishTime != null">finish_time,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="applyUserId != null">apply_user_id,</if>
+            <if test="applyUserName != null">apply_user_name,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="processInstanceId != null">process_instance_id,</if>
+            <if test="deployId != null">deploy_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordNo != null and recordNo != ''">#{recordNo},</if>
+            <if test="planId != null">#{planId},</if>
+            <if test="planNo != null">#{planNo},</if>
+            <if test="sourceType != null">#{sourceType},</if>
+            <if test="equipId != null">#{equipId},</if>
+            <if test="equipName != null">#{equipName},</if>
+            <if test="equipCode != null">#{equipCode},</if>
+            <if test="equipLevels != null">#{equipLevels},</if>
+            <if test="responId != null">#{responId},</if>
+            <if test="responName != null">#{responName},</if>
+            <if test="faultDisc != null">#{faultDisc},</if>
+            <if test="repairContent != null">#{repairContent},</if>
+            <if test="repairTime != null">#{repairTime},</if>
+            <if test="appendix != null">#{appendix},</if>
+            <if test="finishTime != null">#{finishTime},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="applyUserId != null">#{applyUserId},</if>
+            <if test="applyUserName != null">#{applyUserName},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="processInstanceId != null">#{processInstanceId},</if>
+            <if test="deployId != null">#{deployId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEquipRepairRecord" parameterType="EquipRepairRecord">
+        update equip_repair_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordNo != null and recordNo != ''">record_no = #{recordNo},</if>
+            <if test="planId != null">plan_id = #{planId},</if>
+            <if test="planNo != null">plan_no = #{planNo},</if>
+            <if test="sourceType != null">source_type = #{sourceType},</if>
+            <if test="equipId != null">equip_id = #{equipId},</if>
+            <if test="equipName != null">equip_name = #{equipName},</if>
+            <if test="equipCode != null">equip_code = #{equipCode},</if>
+            <if test="equipLevels != null">equip_levels = #{equipLevels},</if>
+            <if test="responId != null">respon_id = #{responId},</if>
+            <if test="responName != null">respon_name = #{responName},</if>
+            <if test="faultDisc != null">fault_disc = #{faultDisc},</if>
+            <if test="repairContent != null">repair_content = #{repairContent},</if>
+            <if test="repairTime != null">repair_time = #{repairTime},</if>
+            <if test="appendix != null">appendix = #{appendix},</if>
+            <if test="finishTime != null">finish_time = #{finishTime},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="applyUserId != null">apply_user_id = #{applyUserId},</if>
+            <if test="applyUserName != null">apply_user_name = #{applyUserName},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
+            <if test="deployId != null">deploy_id = #{deployId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteEquipRepairRecordByRecordId" parameterType="Long">
+        delete
+        from equip_repair_record
+        where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteEquipRepairRecordByRecordIds" parameterType="String">
+        delete from equip_repair_record where record_id in
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteEquipRepairDetailByRecordIds" parameterType="String">
+        delete from equip_repair_detail where record_id in
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteEquipRepairDetailByRecordId" parameterType="Long">
+        delete
+        from equip_repair_detail
+        where record_id = #{recordId}
+    </delete>
+
+    <insert id="batchEquipRepairDetail">
+        insert into equip_repair_detail( detail_id, record_id, assigned_id, assigned_name, start_time, finish_time,
+        men_hours, repair_content, repair_result, used_materials, check_result, check_opinion, remark, create_by,
+        create_time, update_by, update_time) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.detailId}, #{item.recordId}, #{item.assignedId}, #{item.assignedName}, #{item.startTime},
+            #{item.finishTime}, #{item.menHours}, #{item.repairContent}, #{item.repairResult}, #{item.usedMaterials},
+            #{item.checkResult}, #{item.checkOpinion}, #{item.remark}, #{item.createBy}, #{item.createTime},
+            #{item.updateBy}, #{item.updateTime})
+        </foreach>
+    </insert>
+</mapper>

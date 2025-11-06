@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.anticorrosion.mapper.EquipAnticorrosionMapper">
+    
+    <resultMap type="EquipAnticorrosion" id="EquipAnticorrosionResult">
+        <result property="id"    column="id"    />
+        <result property="recordNo"    column="record_no"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="equipLevels"    column="equip_levels"    />
+        <result property="inspectionDate"    column="inspection_date"    />
+        <result property="inspectionId"    column="inspection_id"    />
+        <result property="inspectionDept"    column="inspection_dept"    />
+        <result property="inspectorId"    column="inspector_id"    />
+        <result property="inspector"    column="inspector"    />
+        <result property="point1Thickness"    column="point1_thickness"    />
+        <result property="point2Thickness"    column="point2_thickness"    />
+        <result property="point3Thickness"    column="point3_thickness"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEquipAnticorrosionVo">
+        select id, record_no, equipment_id, equipment_name, equipment_code, equip_levels, inspection_date, inspection_id, inspection_dept, inspector_id, inspector, point1_thickness, point2_thickness, point3_thickness, remark, create_by, create_time, update_by, update_time from equip_anticorrosion
+    </sql>
+
+    <select id="selectEquipAnticorrosionList" parameterType="EquipAnticorrosion" resultMap="EquipAnticorrosionResult">
+        <include refid="selectEquipAnticorrosionVo"/>
+        <where>  
+            <if test="equipmentName != null  and equipmentName != ''"> and equipment_name like concat('%', #{equipmentName}, '%')</if>
+            <if test="equipLevels != null "> and equip_levels = #{equipLevels}</if>
+            <if test="inspectionDept != null  and inspectionDept != ''"> and inspection_dept = #{inspectionDept}</if>
+            <if test="inspector != null  and inspector != ''"> and inspector = #{inspector}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipAnticorrosionById" parameterType="Long" resultMap="EquipAnticorrosionResult">
+        <include refid="selectEquipAnticorrosionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEquipAnticorrosion" parameterType="EquipAnticorrosion" useGeneratedKeys="true" keyProperty="id">
+        insert into equip_anticorrosion
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordNo != null">record_no,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="equipmentName != null">equipment_name,</if>
+            <if test="equipmentCode != null">equipment_code,</if>
+            <if test="equipLevels != null">equip_levels,</if>
+            <if test="inspectionDate != null">inspection_date,</if>
+            <if test="inspectionId != null">inspection_id,</if>
+            <if test="inspectionDept != null">inspection_dept,</if>
+            <if test="inspectorId != null">inspector_id,</if>
+            <if test="inspector != null">inspector,</if>
+            <if test="point1Thickness != null">point1_thickness,</if>
+            <if test="point2Thickness != null">point2_thickness,</if>
+            <if test="point3Thickness != null">point3_thickness,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordNo != null">#{recordNo},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="equipmentName != null">#{equipmentName},</if>
+            <if test="equipmentCode != null">#{equipmentCode},</if>
+            <if test="equipLevels != null">#{equipLevels},</if>
+            <if test="inspectionDate != null">#{inspectionDate},</if>
+            <if test="inspectionId != null">#{inspectionId},</if>
+            <if test="inspectionDept != null">#{inspectionDept},</if>
+            <if test="inspectorId != null">#{inspectorId},</if>
+            <if test="inspector != null">#{inspector},</if>
+            <if test="point1Thickness != null">#{point1Thickness},</if>
+            <if test="point2Thickness != null">#{point2Thickness},</if>
+            <if test="point3Thickness != null">#{point3Thickness},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipAnticorrosion" parameterType="EquipAnticorrosion">
+        update equip_anticorrosion
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordNo != null">record_no = #{recordNo},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
+            <if test="equipmentCode != null">equipment_code = #{equipmentCode},</if>
+            <if test="equipLevels != null">equip_levels = #{equipLevels},</if>
+            <if test="inspectionDate != null">inspection_date = #{inspectionDate},</if>
+            <if test="inspectionId != null">inspection_id = #{inspectionId},</if>
+            <if test="inspectionDept != null">inspection_dept = #{inspectionDept},</if>
+            <if test="inspectorId != null">inspector_id = #{inspectorId},</if>
+            <if test="inspector != null">inspector = #{inspector},</if>
+            <if test="point1Thickness != null">point1_thickness = #{point1Thickness},</if>
+            <if test="point2Thickness != null">point2_thickness = #{point2Thickness},</if>
+            <if test="point3Thickness != null">point3_thickness = #{point3Thickness},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEquipAnticorrosionById" parameterType="Long">
+        delete from equip_anticorrosion where id = #{id}
+    </delete>
+
+    <delete id="deleteEquipAnticorrosionByIds" parameterType="String">
+        delete from equip_anticorrosion where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

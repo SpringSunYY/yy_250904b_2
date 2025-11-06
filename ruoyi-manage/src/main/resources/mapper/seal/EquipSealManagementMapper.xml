@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.seal.mapper.EquipSealManagementMapper">
+
+    <resultMap type="EquipSealManagement" id="EquipSealManagementResult">
+        <result property="manageId" column="manage_id"/>
+        <result property="equipId" column="equip_id"/>
+        <result property="equipName" column="equip_name"/>
+        <result property="equipCode" column="equip_code"/>
+        <result property="equipLevels" column="equip_levels"/>
+        <result property="leakLocation" column="leak_location"/>
+        <result property="discoveryTime" column="discovery_time"/>
+        <result property="reporterId" column="reporter_id"/>
+        <result property="reporterName" column="reporter_name"/>
+        <result property="severity" column="severity"/>
+        <result property="leakedMedium" column="leaked_medium"/>
+        <result property="description" column="description"/>
+        <result property="appendix" column="appendix"/>
+        <result property="handlingMeasures" column="handling_measures"/>
+        <result property="handlerId" column="handler_id"/>
+        <result property="handlerName" column="handler_name"/>
+        <result property="finishTime" column="finish_time"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="applyUserId" column="apply_user_id"/>
+        <result property="applyUserName" column="apply_user_name"/>
+        <result property="taskId" column="task_id"/>
+        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="deployId" column="deploy_id"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectEquipSealManagementVo">
+        select manage_id,
+               equip_id,
+               equip_name,
+               equip_code,
+               equip_levels,
+               leak_location,
+               discovery_time,
+               reporter_id,
+               reporter_name,
+               severity,
+               leaked_medium,
+               description,
+               appendix,
+               handling_measures,
+               handler_id,
+               handler_name,
+               finish_time,
+               dept_id,
+               dept_name,
+               apply_user_id,
+               apply_user_name,
+               task_id,
+               process_instance_id,
+               deploy_id,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_seal_management
+    </sql>
+    <select id="selectEquipSealManagementList" parameterType="EquipSealManagement"
+            resultMap="EquipSealManagementResult">
+        <include refid="selectEquipSealManagementVo"/>
+        <where>
+            <if test="equipName != null  and equipName != ''">and equip_name like concat('%', #{equipName}, '%')</if>
+            <if test="severity != null  and severity != ''">and severity = #{severity}</if>
+        </where>
+    </select>
+
+    <select id="selectEquipSealManagementByManageId" parameterType="Long" resultMap="EquipSealManagementResult">
+        <include refid="selectEquipSealManagementVo"/>
+        where manage_id = #{manageId}
+    </select>
+
+    <insert id="insertEquipSealManagement" parameterType="EquipSealManagement" useGeneratedKeys="true"
+            keyProperty="manageId">
+        insert into equip_seal_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="equipId != null">equip_id,</if>
+            <if test="equipName != null">equip_name,</if>
+            <if test="equipCode != null">equip_code,</if>
+            <if test="equipLevels != null">equip_levels,</if>
+            <if test="leakLocation != null">leak_location,</if>
+            <if test="discoveryTime != null">discovery_time,</if>
+            <if test="reporterId != null">reporter_id,</if>
+            <if test="reporterName != null">reporter_name,</if>
+            <if test="severity != null">severity,</if>
+            <if test="leakedMedium != null">leaked_medium,</if>
+            <if test="description != null">description,</if>
+            <if test="appendix != null">appendix,</if>
+            <if test="handlingMeasures != null">handling_measures,</if>
+            <if test="handlerId != null">handler_id,</if>
+            <if test="handlerName != null">handler_name,</if>
+            <if test="finishTime != null">finish_time,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="applyUserId != null">apply_user_id,</if>
+            <if test="applyUserName != null">apply_user_name,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="processInstanceId != null">process_instance_id,</if>
+            <if test="deployId != null">deploy_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="equipId != null">#{equipId},</if>
+            <if test="equipName != null">#{equipName},</if>
+            <if test="equipCode != null">#{equipCode},</if>
+            <if test="equipLevels != null">#{equipLevels},</if>
+            <if test="leakLocation != null">#{leakLocation},</if>
+            <if test="discoveryTime != null">#{discoveryTime},</if>
+            <if test="reporterId != null">#{reporterId},</if>
+            <if test="reporterName != null">#{reporterName},</if>
+            <if test="severity != null">#{severity},</if>
+            <if test="leakedMedium != null">#{leakedMedium},</if>
+            <if test="description != null">#{description},</if>
+            <if test="appendix != null">#{appendix},</if>
+            <if test="handlingMeasures != null">#{handlingMeasures},</if>
+            <if test="handlerId != null">#{handlerId},</if>
+            <if test="handlerName != null">#{handlerName},</if>
+            <if test="finishTime != null">#{finishTime},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="applyUserId != null">#{applyUserId},</if>
+            <if test="applyUserName != null">#{applyUserName},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="processInstanceId != null">#{processInstanceId},</if>
+            <if test="deployId != null">#{deployId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEquipSealManagement" parameterType="EquipSealManagement">
+        update equip_seal_management
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="equipId != null">equip_id = #{equipId},</if>
+            <if test="equipName != null">equip_name = #{equipName},</if>
+            <if test="equipCode != null">equip_code = #{equipCode},</if>
+            <if test="equipLevels != null">equip_levels = #{equipLevels},</if>
+            <if test="leakLocation != null">leak_location = #{leakLocation},</if>
+            <if test="discoveryTime != null">discovery_time = #{discoveryTime},</if>
+            <if test="reporterId != null">reporter_id = #{reporterId},</if>
+            <if test="reporterName != null">reporter_name = #{reporterName},</if>
+            <if test="severity != null">severity = #{severity},</if>
+            <if test="leakedMedium != null">leaked_medium = #{leakedMedium},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="appendix != null">appendix = #{appendix},</if>
+            <if test="handlingMeasures != null">handling_measures = #{handlingMeasures},</if>
+            <if test="handlerId != null">handler_id = #{handlerId},</if>
+            <if test="handlerName != null">handler_name = #{handlerName},</if>
+            <if test="finishTime != null">finish_time = #{finishTime},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="applyUserId != null">apply_user_id = #{applyUserId},</if>
+            <if test="applyUserName != null">apply_user_name = #{applyUserName},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
+            <if test="deployId != null">deploy_id = #{deployId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where manage_id = #{manageId}
+    </update>
+
+
+    <delete id="deleteEquipSealManagementByManageId" parameterType="Long">
+        delete
+        from equip_seal_management
+        where manage_id = #{manageId}
+    </delete>
+
+    <delete id="deleteEquipSealManagementByManageIds" parameterType="String">
+        delete from equip_seal_management where manage_id in
+        <foreach item="manageId" collection="array" open="(" separator="," close=")">
+            #{manageId}
+        </foreach>
+    </delete>
+</mapper>

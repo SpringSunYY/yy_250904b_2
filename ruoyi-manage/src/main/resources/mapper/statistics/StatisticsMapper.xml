@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.statistics.mapper.StatisticsMapper">
+
+    <select id="checkRateStatistics" resultType="com.ruoyi.statistics.domain.ro.StatisticsRo">
+        SELECT
+        DATE(patrol_time) AS name,
+        COUNT(*) AS value
+        FROM equip_patrol
+        <where>
+            <if test="startDate != null and startDate != '' and endDate!= null and endDate != ''">
+                and patrol_time >= #{startDate}
+                and patrol_time &lt; DATE_ADD(#{endDate}, INTERVAL 1
+                <choose>
+                    <when test="dateType == 'day'">DAY</when>
+                    <when test="dateType == 'month'">MONTH</when>
+                    <when test="dateType == 'quarter'">QUARTER</when>
+                    <when test="dateType == 'year'">YEAR</when>
+                    <otherwise>DAY</otherwise>
+                </choose>
+                )
+            </if>
+            <if test="equipIds != null and equipIds.size() > 0">
+                and equip_id in
+                <foreach item="equipId" collection="equipIds" separator="," close=")" open="(" index="">
+                    #{equipId}
+                </foreach>
+            </if>
+        </where>
+        GROUP BY name
+        ORDER BY name;
+
+    </select>
+    <select id="runTimeStatistics" resultType="com.ruoyi.equip.domain.EquipRuntimeStat">
+        SELECT
+        stat_id AS statId,start_time as startTime,stop_time as stopTime,total_runtime as totalRuntime
+        FROM equip_runtime_stat
+        <where>
+            <if test="startDate != null and startDate != '' and endDate!= null and endDate != ''">
+                and start_time >= #{startDate}
+                and start_time &lt; DATE_ADD(#{endDate}, INTERVAL 1
+                <choose>
+                    <when test="dateType == 'day'">DAY</when>
+                    <when test="dateType == 'month'">MONTH</when>
+                    <when test="dateType == 'quarter'">QUARTER</when>
+                    <when test="dateType == 'year'">YEAR</when>
+                    <otherwise>DAY</otherwise>
+                </choose>
+                )
+            </if>
+            <if test="equipIds != null and equipIds.size() > 0">
+                and device_id in
+                <foreach item="equipId" collection="equipIds" separator="," close=")" open="(" index="">
+                    #{equipId}
+                </foreach>
+            </if>
+        </where>
+        order by start_time
+    </select>
+    <select id="queryEquipLubrPlan" resultType="com.ruoyi.lubr.domain.EquipLubrPlan">
+        select plan_id as planId,equip_id as equipId,lub_points as lubPoints
+        from equip_lubr_plan
+        <where>
+            <if test="equipIds != null and equipIds.size() > 0">
+                and equip_id in
+                <foreach item="equipId" collection="equipIds" separator="," close=")" open="(" index="">
+                    #{equipId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="queryEquipLubrRecord" resultType="com.ruoyi.lubr.domain.EquipLubrRecord2">
+        select plan_id as planId, equip_id as equipId, lub_date as lubDate
+        from equip_lubr_record2
+        <where>
+            <if test="startDate != null and startDate != '' and endDate!= null and endDate != ''">
+                and lub_date >= #{startDate}
+                and lub_date &lt; DATE_ADD(#{endDate}, INTERVAL 1
+                <choose>
+                    <when test="dateType == 'day'">DAY</when>
+                    <when test="dateType == 'month'">MONTH</when>
+                    <when test="dateType == 'quarter'">QUARTER</when>
+                    <when test="dateType == 'year'">YEAR</when>
+                    <otherwise>DAY</otherwise>
+                </choose>
+                )
+            </if>
+            <if test="equipIds != null and equipIds.size() > 0">
+                and equip_id in
+                <foreach item="equipId" collection="equipIds" separator="," close=")" open="(" index="">
+                    #{equipId}
+                </foreach>
+            </if>
+        </where>
+        order by lub_date
+    </select>
+    <select id="queryEquipInspeList" resultType="com.ruoyi.inspe.domain.EquipInspe">
+        select
+        inspe_id as inspeId,
+        inspe_date as inspeDate
+        from equip_inspe
+        <where>
+            <if test="startDate != null and startDate != '' and endDate!= null and endDate != ''">
+                and inspe_date >= #{startDate}
+                and inspe_date &lt; DATE_ADD(#{endDate}, INTERVAL 1
+                <choose>
+                    <when test="dateType == 'day'">DAY</when>
+                    <when test="dateType == 'month'">MONTH</when>
+                    <when test="dateType == 'quarter'">QUARTER</when>
+                    <when test="dateType == 'year'">YEAR</when>
+                    <otherwise>DAY</otherwise>
+                </choose>
+                )
+            </if>
+        </where>
+        order by inspe_date
+    </select>
+    <select id="queryEquipInspeDangerList" resultType="com.ruoyi.inspe.domain.EquipInspeDanger">
+        select
+        inspe_id as inspeId,
+        danger_id as dangerId
+        from equip_inspe_danger
+        <where>
+            <if test="equipInspeIds != null and equipInspeIds.size() > 0">
+                and inspe_id in
+                <foreach item="equipInspeId" collection="equipInspeIds" separator="," close=")" open="(" index="">
+                    #{equipInspeId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="getSealCount" resultType="java.lang.Long">
+        select sum(total_seal_count)
+        from equip_seal_base;
+    </select>
+    <select id="statisticsSealManagement" resultType="com.ruoyi.statistics.domain.ro.StatisticsRo">
+        SELECT DATE(discovery_time) AS name,
+        COUNT(*) AS value
+        FROM equip_seal_management
+        <where>
+            <if test="startDate != null and startDate != '' and endDate!= null and endDate != ''">
+                and discovery_time >= #{startDate}
+                and discovery_time &lt; DATE_ADD(#{endDate}, INTERVAL 1
+                <choose>
+                    <when test="dateType == 'day'">DAY</when>
+                    <when test="dateType == 'month'">MONTH</when>
+                    <when test="dateType == 'quarter'">QUARTER</when>
+                    <when test="dateType == 'year'">YEAR</when>
+                    <otherwise>DAY</otherwise>
+
+                </choose>
+                )
+            </if>
+        </where>
+        GROUP BY name
+        ORDER BY name;
+    </select>
+    <select id="actHiProcinstStatistics" resultType="com.ruoyi.statistics.domain.ro.StatisticsRo">
+        select DATE(START_TIME_) AS name, COUNT(*) AS value
+        from act_hi_procinst
+        <where>
+            <if test="startDate != null and startDate != '' and endDate!= null and endDate != ''">
+                and START_TIME_ >= #{startDate}
+                and START_TIME_ &lt; DATE_ADD(#{endDate}, INTERVAL 1
+                <choose>
+                    <when test="dateType == 'day'">DAY</when>
+                    <when test="dateType == 'month'">MONTH</when>
+                    <when test="dateType == 'quarter'">QUARTER</when>
+                    <when test="dateType == 'year'">YEAR</when>
+                    <otherwise>DAY</otherwise>
+                </choose>
+                )
+            </if>
+            <if test="isActive != null and isActive">
+                and END_TIME_ IS NULL
+            </if>
+            <if test="procDefId != null and procDefId != ''">
+                and PROC_DEF_ID_ like concat(#{procDefId},'%')
+            </if>
+        </where>
+        group by name
+        order by name
+    </select>
+    <select id="statisticsEquipDefect" resultType="com.ruoyi.statistics.domain.ro.StatisticsRo">
+        SELECT DATE(discovery_time) AS name,
+        COUNT(*) AS value
+        FROM equip_defect
+        <where>
+            <if test="startDate != null and startDate != '' and endDate!= null and endDate != ''">
+                and discovery_time >= #{startDate}
+                and discovery_time &lt; DATE_ADD(#{endDate}, INTERVAL 1
+                <choose>
+                    <when test="dateType == 'day'">DAY</when>
+                    <when test="dateType == 'month'">MONTH</when>
+                    <when test="dateType == 'quarter'">QUARTER</when>
+                    <when test="dateType == 'year'">YEAR</when>
+                    <otherwise>DAY</otherwise>
+                </choose>
+                )
+            </if>
+        </where>
+        GROUP BY name
+        ORDER BY name;
+    </select>
+</mapper>

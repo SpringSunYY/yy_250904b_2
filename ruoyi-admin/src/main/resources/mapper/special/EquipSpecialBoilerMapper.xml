@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.special.mapper.EquipSpecialBoilerMapper">
+    
+    <resultMap type="EquipSpecialBoiler" id="EquipSpecialBoilerResult">
+        <result property="boilerId"    column="boiler_id"    />
+        <result property="deviceNumber"    column="device_number"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="boilerType"    column="boiler_type"    />
+        <result property="deviceModel"    column="device_model"    />
+        <result property="manufacturer"    column="manufacturer"    />
+        <result property="manufactureDate"    column="manufacture_date"    />
+        <result property="serialNumber"    column="serial_number"    />
+        <result property="installationUnit"    column="installation_unit"    />
+        <result property="installationDate"    column="installation_date"    />
+        <result property="acceptanceDate"    column="acceptance_date"    />
+        <result property="ratedEvaporation"    column="rated_evaporation"    />
+        <result property="thermalPower"    column="thermal_power"    />
+        <result property="ratedWorkingPressure"    column="rated_working_pressure"    />
+        <result property="ratedWorkingTemperature"    column="rated_working_temperature"    />
+        <result property="fuelType"    column="fuel_type"    />
+        <result property="heatingArea"    column="heating_area"    />
+        <result property="bodyWeight"    column="body_weight"    />
+        <result property="deviceCode"    column="device_code"    />
+        <result property="registrationAuthority"    column="registration_authority"    />
+        <result property="registrationNumber"    column="registration_number"    />
+        <result property="registrationCertificate"    column="registration_certificate"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedTime"    column="updated_time"    />
+    </resultMap>
+
+    <sql id="selectEquipSpecialBoilerVo">
+        select boiler_id, device_number, device_name, boiler_type, device_model, manufacturer, manufacture_date, serial_number, installation_unit, installation_date, acceptance_date, rated_evaporation, thermal_power, rated_working_pressure, rated_working_temperature, fuel_type, heating_area, body_weight, device_code, registration_authority, registration_number, registration_certificate, remarks, created_by, created_time, updated_by, updated_time from equip_special_boiler
+    </sql>
+
+    <select id="selectEquipSpecialBoilerList" parameterType="EquipSpecialBoiler" resultMap="EquipSpecialBoilerResult">
+        <include refid="selectEquipSpecialBoilerVo"/>
+        <where>  
+            <if test="deviceName != null  and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>
+            <if test="boilerType != null  and boilerType != ''"> and boiler_type = #{boilerType}</if>
+            <if test="fuelType != null  and fuelType != ''"> and fuel_type = #{fuelType}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipSpecialBoilerByBoilerId" parameterType="Long" resultMap="EquipSpecialBoilerResult">
+        <include refid="selectEquipSpecialBoilerVo"/>
+        where boiler_id = #{boilerId}
+    </select>
+
+    <insert id="insertEquipSpecialBoiler" parameterType="EquipSpecialBoiler" useGeneratedKeys="true" keyProperty="boilerId">
+        insert into equip_special_boiler
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceNumber != null">device_number,</if>
+            <if test="deviceName != null">device_name,</if>
+            <if test="boilerType != null">boiler_type,</if>
+            <if test="deviceModel != null">device_model,</if>
+            <if test="manufacturer != null">manufacturer,</if>
+            <if test="manufactureDate != null">manufacture_date,</if>
+            <if test="serialNumber != null">serial_number,</if>
+            <if test="installationUnit != null">installation_unit,</if>
+            <if test="installationDate != null">installation_date,</if>
+            <if test="acceptanceDate != null">acceptance_date,</if>
+            <if test="ratedEvaporation != null">rated_evaporation,</if>
+            <if test="thermalPower != null">thermal_power,</if>
+            <if test="ratedWorkingPressure != null">rated_working_pressure,</if>
+            <if test="ratedWorkingTemperature != null">rated_working_temperature,</if>
+            <if test="fuelType != null">fuel_type,</if>
+            <if test="heatingArea != null">heating_area,</if>
+            <if test="bodyWeight != null">body_weight,</if>
+            <if test="deviceCode != null">device_code,</if>
+            <if test="registrationAuthority != null">registration_authority,</if>
+            <if test="registrationNumber != null">registration_number,</if>
+            <if test="registrationCertificate != null">registration_certificate,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedTime != null">updated_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceNumber != null">#{deviceNumber},</if>
+            <if test="deviceName != null">#{deviceName},</if>
+            <if test="boilerType != null">#{boilerType},</if>
+            <if test="deviceModel != null">#{deviceModel},</if>
+            <if test="manufacturer != null">#{manufacturer},</if>
+            <if test="manufactureDate != null">#{manufactureDate},</if>
+            <if test="serialNumber != null">#{serialNumber},</if>
+            <if test="installationUnit != null">#{installationUnit},</if>
+            <if test="installationDate != null">#{installationDate},</if>
+            <if test="acceptanceDate != null">#{acceptanceDate},</if>
+            <if test="ratedEvaporation != null">#{ratedEvaporation},</if>
+            <if test="thermalPower != null">#{thermalPower},</if>
+            <if test="ratedWorkingPressure != null">#{ratedWorkingPressure},</if>
+            <if test="ratedWorkingTemperature != null">#{ratedWorkingTemperature},</if>
+            <if test="fuelType != null">#{fuelType},</if>
+            <if test="heatingArea != null">#{heatingArea},</if>
+            <if test="bodyWeight != null">#{bodyWeight},</if>
+            <if test="deviceCode != null">#{deviceCode},</if>
+            <if test="registrationAuthority != null">#{registrationAuthority},</if>
+            <if test="registrationNumber != null">#{registrationNumber},</if>
+            <if test="registrationCertificate != null">#{registrationCertificate},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipSpecialBoiler" parameterType="EquipSpecialBoiler">
+        update equip_special_boiler
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceNumber != null">device_number = #{deviceNumber},</if>
+            <if test="deviceName != null">device_name = #{deviceName},</if>
+            <if test="boilerType != null">boiler_type = #{boilerType},</if>
+            <if test="deviceModel != null">device_model = #{deviceModel},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="manufactureDate != null">manufacture_date = #{manufactureDate},</if>
+            <if test="serialNumber != null">serial_number = #{serialNumber},</if>
+            <if test="installationUnit != null">installation_unit = #{installationUnit},</if>
+            <if test="installationDate != null">installation_date = #{installationDate},</if>
+            <if test="acceptanceDate != null">acceptance_date = #{acceptanceDate},</if>
+            <if test="ratedEvaporation != null">rated_evaporation = #{ratedEvaporation},</if>
+            <if test="thermalPower != null">thermal_power = #{thermalPower},</if>
+            <if test="ratedWorkingPressure != null">rated_working_pressure = #{ratedWorkingPressure},</if>
+            <if test="ratedWorkingTemperature != null">rated_working_temperature = #{ratedWorkingTemperature},</if>
+            <if test="fuelType != null">fuel_type = #{fuelType},</if>
+            <if test="heatingArea != null">heating_area = #{heatingArea},</if>
+            <if test="bodyWeight != null">body_weight = #{bodyWeight},</if>
+            <if test="deviceCode != null">device_code = #{deviceCode},</if>
+            <if test="registrationAuthority != null">registration_authority = #{registrationAuthority},</if>
+            <if test="registrationNumber != null">registration_number = #{registrationNumber},</if>
+            <if test="registrationCertificate != null">registration_certificate = #{registrationCertificate},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+        </trim>
+        where boiler_id = #{boilerId}
+    </update>
+
+    <delete id="deleteEquipSpecialBoilerByBoilerId" parameterType="Long">
+        delete from equip_special_boiler where boiler_id = #{boilerId}
+    </delete>
+
+    <delete id="deleteEquipSpecialBoilerByBoilerIds" parameterType="String">
+        delete from equip_special_boiler where boiler_id in 
+        <foreach item="boilerId" collection="array" open="(" separator="," close=")">
+            #{boilerId}
+        </foreach>
+    </delete>
+</mapper>

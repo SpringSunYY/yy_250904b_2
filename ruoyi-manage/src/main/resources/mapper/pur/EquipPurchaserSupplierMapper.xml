@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.pur.mapper.EquipPurchaserSupplierMapper">
+    
+    <resultMap type="EquipPurchaserSupplier" id="EquipPurchaserSupplierResult">
+        <result property="supplierId"    column="supplier_id"    />
+        <result property="supplierName"    column="supplier_name"    />
+        <result property="address"    column="address"    />
+        <result property="businessScope"    column="business_scope"    />
+        <result property="companySize"    column="company_size"    />
+        <result property="legalRepresen"    column="legal_represen"    />
+        <result property="businessLicense"    column="business_license"    />
+        <result property="qualificationCertificate"    column="qualification_certificate"    />
+        <result property="contactPerson"    column="contact_person"    />
+        <result property="contactPhone"    column="contact_phone"    />
+        <result property="email"    column="email"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEquipPurchaserSupplierVo">
+        select supplier_id, supplier_name, address, business_scope, company_size, legal_represen, business_license, qualification_certificate, contact_person, contact_phone, email, remark, create_by, create_time, update_by, update_time from equip_purchaser_supplier
+    </sql>
+
+    <select id="selectEquipPurchaserSupplierList" parameterType="EquipPurchaserSupplier" resultMap="EquipPurchaserSupplierResult">
+        <include refid="selectEquipPurchaserSupplierVo"/>
+        <where>  
+            <if test="supplierName != null  and supplierName != ''"> and supplier_name like concat('%', #{supplierName}, '%')</if>
+            <if test="contactPerson != null  and contactPerson != ''"> and contact_person = #{contactPerson}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipPurchaserSupplierBySupplierId" parameterType="Long" resultMap="EquipPurchaserSupplierResult">
+        <include refid="selectEquipPurchaserSupplierVo"/>
+        where supplier_id = #{supplierId}
+    </select>
+
+    <insert id="insertEquipPurchaserSupplier" parameterType="EquipPurchaserSupplier" useGeneratedKeys="true" keyProperty="supplierId">
+        insert into equip_purchaser_supplier
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="supplierName != null and supplierName != ''">supplier_name,</if>
+            <if test="address != null">address,</if>
+            <if test="businessScope != null">business_scope,</if>
+            <if test="companySize != null">company_size,</if>
+            <if test="legalRepresen != null">legal_represen,</if>
+            <if test="businessLicense != null">business_license,</if>
+            <if test="qualificationCertificate != null">qualification_certificate,</if>
+            <if test="contactPerson != null">contact_person,</if>
+            <if test="contactPhone != null">contact_phone,</if>
+            <if test="email != null">email,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="supplierName != null and supplierName != ''">#{supplierName},</if>
+            <if test="address != null">#{address},</if>
+            <if test="businessScope != null">#{businessScope},</if>
+            <if test="companySize != null">#{companySize},</if>
+            <if test="legalRepresen != null">#{legalRepresen},</if>
+            <if test="businessLicense != null">#{businessLicense},</if>
+            <if test="qualificationCertificate != null">#{qualificationCertificate},</if>
+            <if test="contactPerson != null">#{contactPerson},</if>
+            <if test="contactPhone != null">#{contactPhone},</if>
+            <if test="email != null">#{email},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipPurchaserSupplier" parameterType="EquipPurchaserSupplier">
+        update equip_purchaser_supplier
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="supplierName != null and supplierName != ''">supplier_name = #{supplierName},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="businessScope != null">business_scope = #{businessScope},</if>
+            <if test="companySize != null">company_size = #{companySize},</if>
+            <if test="legalRepresen != null">legal_represen = #{legalRepresen},</if>
+            <if test="businessLicense != null">business_license = #{businessLicense},</if>
+            <if test="qualificationCertificate != null">qualification_certificate = #{qualificationCertificate},</if>
+            <if test="contactPerson != null">contact_person = #{contactPerson},</if>
+            <if test="contactPhone != null">contact_phone = #{contactPhone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where supplier_id = #{supplierId}
+    </update>
+
+    <delete id="deleteEquipPurchaserSupplierBySupplierId" parameterType="Long">
+        delete from equip_purchaser_supplier where supplier_id = #{supplierId}
+    </delete>
+
+    <delete id="deleteEquipPurchaserSupplierBySupplierIds" parameterType="String">
+        delete from equip_purchaser_supplier where supplier_id in 
+        <foreach item="supplierId" collection="array" open="(" separator="," close=")">
+            #{supplierId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.special.mapper.EquipVehicleInventoryMapper">
+    
+    <resultMap type="EquipVehicleInventory" id="EquipVehicleInventoryResult">
+        <result property="id"    column="id"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="internalNumber"    column="internal_number"    />
+        <result property="deviceType"    column="device_type"    />
+        <result property="specificationModel"    column="specification_model"    />
+        <result property="powerMethod"    column="power_method"    />
+        <result property="manufacturer"    column="manufacturer"    />
+        <result property="manufactureDate"    column="manufacture_date"    />
+        <result property="serialNumber"    column="serial_number"    />
+        <result property="useDate"    column="use_date"    />
+        <result property="ratedLoad"    column="rated_load"    />
+        <result property="deviceCode"    column="device_code"    />
+        <result property="registrationAuthority"    column="registration_authority"    />
+        <result property="registrationNumber"    column="registration_number"    />
+        <result property="registrationCertificate"    column="registration_certificate"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedTime"    column="updated_time"    />
+    </resultMap>
+
+    <sql id="selectEquipVehicleInventoryVo">
+        select id, device_name, internal_number, device_type, specification_model, power_method, manufacturer, manufacture_date, serial_number, use_date, rated_load, device_code, registration_authority, registration_number, registration_certificate, remarks, created_by, created_time, updated_by, updated_time from equip_vehicle_inventory
+    </sql>
+
+    <select id="selectEquipVehicleInventoryList" parameterType="EquipVehicleInventory" resultMap="EquipVehicleInventoryResult">
+        <include refid="selectEquipVehicleInventoryVo"/>
+        <where>  
+            <if test="deviceName != null  and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>
+            <if test="internalNumber != null  and internalNumber != ''"> and internal_number like concat('%', #{internalNumber}, '%')</if>
+            <if test="deviceType != null  and deviceType != ''"> and device_type = #{deviceType}</if>
+            <if test="powerMethod != null  and powerMethod != ''"> and power_method = #{powerMethod}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipVehicleInventoryById" parameterType="Long" resultMap="EquipVehicleInventoryResult">
+        <include refid="selectEquipVehicleInventoryVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEquipVehicleInventory" parameterType="EquipVehicleInventory" useGeneratedKeys="true" keyProperty="id">
+        insert into equip_vehicle_inventory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceName != null and deviceName != ''">device_name,</if>
+            <if test="internalNumber != null and internalNumber != ''">internal_number,</if>
+            <if test="deviceType != null">device_type,</if>
+            <if test="specificationModel != null">specification_model,</if>
+            <if test="powerMethod != null">power_method,</if>
+            <if test="manufacturer != null">manufacturer,</if>
+            <if test="manufactureDate != null">manufacture_date,</if>
+            <if test="serialNumber != null">serial_number,</if>
+            <if test="useDate != null">use_date,</if>
+            <if test="ratedLoad != null">rated_load,</if>
+            <if test="deviceCode != null">device_code,</if>
+            <if test="registrationAuthority != null">registration_authority,</if>
+            <if test="registrationNumber != null">registration_number,</if>
+            <if test="registrationCertificate != null">registration_certificate,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedTime != null">updated_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceName != null and deviceName != ''">#{deviceName},</if>
+            <if test="internalNumber != null and internalNumber != ''">#{internalNumber},</if>
+            <if test="deviceType != null">#{deviceType},</if>
+            <if test="specificationModel != null">#{specificationModel},</if>
+            <if test="powerMethod != null">#{powerMethod},</if>
+            <if test="manufacturer != null">#{manufacturer},</if>
+            <if test="manufactureDate != null">#{manufactureDate},</if>
+            <if test="serialNumber != null">#{serialNumber},</if>
+            <if test="useDate != null">#{useDate},</if>
+            <if test="ratedLoad != null">#{ratedLoad},</if>
+            <if test="deviceCode != null">#{deviceCode},</if>
+            <if test="registrationAuthority != null">#{registrationAuthority},</if>
+            <if test="registrationNumber != null">#{registrationNumber},</if>
+            <if test="registrationCertificate != null">#{registrationCertificate},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipVehicleInventory" parameterType="EquipVehicleInventory">
+        update equip_vehicle_inventory
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceName != null and deviceName != ''">device_name = #{deviceName},</if>
+            <if test="internalNumber != null and internalNumber != ''">internal_number = #{internalNumber},</if>
+            <if test="deviceType != null">device_type = #{deviceType},</if>
+            <if test="specificationModel != null">specification_model = #{specificationModel},</if>
+            <if test="powerMethod != null">power_method = #{powerMethod},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="manufactureDate != null">manufacture_date = #{manufactureDate},</if>
+            <if test="serialNumber != null">serial_number = #{serialNumber},</if>
+            <if test="useDate != null">use_date = #{useDate},</if>
+            <if test="ratedLoad != null">rated_load = #{ratedLoad},</if>
+            <if test="deviceCode != null">device_code = #{deviceCode},</if>
+            <if test="registrationAuthority != null">registration_authority = #{registrationAuthority},</if>
+            <if test="registrationNumber != null">registration_number = #{registrationNumber},</if>
+            <if test="registrationCertificate != null">registration_certificate = #{registrationCertificate},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEquipVehicleInventoryById" parameterType="Long">
+        delete from equip_vehicle_inventory where id = #{id}
+    </delete>
+
+    <delete id="deleteEquipVehicleInventoryByIds" parameterType="String">
+        delete from equip_vehicle_inventory where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

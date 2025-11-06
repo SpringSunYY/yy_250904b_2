@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.patrol.mapper.EquipPatrolItemMapper">
+    
+    <resultMap type="EquipPatrolItem" id="EquipPatrolItemResult">
+        <result property="itemId"    column="item_id"    />
+        <result property="equipId"    column="equip_id"    />
+        <result property="equipName"    column="equip_name"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="standard"    column="standard"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEquipPatrolItemVo">
+        select item_id, equip_id, equip_name, item_name, standard, remark, create_by, create_time, update_by, update_time from equip_patrol_item
+    </sql>
+
+    <select id="selectEquipPatrolItemList" parameterType="EquipPatrolItem" resultMap="EquipPatrolItemResult">
+        <include refid="selectEquipPatrolItemVo"/>
+        <where>  
+            <if test="equipName != null  and equipName != ''"> and equip_name like concat('%', #{equipName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipPatrolItemByItemId" parameterType="Long" resultMap="EquipPatrolItemResult">
+        <include refid="selectEquipPatrolItemVo"/>
+        where item_id = #{itemId}
+    </select>
+
+    <insert id="insertEquipPatrolItem" parameterType="EquipPatrolItem" useGeneratedKeys="true" keyProperty="itemId">
+        insert into equip_patrol_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="equipId != null">equip_id,</if>
+            <if test="equipName != null">equip_name,</if>
+            <if test="itemName != null">item_name,</if>
+            <if test="standard != null">standard,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="equipId != null">#{equipId},</if>
+            <if test="equipName != null">#{equipName},</if>
+            <if test="itemName != null">#{itemName},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipPatrolItem" parameterType="EquipPatrolItem">
+        update equip_patrol_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="equipId != null">equip_id = #{equipId},</if>
+            <if test="equipName != null">equip_name = #{equipName},</if>
+            <if test="itemName != null">item_name = #{itemName},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where item_id = #{itemId}
+    </update>
+
+    <delete id="deleteEquipPatrolItemByItemId" parameterType="Long">
+        delete from equip_patrol_item where item_id = #{itemId}
+    </delete>
+
+    <delete id="deleteEquipPatrolItemByItemIds" parameterType="String">
+        delete from equip_patrol_item where item_id in 
+        <foreach item="itemId" collection="array" open="(" separator="," close=")">
+            #{itemId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.vulnerable.mapper.EquipVulnerableInspectionMapper">
+    
+    <resultMap type="EquipVulnerableInspection" id="EquipVulnerableInspectionResult">
+        <result property="id"    column="id"    />
+        <result property="inspectionNumber"    column="inspection_number"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="inspectionDate"    column="inspection_date"    />
+        <result property="inspector"    column="inspector"    />
+        <result property="inspectionPhotos"    column="inspection_photos"    />
+        <result property="vulnerablePartStatus"    column="vulnerable_part_status"    />
+        <result property="problemDescription"    column="problem_description"    />
+        <result property="sitePhotos"    column="site_photos"    />
+        <result property="handlingMeasures"    column="handling_measures"    />
+        <result property="handler"    column="handler"    />
+        <result property="replacedParts"    column="replaced_parts"    />
+        <result property="afterReplacementPhotos"    column="after_replacement_photos"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedTime"    column="updated_time"    />
+    </resultMap>
+
+    <sql id="selectEquipVulnerableInspectionVo">
+        select id, inspection_number, equipment_name, inspection_date, inspector, inspection_photos, vulnerable_part_status, problem_description, site_photos, handling_measures, handler, replaced_parts, after_replacement_photos, remarks, created_by, created_time, updated_by, updated_time from equip_vulnerable_inspection
+    </sql>
+
+    <select id="selectEquipVulnerableInspectionList" parameterType="EquipVulnerableInspection" resultMap="EquipVulnerableInspectionResult">
+        <include refid="selectEquipVulnerableInspectionVo"/>
+        <where>  
+            <if test="equipmentName != null  and equipmentName != ''"> and equipment_name like concat('%', #{equipmentName}, '%')</if>
+            <if test="vulnerablePartStatus != null  and vulnerablePartStatus != ''"> and vulnerable_part_status = #{vulnerablePartStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipVulnerableInspectionById" parameterType="Long" resultMap="EquipVulnerableInspectionResult">
+        <include refid="selectEquipVulnerableInspectionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEquipVulnerableInspection" parameterType="EquipVulnerableInspection" useGeneratedKeys="true" keyProperty="id">
+        insert into equip_vulnerable_inspection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="inspectionNumber != null">inspection_number,</if>
+            <if test="equipmentName != null">equipment_name,</if>
+            <if test="inspectionDate != null">inspection_date,</if>
+            <if test="inspector != null">inspector,</if>
+            <if test="inspectionPhotos != null">inspection_photos,</if>
+            <if test="vulnerablePartStatus != null">vulnerable_part_status,</if>
+            <if test="problemDescription != null">problem_description,</if>
+            <if test="sitePhotos != null">site_photos,</if>
+            <if test="handlingMeasures != null">handling_measures,</if>
+            <if test="handler != null">handler,</if>
+            <if test="replacedParts != null">replaced_parts,</if>
+            <if test="afterReplacementPhotos != null">after_replacement_photos,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedTime != null">updated_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="inspectionNumber != null">#{inspectionNumber},</if>
+            <if test="equipmentName != null">#{equipmentName},</if>
+            <if test="inspectionDate != null">#{inspectionDate},</if>
+            <if test="inspector != null">#{inspector},</if>
+            <if test="inspectionPhotos != null">#{inspectionPhotos},</if>
+            <if test="vulnerablePartStatus != null">#{vulnerablePartStatus},</if>
+            <if test="problemDescription != null">#{problemDescription},</if>
+            <if test="sitePhotos != null">#{sitePhotos},</if>
+            <if test="handlingMeasures != null">#{handlingMeasures},</if>
+            <if test="handler != null">#{handler},</if>
+            <if test="replacedParts != null">#{replacedParts},</if>
+            <if test="afterReplacementPhotos != null">#{afterReplacementPhotos},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipVulnerableInspection" parameterType="EquipVulnerableInspection">
+        update equip_vulnerable_inspection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inspectionNumber != null">inspection_number = #{inspectionNumber},</if>
+            <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
+            <if test="inspectionDate != null">inspection_date = #{inspectionDate},</if>
+            <if test="inspector != null">inspector = #{inspector},</if>
+            <if test="inspectionPhotos != null">inspection_photos = #{inspectionPhotos},</if>
+            <if test="vulnerablePartStatus != null">vulnerable_part_status = #{vulnerablePartStatus},</if>
+            <if test="problemDescription != null">problem_description = #{problemDescription},</if>
+            <if test="sitePhotos != null">site_photos = #{sitePhotos},</if>
+            <if test="handlingMeasures != null">handling_measures = #{handlingMeasures},</if>
+            <if test="handler != null">handler = #{handler},</if>
+            <if test="replacedParts != null">replaced_parts = #{replacedParts},</if>
+            <if test="afterReplacementPhotos != null">after_replacement_photos = #{afterReplacementPhotos},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEquipVulnerableInspectionById" parameterType="Long">
+        delete from equip_vulnerable_inspection where id = #{id}
+    </delete>
+
+    <delete id="deleteEquipVulnerableInspectionByIds" parameterType="String">
+        delete from equip_vulnerable_inspection where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

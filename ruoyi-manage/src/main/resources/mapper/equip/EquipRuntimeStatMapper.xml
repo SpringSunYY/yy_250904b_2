@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.equip.mapper.EquipRuntimeStatMapper">
+    
+    <resultMap type="EquipRuntimeStat" id="EquipRuntimeStatResult">
+        <result property="statId"    column="stat_id"    />
+        <result property="statNo"    column="stat_no"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="deviceCode"    column="device_code"    />
+        <result property="startRecordId"    column="start_record_id"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="stopRecordId"    column="stop_record_id"    />
+        <result property="stopTime"    column="stop_time"    />
+        <result property="totalRuntime"    column="total_runtime"    />
+        <result property="status"    column="status"    />
+        <result property="shutdownReason"    column="shutdown_reason"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <resultMap id="EquipRuntimeStatEquipRuntimeDatailResult" type="EquipRuntimeStat" extends="EquipRuntimeStatResult">
+        <collection property="equipRuntimeDatailList" ofType="EquipRuntimeDatail" column="stat_id" select="selectEquipRuntimeDatailList" />
+    </resultMap>
+
+    <resultMap type="EquipRuntimeDatail" id="EquipRuntimeDatailResult">
+        <result property="datailId"    column="datail_id"    />
+        <result property="statId"    column="stat_id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="operationType"    column="operation_type"    />
+        <result property="operationTime"    column="operation_time"    />
+        <result property="shutdownReason"    column="shutdown_reason"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEquipRuntimeStatVo">
+        select stat_id, stat_no, device_id, device_name, device_code, start_record_id, start_time, stop_record_id, stop_time, total_runtime, status, shutdown_reason, remark, create_by, create_time, update_by, update_time from equip_runtime_stat
+    </sql>
+
+    <select id="selectEquipRuntimeStatList" parameterType="EquipRuntimeStat" resultMap="EquipRuntimeStatResult">
+        <include refid="selectEquipRuntimeStatVo"/>
+        <where>  
+            <if test="statNo != null and statNo != ''"> and stat_no = #{statNo}</if>
+            <if test="deviceId != null"> and device_id = #{deviceId}</if>
+            <if test="deviceName != null and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipRuntimeStatByStatId" parameterType="Long" resultMap="EquipRuntimeStatEquipRuntimeDatailResult">
+        select stat_id, stat_no, device_id, device_name, device_code, start_record_id, start_time, stop_record_id, stop_time, total_runtime, status, shutdown_reason, remark, create_by, create_time, update_by, update_time
+        from equip_runtime_stat
+        where stat_id = #{statId}
+    </select>
+
+    <select id="selectEquipRuntimeDatailList" resultMap="EquipRuntimeDatailResult">
+        select datail_id, stat_id, device_id, device_name, operation_type, operation_time, shutdown_reason, remark, create_by, create_time, update_by, update_time
+        from equip_runtime_datail
+        where stat_id = #{stat_id}
+    </select>
+
+    <select id="selectLatestStartRecordByDeviceId" parameterType="Long" resultMap="EquipRuntimeStatResult">
+        select stat_id, stat_no, device_id, device_name, device_code, start_record_id, start_time, stop_record_id, stop_time, total_runtime, status, shutdown_reason, remark, create_by, create_time, update_by, update_time
+        from equip_runtime_stat
+        where device_id = #{deviceId} and start_time is not null and stop_time is null
+        order by start_time desc
+        limit 1
+    </select>
+
+    <insert id="insertEquipRuntimeStat" parameterType="EquipRuntimeStat" useGeneratedKeys="true" keyProperty="statId">
+        insert into equip_runtime_stat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="statNo != null and statNo != ''">stat_no,</if>
+            <if test="deviceId != null">device_id,</if>
+            <if test="deviceName != null and deviceName != ''">device_name,</if>
+            <if test="deviceCode != null and deviceCode != ''">device_code,</if>
+            <if test="startRecordId != null">start_record_id,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="stopRecordId != null">stop_record_id,</if>
+            <if test="stopTime != null">stop_time,</if>
+            <if test="totalRuntime != null">total_runtime,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="shutdownReason != null and shutdownReason != ''">shutdown_reason,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="statNo != null and statNo != ''">#{statNo},</if>
+            <if test="deviceId != null">#{deviceId},</if>
+            <if test="deviceName != null and deviceName != ''">#{deviceName},</if>
+            <if test="deviceCode != null and deviceCode != ''">#{deviceCode},</if>
+            <if test="startRecordId != null">#{startRecordId},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="stopRecordId != null">#{stopRecordId},</if>
+            <if test="stopTime != null">#{stopTime},</if>
+            <if test="totalRuntime != null">#{totalRuntime},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="shutdownReason != null and shutdownReason != ''">#{shutdownReason},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipRuntimeStat" parameterType="EquipRuntimeStat">
+        update equip_runtime_stat
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="statNo != null and statNo != ''">stat_no = #{statNo},</if>
+            <if test="deviceId != null">device_id = #{deviceId},</if>
+            <if test="deviceName != null and deviceName != ''">device_name = #{deviceName},</if>
+            <if test="deviceCode != null and deviceCode != ''">device_code = #{deviceCode},</if>
+            <if test="startRecordId != null">start_record_id = #{startRecordId},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="stopRecordId != null">stop_record_id = #{stopRecordId},</if>
+            <if test="stopTime != null">stop_time = #{stopTime},</if>
+            <if test="totalRuntime != null">total_runtime = #{totalRuntime},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="shutdownReason != null and shutdownReason != ''">shutdown_reason = #{shutdownReason},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where stat_id = #{statId}
+    </update>
+
+    <delete id="deleteEquipRuntimeStatByStatId" parameterType="Long">
+        delete from equip_runtime_stat where stat_id = #{statId}
+    </delete>
+
+    <delete id="deleteEquipRuntimeStatByStatIds" parameterType="String">
+        delete from equip_runtime_stat where stat_id in 
+        <foreach item="statId" collection="array" open="(" separator="," close=")">
+            #{statId}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteEquipRuntimeDatailByStatIds" parameterType="String">
+        delete from equip_runtime_datail where stat_id in 
+        <foreach item="statId" collection="array" open="(" separator="," close=")">
+            #{statId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteEquipRuntimeDatailByStatId" parameterType="Long">
+        delete from equip_runtime_datail where stat_id = #{statId}
+    </delete>
+
+    <insert id="batchEquipRuntimeDatail">
+        insert into equip_runtime_datail( datail_id, stat_id, device_id, device_name, operation_type, operation_time, shutdown_reason, remark, create_by, create_time, update_by, update_time) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.datailId}, #{item.statId}, #{item.deviceId}, #{item.deviceName}, #{item.operationType}, #{item.operationTime}, #{item.shutdownReason}, #{item.remark}, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime})
+        </foreach>
+    </insert>
+</mapper>

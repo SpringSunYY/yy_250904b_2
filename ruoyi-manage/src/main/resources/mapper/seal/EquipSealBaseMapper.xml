@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.seal.mapper.EquipSealBaseMapper">
+    
+    <resultMap type="EquipSealBase" id="EquipSealBaseResult">
+        <result property="baseId"    column="base_id"    />
+        <result property="equipId"    column="equip_id"    />
+        <result property="equipName"    column="equip_name"    />
+        <result property="equipLevels"    column="equip_levels"    />
+        <result property="staticSealCount"    column="static_seal_count"    />
+        <result property="dynamicSealCount"    column="dynamic_seal_count"    />
+        <result property="totalSealCount"    column="total_seal_count"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEquipSealBaseVo">
+        select base_id, equip_id, equip_name, equip_levels, static_seal_count, dynamic_seal_count, total_seal_count, remark, create_by, create_time, update_by, update_time from equip_seal_base
+    </sql>
+
+    <select id="selectEquipSealBaseList" parameterType="EquipSealBase" resultMap="EquipSealBaseResult">
+        <include refid="selectEquipSealBaseVo"/>
+        <where>  
+            <if test="equipName != null  and equipName != ''"> and equip_name like concat('%', #{equipName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipSealBaseByBaseId" parameterType="Long" resultMap="EquipSealBaseResult">
+        <include refid="selectEquipSealBaseVo"/>
+        where base_id = #{baseId}
+    </select>
+
+    <insert id="insertEquipSealBase" parameterType="EquipSealBase">
+        insert into equip_seal_base
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="baseId != null">base_id,</if>
+            <if test="equipId != null">equip_id,</if>
+            <if test="equipName != null">equip_name,</if>
+            <if test="equipLevels != null">equip_levels,</if>
+            <if test="staticSealCount != null">static_seal_count,</if>
+            <if test="dynamicSealCount != null">dynamic_seal_count,</if>
+            <if test="totalSealCount != null">total_seal_count,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="baseId != null">#{baseId},</if>
+            <if test="equipId != null">#{equipId},</if>
+            <if test="equipName != null">#{equipName},</if>
+            <if test="equipLevels != null">#{equipLevels},</if>
+            <if test="staticSealCount != null">#{staticSealCount},</if>
+            <if test="dynamicSealCount != null">#{dynamicSealCount},</if>
+            <if test="totalSealCount != null">#{totalSealCount},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipSealBase" parameterType="EquipSealBase">
+        update equip_seal_base
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="equipId != null">equip_id = #{equipId},</if>
+            <if test="equipName != null">equip_name = #{equipName},</if>
+            <if test="equipLevels != null">equip_levels = #{equipLevels},</if>
+            <if test="staticSealCount != null">static_seal_count = #{staticSealCount},</if>
+            <if test="dynamicSealCount != null">dynamic_seal_count = #{dynamicSealCount},</if>
+            <if test="totalSealCount != null">total_seal_count = #{totalSealCount},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where base_id = #{baseId}
+    </update>
+
+    <delete id="deleteEquipSealBaseByBaseId" parameterType="Long">
+        delete from equip_seal_base where base_id = #{baseId}
+    </delete>
+
+    <delete id="deleteEquipSealBaseByBaseIds" parameterType="String">
+        delete from equip_seal_base where base_id in 
+        <foreach item="baseId" collection="array" open="(" separator="," close=")">
+            #{baseId}
+        </foreach>
+    </delete>
+</mapper>

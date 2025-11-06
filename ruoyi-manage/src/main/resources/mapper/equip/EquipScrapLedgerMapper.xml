@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.equip.mapper.EquipScrapLedgerMapper">
+
+    <resultMap type="EquipScrapLedger" id="EquipScrapLedgerResult">
+        <result property="scrapId" column="scrap_id"/>
+        <result property="scrapNo" column="scrap_no"/>
+        <result property="equipmentId" column="equipment_id"/>
+        <result property="equipName" column="equip_name"/>
+        <result property="equCode" column="equ_code"/>
+        <result property="scrapReason" column="scrap_reason"/>
+        <result property="applicationTime" column="application_time"/>
+        <result property="applicantId" column="applicant_id"/>
+        <result property="applicantName" column="applicant_name"/>
+        <result property="techAssessment" column="tech_assessment"/>
+        <result property="financialReview" column="financial_review"/>
+        <result property="scrapMethod" column="scrap_method"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="applyUserId" column="apply_user_id"/>
+        <result property="applyUserName" column="apply_user_name"/>
+        <result property="taskId" column="task_id"/>
+        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="deployId" column="deploy_id"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectEquipScrapLedgerVo">
+        select scrap_id,
+               scrap_no,
+               equipment_id,
+               equip_name,
+               equ_code,
+               scrap_reason,
+               application_time,
+               applicant_id,
+               applicant_name,
+               tech_assessment,
+               financial_review,
+               scrap_method,
+               dept_id,
+               dept_name,
+               apply_user_id,
+               apply_user_name,
+               task_id,
+               process_instance_id,
+               deploy_id,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_scrap_ledger
+    </sql>
+
+
+    <select id="selectEquipScrapLedgerList" parameterType="EquipScrapLedger" resultMap="EquipScrapLedgerResult">
+        <include refid="selectEquipScrapLedgerVo"/>
+        <where>
+            <if test="equipName != null  and equipName != ''">and equip_name like concat('%', #{equipName}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectEquipScrapLedgerByScrapId" parameterType="Long" resultMap="EquipScrapLedgerResult">
+        <include refid="selectEquipScrapLedgerVo"/>
+        where scrap_id = #{scrapId}
+    </select>
+
+    <insert id="insertEquipScrapLedger" parameterType="EquipScrapLedger" useGeneratedKeys="true" keyProperty="scrapId">
+        insert into equip_scrap_ledger
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="scrapNo != null">scrap_no,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="equipName != null">equip_name,</if>
+            <if test="equCode != null">equ_code,</if>
+            <if test="scrapReason != null">scrap_reason,</if>
+            <if test="applicationTime != null">application_time,</if>
+            <if test="applicantId != null">applicant_id,</if>
+            <if test="applicantName != null">applicant_name,</if>
+            <if test="techAssessment != null">tech_assessment,</if>
+            <if test="financialReview != null">financial_review,</if>
+            <if test="scrapMethod != null">scrap_method,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="applyUserId != null">apply_user_id,</if>
+            <if test="applyUserName != null">apply_user_name,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="processInstanceId != null">process_instance_id,</if>
+            <if test="deployId != null">deploy_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="scrapNo != null">#{scrapNo},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="equipName != null">#{equipName},</if>
+            <if test="equCode != null">#{equCode},</if>
+            <if test="scrapReason != null">#{scrapReason},</if>
+            <if test="applicationTime != null">#{applicationTime},</if>
+            <if test="applicantId != null">#{applicantId},</if>
+            <if test="applicantName != null">#{applicantName},</if>
+            <if test="techAssessment != null">#{techAssessment},</if>
+            <if test="financialReview != null">#{financialReview},</if>
+            <if test="scrapMethod != null">#{scrapMethod},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="applyUserId != null">#{applyUserId},</if>
+            <if test="applyUserName != null">#{applyUserName},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="processInstanceId != null">#{processInstanceId},</if>
+            <if test="deployId != null">#{deployId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEquipScrapLedger" parameterType="EquipScrapLedger">
+        update equip_scrap_ledger
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="scrapNo != null">scrap_no = #{scrapNo},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="equipName != null">equip_name = #{equipName},</if>
+            <if test="equCode != null">equ_code = #{equCode},</if>
+            <if test="scrapReason != null">scrap_reason = #{scrapReason},</if>
+            <if test="applicationTime != null">application_time = #{applicationTime},</if>
+            <if test="applicantId != null">applicant_id = #{applicantId},</if>
+            <if test="applicantName != null">applicant_name = #{applicantName},</if>
+            <if test="techAssessment != null">tech_assessment = #{techAssessment},</if>
+            <if test="financialReview != null">financial_review = #{financialReview},</if>
+            <if test="scrapMethod != null">scrap_method = #{scrapMethod},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="applyUserId != null">apply_user_id = #{applyUserId},</if>
+            <if test="applyUserName != null">apply_user_name = #{applyUserName},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
+            <if test="deployId != null">deploy_id = #{deployId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where scrap_id = #{scrapId}
+    </update>
+
+    <delete id="deleteEquipScrapLedgerByScrapId" parameterType="Long">
+        delete
+        from equip_scrap_ledger
+        where scrap_id = #{scrapId}
+    </delete>
+
+    <delete id="deleteEquipScrapLedgerByScrapIds" parameterType="String">
+        delete from equip_scrap_ledger where scrap_id in
+        <foreach item="scrapId" collection="array" open="(" separator="," close=")">
+            #{scrapId}
+        </foreach>
+    </delete>
+</mapper>

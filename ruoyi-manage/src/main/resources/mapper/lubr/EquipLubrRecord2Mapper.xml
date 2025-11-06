@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.lubr.mapper.EquipLubrRecord2Mapper">
+
+    <resultMap type="EquipLubrRecord2" id="EquipLubrRecord2Result">
+        <result property="recordId" column="record_id"/>
+        <result property="planId" column="plan_id"/>
+        <result property="planNo" column="plan_no"/>
+        <result property="equipId" column="equip_id"/>
+        <result property="equipName" column="equip_name"/>
+        <result property="equipCode" column="equip_code"/>
+        <result property="equipLevels" column="equip_levels"/>
+        <result property="actualQuantity" column="actual_quantity"/>
+        <result property="lubDate" column="lub_date"/>
+        <result property="operatorId" column="operator_id"/>
+        <result property="operatorName" column="operator_name"/>
+        <result property="isOnTime" column="is_on_time"/>
+        <result property="delayDays" column="delay_days"/>
+        <result property="delayReason" column="delay_reason"/>
+        <result property="executionCondition" column="execution_condition"/>
+        <result property="appendix" column="appendix"/>
+        <result property="reviewerId" column="reviewer_id"/>
+        <result property="reviewerName" column="reviewer_name"/>
+        <result property="remark" column="remark"/>
+        <result property="applyUserId" column="apply_user_id"/>
+        <result property="applyUserName" column="apply_user_name"/>
+        <result property="taskId" column="task_id"/>
+        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="deployId" column="deploy_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectEquipLubrRecord2Vo">
+        select record_id,
+               plan_id,
+               plan_no,
+               equip_id,
+               equip_name,
+               equip_code,
+               equip_levels,
+               actual_quantity,
+               lub_date,
+               operator_id,
+               operator_name,
+               is_on_time,
+               delay_days,
+               delay_reason,
+               execution_condition,
+               appendix,
+               reviewer_id,
+               reviewer_name,
+               remark,
+               apply_user_id,
+               apply_user_name,
+               task_id,
+               process_instance_id,
+               deploy_id,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_lubr_record2
+    </sql>
+
+    <select id="selectEquipLubrRecord2List" parameterType="EquipLubrRecord2" resultMap="EquipLubrRecord2Result">
+        <include refid="selectEquipLubrRecord2Vo"/>
+        <where>
+            <if test="planNo != null  and planNo != ''">and plan_no like concat('%', #{planNo}, '%')</if>
+            <if test="equipName != null  and equipName != ''">and equip_name like concat('%', #{equipName}, '%')</if>
+            <if test="equipCode != null  and equipCode != ''">and equip_code = #{equipCode}</if>
+            <if test="isOnTime != null  and isOnTime != ''">and is_on_time = #{isOnTime}</if>
+        </where>
+    </select>
+
+    <select id="selectEquipLubrRecord2ByRecordId" parameterType="Long" resultMap="EquipLubrRecord2Result">
+        <include refid="selectEquipLubrRecord2Vo"/>
+        where record_id = #{recordId}
+    </select>
+
+    <insert id="insertEquipLubrRecord2" parameterType="EquipLubrRecord2" useGeneratedKeys="true" keyProperty="recordId">
+        insert into equip_lubr_record2
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="planId != null">plan_id,</if>
+            <if test="planNo != null">plan_no,</if>
+            <if test="equipId != null">equip_id,</if>
+            <if test="equipName != null">equip_name,</if>
+            <if test="equipCode != null">equip_code,</if>
+            <if test="equipLevels != null">equip_levels,</if>
+            <if test="actualQuantity != null">actual_quantity,</if>
+            <if test="lubDate != null">lub_date,</if>
+            <if test="operatorId != null">operator_id,</if>
+            <if test="operatorName != null">operator_name,</if>
+            <if test="isOnTime != null">is_on_time,</if>
+            <if test="delayDays != null">delay_days,</if>
+            <if test="delayReason != null">delay_reason,</if>
+            <if test="executionCondition != null">execution_condition,</if>
+            <if test="appendix != null">appendix,</if>
+            <if test="reviewerId != null">reviewer_id,</if>
+            <if test="reviewerName != null">reviewer_name,</if>
+            <if test="remark != null">remark,</if>
+            <if test="applyUserId != null">apply_user_id,</if>
+            <if test="applyUserName != null">apply_user_name,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="processInstanceId != null">process_instance_id,</if>
+            <if test="deployId != null">deploy_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="planId != null">#{planId},</if>
+            <if test="planNo != null">#{planNo},</if>
+            <if test="equipId != null">#{equipId},</if>
+            <if test="equipName != null">#{equipName},</if>
+            <if test="equipCode != null">#{equipCode},</if>
+            <if test="equipLevels != null">#{equipLevels},</if>
+            <if test="actualQuantity != null">#{actualQuantity},</if>
+            <if test="lubDate != null">#{lubDate},</if>
+            <if test="operatorId != null">#{operatorId},</if>
+            <if test="operatorName != null">#{operatorName},</if>
+            <if test="isOnTime != null">#{isOnTime},</if>
+            <if test="delayDays != null">#{delayDays},</if>
+            <if test="delayReason != null">#{delayReason},</if>
+            <if test="executionCondition != null">#{executionCondition},</if>
+            <if test="appendix != null">#{appendix},</if>
+            <if test="reviewerId != null">#{reviewerId},</if>
+            <if test="reviewerName != null">#{reviewerName},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="applyUserId != null">#{applyUserId},</if>
+            <if test="applyUserName != null">#{applyUserName},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="processInstanceId != null">#{processInstanceId},</if>
+            <if test="deployId != null">#{deployId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEquipLubrRecord2" parameterType="EquipLubrRecord2">
+        update equip_lubr_record2
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planId != null">plan_id = #{planId},</if>
+            <if test="planNo != null">plan_no = #{planNo},</if>
+            <if test="equipId != null">equip_id = #{equipId},</if>
+            <if test="equipName != null">equip_name = #{equipName},</if>
+            <if test="equipCode != null">equip_code = #{equipCode},</if>
+            <if test="equipLevels != null">equip_levels = #{equipLevels},</if>
+            <if test="actualQuantity != null">actual_quantity = #{actualQuantity},</if>
+            <if test="lubDate != null">lub_date = #{lubDate},</if>
+            <if test="operatorId != null">operator_id = #{operatorId},</if>
+            <if test="operatorName != null">operator_name = #{operatorName},</if>
+            <if test="isOnTime != null">is_on_time = #{isOnTime},</if>
+            <if test="delayDays != null">delay_days = #{delayDays},</if>
+            <if test="delayReason != null">delay_reason = #{delayReason},</if>
+            <if test="executionCondition != null">execution_condition = #{executionCondition},</if>
+            <if test="appendix != null">appendix = #{appendix},</if>
+            <if test="reviewerId != null">reviewer_id = #{reviewerId},</if>
+            <if test="reviewerName != null">reviewer_name = #{reviewerName},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="applyUserId != null">apply_user_id = #{applyUserId},</if>
+            <if test="applyUserName != null">apply_user_name = #{applyUserName},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
+            <if test="deployId != null">deploy_id = #{deployId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteEquipLubrRecord2ByRecordId" parameterType="Long">
+        delete
+        from equip_lubr_record2
+        where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteEquipLubrRecord2ByRecordIds" parameterType="Long[]">
+        delete from equip_lubr_record2 where record_id in
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+</mapper>

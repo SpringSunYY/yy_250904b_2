@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.equip.mapper.EquipDefectMapper">
+
+    <resultMap type="EquipDefect" id="EquipDefectResult">
+        <result property="defectId" column="defect_id"/>
+        <result property="defectNo" column="defect_no"/>
+        <result property="equipmentId" column="equipment_id"/>
+        <result property="equipmentName" column="equipment_name"/>
+        <result property="equipmentCode" column="equipment_code"/>
+        <result property="equipLevels" column="equip_levels"/>
+        <result property="installLocation" column="install_location"/>
+        <result property="discoveryTime" column="discovery_time"/>
+        <result property="reporterEmpNo" column="reporter_emp_no"/>
+        <result property="reporterName" column="reporter_name"/>
+        <result property="defectContent" column="defect_content"/>
+        <result property="appendix" column="appendix"/>
+        <result property="defectLevel" column="defect_level"/>
+        <result property="isRepeated" column="is_repeated"/>
+        <result property="handlingMeasures" column="handling_measures"/>
+        <result property="handlingTime" column="handling_time"/>
+        <result property="acceptanceOpinion" column="acceptance_opinion"/>
+        <result property="reviewerEmpNo" column="reviewer_emp_no"/>
+        <result property="reviewerName" column="reviewer_name"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="applyUserId" column="apply_user_id"/>
+        <result property="applyUserName" column="apply_user_name"/>
+        <result property="taskId" column="task_id"/>
+        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="deployId" column="deploy_id"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectEquipDefectVo">
+        select defect_id,
+               defect_no,
+               equipment_id,
+               equipment_name,
+               equipment_code,
+               equip_levels,
+               install_location,
+               discovery_time,
+               reporter_emp_no,
+               reporter_name,
+               defect_content,
+               appendix,
+               defect_level,
+               is_repeated,
+               handling_measures,
+               handling_time,
+               acceptance_opinion,
+               reviewer_emp_no,
+               reviewer_name,
+               dept_id,
+               dept_name,
+               apply_user_id,
+               apply_user_name,
+               task_id,
+               process_instance_id,
+               deploy_id,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_defect
+    </sql>
+
+    <select id="selectEquipDefectList" parameterType="EquipDefect" resultMap="EquipDefectResult">
+        <include refid="selectEquipDefectVo"/>
+        <where>
+            <if test="equipmentName != null  and equipmentName != ''">and equipment_name like concat('%',
+                #{equipmentName}, '%')
+            </if>
+            <if test="reporterName != null  and reporterName != ''">and reporter_name like concat('%', #{reporterName},
+                '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectEquipDefectByDefectId" parameterType="Long" resultMap="EquipDefectResult">
+        <include refid="selectEquipDefectVo"/>
+        where defect_id = #{defectId}
+    </select>
+
+    <insert id="insertEquipDefect" parameterType="EquipDefect" useGeneratedKeys="true" keyProperty="defectId">
+        insert into equip_defect
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="defectNo != null">defect_no,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="equipmentName != null">equipment_name,</if>
+            <if test="equipmentCode != null">equipment_code,</if>
+            <if test="equipLevels != null">equip_levels,</if>
+            <if test="installLocation != null">install_location,</if>
+            <if test="discoveryTime != null">discovery_time,</if>
+            <if test="reporterEmpNo != null">reporter_emp_no,</if>
+            <if test="reporterName != null">reporter_name,</if>
+            <if test="defectContent != null">defect_content,</if>
+            <if test="appendix != null">appendix,</if>
+            <if test="defectLevel != null">defect_level,</if>
+            <if test="isRepeated != null">is_repeated,</if>
+            <if test="handlingMeasures != null">handling_measures,</if>
+            <if test="handlingTime != null">handling_time,</if>
+            <if test="acceptanceOpinion != null">acceptance_opinion,</if>
+            <if test="reviewerEmpNo != null">reviewer_emp_no,</if>
+            <if test="reviewerName != null">reviewer_name,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="applyUserId != null">apply_user_id,</if>
+            <if test="applyUserName != null">apply_user_name,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="processInstanceId != null">process_instance_id,</if>
+            <if test="deployId != null">deploy_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="defectNo != null">#{defectNo},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="equipmentName != null">#{equipmentName},</if>
+            <if test="equipmentCode != null">#{equipmentCode},</if>
+            <if test="equipLevels != null">#{equipLevels},</if>
+            <if test="installLocation != null">#{installLocation},</if>
+            <if test="discoveryTime != null">#{discoveryTime},</if>
+            <if test="reporterEmpNo != null">#{reporterEmpNo},</if>
+            <if test="reporterName != null">#{reporterName},</if>
+            <if test="defectContent != null">#{defectContent},</if>
+            <if test="appendix != null">#{appendix},</if>
+            <if test="defectLevel != null">#{defectLevel},</if>
+            <if test="isRepeated != null">#{isRepeated},</if>
+            <if test="handlingMeasures != null">#{handlingMeasures},</if>
+            <if test="handlingTime != null">#{handlingTime},</if>
+            <if test="acceptanceOpinion != null">#{acceptanceOpinion},</if>
+            <if test="reviewerEmpNo != null">#{reviewerEmpNo},</if>
+            <if test="reviewerName != null">#{reviewerName},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="applyUserId != null">#{applyUserId},</if>
+            <if test="applyUserName != null">#{applyUserName},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="processInstanceId != null">#{processInstanceId},</if>
+            <if test="deployId != null">#{deployId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEquipDefect" parameterType="EquipDefect">
+        update equip_defect
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="defectNo != null">defect_no = #{defectNo},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
+            <if test="equipmentCode != null">equipment_code = #{equipmentCode},</if>
+            <if test="equipLevels != null">equip_levels = #{equipLevels},</if>
+            <if test="installLocation != null">install_location = #{installLocation},</if>
+            <if test="discoveryTime != null">discovery_time = #{discoveryTime},</if>
+            <if test="reporterEmpNo != null">reporter_emp_no = #{reporterEmpNo},</if>
+            <if test="reporterName != null">reporter_name = #{reporterName},</if>
+            <if test="defectContent != null">defect_content = #{defectContent},</if>
+            <if test="appendix != null">appendix = #{appendix},</if>
+            <if test="defectLevel != null">defect_level = #{defectLevel},</if>
+            <if test="isRepeated != null">is_repeated = #{isRepeated},</if>
+            <if test="handlingMeasures != null">handling_measures = #{handlingMeasures},</if>
+            <if test="handlingTime != null">handling_time = #{handlingTime},</if>
+            <if test="acceptanceOpinion != null">acceptance_opinion = #{acceptanceOpinion},</if>
+            <if test="reviewerEmpNo != null">reviewer_emp_no = #{reviewerEmpNo},</if>
+            <if test="reviewerName != null">reviewer_name = #{reviewerName},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="applyUserId != null">apply_user_id = #{applyUserId},</if>
+            <if test="applyUserName != null">apply_user_name = #{applyUserName},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
+            <if test="deployId != null">deploy_id = #{deployId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where defect_id = #{defectId}
+    </update>
+
+    <delete id="deleteEquipDefectByDefectId" parameterType="Long">
+        delete
+        from equip_defect
+        where defect_id = #{defectId}
+    </delete>
+
+    <delete id="deleteEquipDefectByDefectIds" parameterType="String">
+        delete from equip_defect where defect_id in
+        <foreach item="defectId" collection="array" open="(" separator="," close=")">
+            #{defectId}
+        </foreach>
+    </delete>
+</mapper>

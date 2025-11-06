@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.inspe.mapper.EquipInspeMapper">
+
+    <resultMap type="EquipInspe" id="EquipInspeResult">
+        <result property="inspeId" column="inspe_id"/>
+        <result property="inspeNo" column="inspe_no"/>
+        <result property="inspeDate" column="inspe_date"/>
+        <result property="inspeType" column="inspe_type"/>
+        <result property="teamLeaderId" column="team_leader_id"/>
+        <result property="participantsIds" column="participants_ids"/>
+        <result property="hasDanger" column="has_danger"/>
+        <result property="dangerCoun" column="danger_coun"/>
+        <result property="appendix" column="appendix"/>
+        <result property="overallStatus" column="overall_status"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="applyUserId" column="apply_user_id"/>
+        <result property="applyUserName" column="apply_user_name"/>
+        <result property="taskId" column="task_id"/>
+        <result property="deployId" column="deploy_id"/>
+        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectEquipInspeVo">
+        select inspe_id,
+               inspe_no,
+               inspe_date,
+               inspe_type,
+               team_leader_id,
+               participants_ids,
+               has_danger,
+               danger_coun,
+               appendix,
+               overall_status,
+               dept_id,
+               dept_name,
+               apply_user_id,
+               apply_user_name,
+               task_id,
+               deploy_id,
+               process_instance_id,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_inspe
+    </sql>
+
+    <select id="selectEquipInspeList" parameterType="EquipInspe" resultMap="EquipInspeResult">
+        <include refid="selectEquipInspeVo"/>
+        <where>
+            <if test="inspeType != null  and inspeType != ''">and inspe_type = #{inspeType}</if>
+            <if test="inspeNo != null  and inspeNo != ''">and inspe_no like concat(#{inspeNo}, '%')</if>
+            <!-- 添加隐患状态筛选条件 -->
+            <if test="hasDanger != null and hasDanger != ''">and has_danger = #{hasDanger}</if>
+        </where>
+        <!-- 处理排序 -->
+        <choose>
+            <when test='params.orderByColumn != null and params.orderByColumn != ""'>
+                order by ${params.orderByColumn} ${params.isAsc}
+            </when>
+            <otherwise>
+                order by inspe_date desc, inspe_id desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="selectEquipInspeByInspeId" parameterType="Long" resultMap="EquipInspeResult">
+        <include refid="selectEquipInspeVo"/>
+        where inspe_id = #{inspeId}
+    </select>
+
+
+    <insert id="insertEquipInspe" parameterType="EquipInspe" useGeneratedKeys="true" keyProperty="inspeId">
+        insert into equip_inspe
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="inspeNo != null">inspe_no,</if>
+            <if test="inspeDate != null">inspe_date,</if>
+            <if test="inspeType != null">inspe_type,</if>
+            <if test="teamLeaderId != null">team_leader_id,</if>
+            <if test="participantsIds != null">participants_ids,</if>
+            <if test="hasDanger != null">has_danger,</if>
+            <if test="dangerCoun != null">danger_coun,</if>
+            <if test="appendix != null">appendix,</if>
+            <if test="overallStatus != null">overall_status,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="applyUserId != null">apply_user_id,</if>
+            <if test="applyUserName != null">apply_user_name,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="deployId != null">deploy_id,</if>
+            <if test="processInstanceId != null">process_instance_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="inspeNo != null">#{inspeNo},</if>
+            <if test="inspeDate != null">#{inspeDate},</if>
+            <if test="inspeType != null">#{inspeType},</if>
+            <if test="teamLeaderId != null">#{teamLeaderId},</if>
+            <if test="participantsIds != null">#{participantsIds},</if>
+            <if test="hasDanger != null">#{hasDanger},</if>
+            <if test="dangerCoun != null">#{dangerCoun},</if>
+            <if test="appendix != null">#{appendix},</if>
+            <if test="overallStatus != null">#{overallStatus},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="applyUserId != null">#{applyUserId},</if>
+            <if test="applyUserName != null">#{applyUserName},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="deployId != null">#{deployId},</if>
+            <if test="processInstanceId != null">#{processInstanceId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEquipInspe" parameterType="EquipInspe">
+        update equip_inspe
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inspeNo != null">inspe_no = #{inspeNo},</if>
+            <if test="inspeDate != null">inspe_date = #{inspeDate},</if>
+            <if test="inspeType != null">inspe_type = #{inspeType},</if>
+            <if test="teamLeaderId != null">team_leader_id = #{teamLeaderId},</if>
+            <if test="participantsIds != null">participants_ids = #{participantsIds},</if>
+            <if test="hasDanger != null">has_danger = #{hasDanger},</if>
+            <if test="dangerCoun != null">danger_coun = #{dangerCoun},</if>
+            <if test="appendix != null">appendix = #{appendix},</if>
+            <if test="overallStatus != null">overall_status = #{overallStatus},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="applyUserId != null">apply_user_id = #{applyUserId},</if>
+            <if test="applyUserName != null">apply_user_name = #{applyUserName},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="deployId != null">deploy_id = #{deployId},</if>
+            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where inspe_id = #{inspeId}
+    </update>
+    <delete id="deleteEquipInspeByInspeId" parameterType="Long">
+        delete
+        from equip_inspe
+        where inspe_id = #{inspeId}
+    </delete>
+
+    <delete id="deleteEquipInspeByInspeIds" parameterType="String">
+        delete from equip_inspe where inspe_id in
+        <foreach item="inspeId" collection="array" open="(" separator="," close=")">
+            #{inspeId}
+        </foreach>
+    </delete>
+</mapper>

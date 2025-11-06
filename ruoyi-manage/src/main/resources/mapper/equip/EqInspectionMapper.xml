@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.equip.mapper.EqInspectionMapper">
+    
+    <resultMap type="EqInspection" id="EqInspectionResult">
+        <result property="inspectionId"    column="inspection_id"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentCode"    column="equipment_code"    />
+        <result property="inspectionType"    column="inspection_type"    />
+        <result property="inspectionCycle"    column="inspection_cycle"    />
+        <result property="actualDate"    column="actual_date"    />
+        <result property="inspectionOrg"    column="inspection_org"    />
+        <result property="inspectionStatus"    column="inspection_status"    />
+        <result property="certificateNo"    column="certificate_no"    />
+        <result property="reportFile"    column="report_file"    />
+        <result property="validDate"    column="valid_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEqInspectionVo">
+        select inspection_id, equipment_id, equipment_name, equipment_code, inspection_type, inspection_cycle, actual_date, inspection_org, inspection_status, certificate_no, report_file, valid_date, remark, create_by, create_time, update_by, update_time from eq_inspection
+    </sql>
+
+    <select id="selectEqInspectionList" parameterType="EqInspection" resultMap="EqInspectionResult">
+        <include refid="selectEqInspectionVo"/>
+        <where>  
+            <if test="equipmentName != null  and equipmentName != ''"> and equipment_name like concat('%', #{equipmentName}, '%')</if>
+            <if test="inspectionType != null  and inspectionType != ''"> and inspection_type = #{inspectionType}</if>
+            <if test="inspectionCycle != null "> and inspection_cycle = #{inspectionCycle}</if>
+        </where>
+    </select>
+    
+    <select id="selectEqInspectionByInspectionId" parameterType="Long" resultMap="EqInspectionResult">
+        <include refid="selectEqInspectionVo"/>
+        where inspection_id = #{inspectionId}
+    </select>
+
+    <insert id="insertEqInspection" parameterType="EqInspection" useGeneratedKeys="true" keyProperty="inspectionId">
+        insert into eq_inspection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="equipmentName != null">equipment_name,</if>
+            <if test="equipmentCode != null">equipment_code,</if>
+            <if test="inspectionType != null">inspection_type,</if>
+            <if test="inspectionCycle != null">inspection_cycle,</if>
+            <if test="actualDate != null">actual_date,</if>
+            <if test="inspectionOrg != null">inspection_org,</if>
+            <if test="inspectionStatus != null">inspection_status,</if>
+            <if test="certificateNo != null">certificate_no,</if>
+            <if test="reportFile != null">report_file,</if>
+            <if test="validDate != null">valid_date,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="equipmentName != null">#{equipmentName},</if>
+            <if test="equipmentCode != null">#{equipmentCode},</if>
+            <if test="inspectionType != null">#{inspectionType},</if>
+            <if test="inspectionCycle != null">#{inspectionCycle},</if>
+            <if test="actualDate != null">#{actualDate},</if>
+            <if test="inspectionOrg != null">#{inspectionOrg},</if>
+            <if test="inspectionStatus != null">#{inspectionStatus},</if>
+            <if test="certificateNo != null">#{certificateNo},</if>
+            <if test="reportFile != null">#{reportFile},</if>
+            <if test="validDate != null">#{validDate},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEqInspection" parameterType="EqInspection">
+        update eq_inspection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
+            <if test="equipmentCode != null">equipment_code = #{equipmentCode},</if>
+            <if test="inspectionType != null">inspection_type = #{inspectionType},</if>
+            <if test="inspectionCycle != null">inspection_cycle = #{inspectionCycle},</if>
+            <if test="actualDate != null">actual_date = #{actualDate},</if>
+            <if test="inspectionOrg != null">inspection_org = #{inspectionOrg},</if>
+            <if test="inspectionStatus != null">inspection_status = #{inspectionStatus},</if>
+            <if test="certificateNo != null">certificate_no = #{certificateNo},</if>
+            <if test="reportFile != null">report_file = #{reportFile},</if>
+            <if test="validDate != null">valid_date = #{validDate},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where inspection_id = #{inspectionId}
+    </update>
+
+    <delete id="deleteEqInspectionByInspectionId" parameterType="Long">
+        delete from eq_inspection where inspection_id = #{inspectionId}
+    </delete>
+
+    <delete id="deleteEqInspectionByInspectionIds" parameterType="String">
+        delete from eq_inspection where inspection_id in 
+        <foreach item="inspectionId" collection="array" open="(" separator="," close=")">
+            #{inspectionId}
+        </foreach>
+    </delete>
+</mapper>

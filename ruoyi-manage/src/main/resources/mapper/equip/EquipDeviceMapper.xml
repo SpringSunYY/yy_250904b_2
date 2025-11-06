@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.equip.mapper.EquipDeviceMapper">
+
+    <resultMap type="EquipDevice" id="EquipDeviceResult">
+        <result property="deviceId" column="device_id"/>
+        <result property="deviceNo" column="device_no"/>
+        <result property="equipId" column="equip_id"/>
+        <result property="equipName" column="equip_name"/>
+        <result property="equipNo" column="equip_no"/>
+        <result property="equipModel" column="equip_model"/>
+        <result property="inDate" column="in_date"/>
+        <result property="instUnit" column="inst_unit"/>
+        <result property="instPerson" column="inst_person"/>
+        <result property="instPhone" column="inst_phone"/>
+        <result property="instDate" column="inst_date"/>
+        <result property="instLocation" column="inst_location"/>
+        <result property="instAdjustUnit" column="inst_adjust_unit"/>
+        <result property="appendix" column="appendix"/>
+        <result property="acceptanceResult" column="acceptance_result"/>
+        <result property="acceptanceOpinion" column="acceptance_opinion"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="applyUserId" column="apply_user_id"/>
+        <result property="applyUserName" column="apply_user_name"/>
+        <result property="taskId" column="task_id"/>
+        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="deployId" column="deploy_id"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <resultMap id="EquipDeviceEquipDeviceItemResult" type="EquipDevice" extends="EquipDeviceResult">
+        <collection property="equipDeviceItemList" ofType="EquipDeviceItem" column="device_id"
+                    select="selectEquipDeviceItemList"/>
+    </resultMap>
+
+    <resultMap type="EquipDeviceItem" id="EquipDeviceItemResult">
+        <result property="annexId" column="annex_id"/>
+        <result property="deviceId" column="device_id"/>
+        <result property="vi" column="vi"/>
+        <result property="funTest" column="fun_test"/>
+        <result property="tecPaper" column="tec_paper"/>
+        <result property="attachment" column="attachment"/>
+    </resultMap>
+
+    <sql id="selectEquipDeviceVo">
+        select device_id,
+               device_no,
+               equip_id,
+               equip_name,
+               equip_no,
+               equip_model,
+               in_date,
+               inst_unit,
+               inst_person,
+               inst_phone,
+               inst_date,
+               inst_location,
+               inst_adjust_unit,
+               appendix,
+               acceptance_result,
+               acceptance_opinion,
+               dept_id,
+               dept_name,
+               apply_user_id,
+               apply_user_name,
+               task_id,
+               process_instance_id,
+               deploy_id,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_device
+    </sql>
+
+    <select id="selectEquipDeviceList" parameterType="EquipDevice" resultMap="EquipDeviceResult">
+        <include refid="selectEquipDeviceVo"/>
+        <where>
+            <if test="equipName != null ">and equip_name like concat('%', #{equipName}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectEquipDeviceByDeviceId" parameterType="Long" resultMap="EquipDeviceEquipDeviceItemResult">
+        select device_id,
+               device_no,
+               equip_id,
+               equip_name,
+               equip_no,
+               equip_model,
+               in_date,
+               inst_unit,
+               inst_person,
+               inst_phone,
+               inst_date,
+               inst_location,
+               inst_adjust_unit,
+               appendix,
+               acceptance_result,
+               acceptance_opinion,
+               dept_id,
+               dept_name,
+               apply_user_id,
+               apply_user_name,
+               task_id,
+               process_instance_id,
+               deploy_id,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_device
+        where device_id = #{deviceId}
+    </select>
+
+    <select id="selectEquipDeviceItemList" resultMap="EquipDeviceItemResult">
+        select annex_id, device_id, vi, fun_test, tec_paper, attachment
+        from equip_device_item
+        where device_id = #{device_id}
+    </select>
+
+    <insert id="insertEquipDevice" parameterType="EquipDevice" useGeneratedKeys="true" keyProperty="deviceId">
+        insert into equip_device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceNo != null">device_no,</if>
+            <if test="equipId != null">equip_id,</if>
+            <if test="equipName != null">equip_name,</if>
+            <if test="equipNo != null">equip_no,</if>
+            <if test="equipModel != null">equip_model,</if>
+            <if test="inDate != null">in_date,</if>
+            <if test="instUnit != null">inst_unit,</if>
+            <if test="instPerson != null">inst_person,</if>
+            <if test="instPhone != null">inst_phone,</if>
+            <if test="instDate != null">inst_date,</if>
+            <if test="instLocation != null">inst_location,</if>
+            <if test="instAdjustUnit != null">inst_adjust_unit,</if>
+            <if test="appendix != null">appendix,</if>
+            <if test="acceptanceResult != null">acceptance_result,</if>
+            <if test="acceptanceOpinion != null">acceptance_opinion,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="applyUserId != null">apply_user_id,</if>
+            <if test="applyUserName != null">apply_user_name,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="processInstanceId != null">process_instance_id,</if>
+            <if test="deployId != null">deploy_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceNo != null">#{deviceNo},</if>
+            <if test="equipId != null">#{equipId},</if>
+            <if test="equipName != null">#{equipName},</if>
+            <if test="equipNo != null">#{equipNo},</if>
+            <if test="equipModel != null">#{equipModel},</if>
+            <if test="inDate != null">#{inDate},</if>
+            <if test="instUnit != null">#{instUnit},</if>
+            <if test="instPerson != null">#{instPerson},</if>
+            <if test="instPhone != null">#{instPhone},</if>
+            <if test="instDate != null">#{instDate},</if>
+            <if test="instLocation != null">#{instLocation},</if>
+            <if test="instAdjustUnit != null">#{instAdjustUnit},</if>
+            <if test="appendix != null">#{appendix},</if>
+            <if test="acceptanceResult != null">#{acceptanceResult},</if>
+            <if test="acceptanceOpinion != null">#{acceptanceOpinion},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="applyUserId != null">#{applyUserId},</if>
+            <if test="applyUserName != null">#{applyUserName},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="processInstanceId != null">#{processInstanceId},</if>
+            <if test="deployId != null">#{deployId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEquipDevice" parameterType="EquipDevice">
+        update equip_device
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceNo != null">device_no = #{deviceNo},</if>
+            <if test="equipId != null">equip_id = #{equipId},</if>
+            <if test="equipName != null">equip_name = #{equipName},</if>
+            <if test="equipNo != null">equip_no = #{equipNo},</if>
+            <if test="equipModel != null">equip_model = #{equipModel},</if>
+            <if test="inDate != null">in_date = #{inDate},</if>
+            <if test="instUnit != null">inst_unit = #{instUnit},</if>
+            <if test="instPerson != null">inst_person = #{instPerson},</if>
+            <if test="instPhone != null">inst_phone = #{instPhone},</if>
+            <if test="instDate != null">inst_date = #{instDate},</if>
+            <if test="instLocation != null">inst_location = #{instLocation},</if>
+            <if test="instAdjustUnit != null">inst_adjust_unit = #{instAdjustUnit},</if>
+            <if test="appendix != null">appendix = #{appendix},</if>
+            <if test="acceptanceResult != null">acceptance_result = #{acceptanceResult},</if>
+            <if test="acceptanceOpinion != null">acceptance_opinion = #{acceptanceOpinion},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="applyUserId != null">apply_user_id = #{applyUserId},</if>
+            <if test="applyUserName != null">apply_user_name = #{applyUserName},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
+            <if test="deployId != null">deploy_id = #{deployId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where device_id = #{deviceId}
+    </update>
+
+    <delete id="deleteEquipDeviceByDeviceId" parameterType="Long">
+        delete
+        from equip_device
+        where device_id = #{deviceId}
+    </delete>
+
+    <delete id="deleteEquipDeviceByDeviceIds" parameterType="String">
+        delete from equip_device where device_id in
+        <foreach item="deviceId" collection="array" open="(" separator="," close=")">
+            #{deviceId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteEquipDeviceItemByDeviceIds" parameterType="String">
+        delete from equip_device_item where device_id in
+        <foreach item="deviceId" collection="array" open="(" separator="," close=")">
+            #{deviceId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteEquipDeviceItemByDeviceId" parameterType="Long">
+        delete
+        from equip_device_item
+        where device_id = #{deviceId}
+    </delete>
+
+    <insert id="batchEquipDeviceItem">
+        insert into equip_device_item( annex_id, device_id, vi, fun_test, tec_paper, attachment) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.annexId}, #{item.deviceId}, #{item.vi}, #{item.funTest}, #{item.tecPaper}, #{item.attachment})
+        </foreach>
+    </insert>
+</mapper>

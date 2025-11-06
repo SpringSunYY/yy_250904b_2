@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.special.mapper.EquipPipelineDataMapper">
+    
+    <resultMap type="EquipPipelineData" id="EquipPipelineDataResult">
+        <result property="pipelineId"    column="pipeline_id"    />
+        <result property="pipelineNo"    column="pipeline_no"    />
+        <result property="pipelineName"    column="pipeline_name"    />
+        <result property="pressurePipeline"    column="pressure_pipeline"    />
+        <result property="pipelineClass"    column="pipeline_class"    />
+        <result property="material"    column="material"    />
+        <result property="designUnit"    column="design_unit"    />
+        <result property="installationUnit"    column="installation_unit"    />
+        <result property="installationDate"    column="installation_date"    />
+        <result property="commissioningDate"    column="commissioning_date"    />
+        <result property="insulationCode"    column="insulation_code"    />
+        <result property="nominalDiameter"    column="nominal_diameter"    />
+        <result property="nominalWallThickness"    column="nominal_wall_thickness"    />
+        <result property="wallThicknessClass"    column="wall_thickness_class"    />
+        <result property="mediumName"    column="medium_name"    />
+        <result property="mediumState"    column="medium_state"    />
+        <result property="pipelineLength"    column="pipeline_length"    />
+        <result property="startPoint"    column="start_point"    />
+        <result property="endPoint"    column="end_point"    />
+        <result property="operatingPressure"    column="operating_pressure"    />
+        <result property="operatingTemperature"    column="operating_temperature"    />
+        <result property="designPressure"    column="design_pressure"    />
+        <result property="designTemperature"    column="design_temperature"    />
+        <result property="pressureTestType"    column="pressure_test_type"    />
+        <result property="testPressure"    column="test_pressure"    />
+        <result property="safetyClass"    column="safety_class"    />
+        <result property="usageRegistrationCertificate"    column="usage_registration_certificate"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedTime"    column="updated_time"    />
+    </resultMap>
+
+    <sql id="selectEquipPipelineDataVo">
+        select pipeline_id, pipeline_no, pipeline_name, pressure_pipeline, pipeline_class, material, design_unit, installation_unit, installation_date, commissioning_date, insulation_code, nominal_diameter, nominal_wall_thickness, wall_thickness_class, medium_name, medium_state, pipeline_length, start_point, end_point, operating_pressure, operating_temperature, design_pressure, design_temperature, pressure_test_type, test_pressure, safety_class, usage_registration_certificate, remarks, created_by, created_time, updated_by, updated_time from equip_pipeline_data
+    </sql>
+
+    <select id="selectEquipPipelineDataList" parameterType="EquipPipelineData" resultMap="EquipPipelineDataResult">
+        <include refid="selectEquipPipelineDataVo"/>
+        <where>  
+            <if test="pipelineName != null  and pipelineName != ''"> and pipeline_name like concat('%', #{pipelineName}, '%')</if>
+            <if test="pressurePipeline != null  and pressurePipeline != ''"> and pressure_pipeline = #{pressurePipeline}</if>
+            <if test="pipelineClass != null  and pipelineClass != ''"> and pipeline_class = #{pipelineClass}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipPipelineDataByPipelineId" parameterType="String" resultMap="EquipPipelineDataResult">
+        <include refid="selectEquipPipelineDataVo"/>
+        where pipeline_id = #{pipelineId}
+    </select>
+
+    <insert id="insertEquipPipelineData" parameterType="EquipPipelineData">
+        insert into equip_pipeline_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pipelineId != null and pipelineId != ''">pipeline_id,</if>
+            <if test="pipelineNo != null and pipelineNo != ''">pipeline_no,</if>
+            <if test="pipelineName != null and pipelineName != ''">pipeline_name,</if>
+            <if test="pressurePipeline != null and pressurePipeline != ''">pressure_pipeline,</if>
+            <if test="pipelineClass != null and pipelineClass != ''">pipeline_class,</if>
+            <if test="material != null">material,</if>
+            <if test="designUnit != null">design_unit,</if>
+            <if test="installationUnit != null">installation_unit,</if>
+            <if test="installationDate != null">installation_date,</if>
+            <if test="commissioningDate != null">commissioning_date,</if>
+            <if test="insulationCode != null">insulation_code,</if>
+            <if test="nominalDiameter != null">nominal_diameter,</if>
+            <if test="nominalWallThickness != null">nominal_wall_thickness,</if>
+            <if test="wallThicknessClass != null">wall_thickness_class,</if>
+            <if test="mediumName != null">medium_name,</if>
+            <if test="mediumState != null">medium_state,</if>
+            <if test="pipelineLength != null">pipeline_length,</if>
+            <if test="startPoint != null">start_point,</if>
+            <if test="endPoint != null">end_point,</if>
+            <if test="operatingPressure != null">operating_pressure,</if>
+            <if test="operatingTemperature != null">operating_temperature,</if>
+            <if test="designPressure != null">design_pressure,</if>
+            <if test="designTemperature != null">design_temperature,</if>
+            <if test="pressureTestType != null">pressure_test_type,</if>
+            <if test="testPressure != null">test_pressure,</if>
+            <if test="safetyClass != null">safety_class,</if>
+            <if test="usageRegistrationCertificate != null">usage_registration_certificate,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedTime != null">updated_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pipelineId != null">#{pipelineId},</if>
+            <if test="pipelineNo != null">#{pipelineNo},</if>
+            <if test="pipelineName != null">#{pipelineName},</if>
+            <if test="pressurePipeline != null">#{pressurePipeline},</if>
+            <if test="pipelineClass != null">#{pipelineClass},</if>
+            <if test="material != null">#{material},</if>
+            <if test="designUnit != null">#{designUnit},</if>
+            <if test="installationUnit != null">#{installationUnit},</if>
+            <if test="installationDate != null">#{installationDate},</if>
+            <if test="commissioningDate != null">#{commissioningDate},</if>
+            <if test="insulationCode != null">#{insulationCode},</if>
+            <if test="nominalDiameter != null">#{nominalDiameter},</if>
+            <if test="nominalWallThickness != null">#{nominalWallThickness},</if>
+            <if test="wallThicknessClass != null">#{wallThicknessClass},</if>
+            <if test="mediumName != null">#{mediumName},</if>
+            <if test="mediumState != null">#{mediumState},</if>
+            <if test="pipelineLength != null">#{pipelineLength},</if>
+            <if test="startPoint != null">#{startPoint},</if>
+            <if test="endPoint != null">#{endPoint},</if>
+            <if test="operatingPressure != null">#{operatingPressure},</if>
+            <if test="operatingTemperature != null">#{operatingTemperature},</if>
+            <if test="designPressure != null">#{designPressure},</if>
+            <if test="designTemperature != null">#{designTemperature},</if>
+            <if test="pressureTestType != null">#{pressureTestType},</if>
+            <if test="testPressure != null">#{testPressure},</if>
+            <if test="safetyClass != null">#{safetyClass},</if>
+            <if test="usageRegistrationCertificate != null">#{usageRegistrationCertificate},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipPipelineData" parameterType="EquipPipelineData">
+        update equip_pipeline_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pipelineNo != null">pipeline_no = #{pipelineNo},</if>
+            <if test="pipelineName != null">pipeline_name = #{pipelineName},</if>
+            <if test="pressurePipeline != null">pressure_pipeline = #{pressurePipeline},</if>
+            <if test="pipelineClass != null">pipeline_class = #{pipelineClass},</if>
+            <if test="material != null">material = #{material},</if>
+            <if test="designUnit != null">design_unit = #{designUnit},</if>
+            <if test="installationUnit != null">installation_unit = #{installationUnit},</if>
+            <if test="installationDate != null">installation_date = #{installationDate},</if>
+            <if test="commissioningDate != null">commissioning_date = #{commissioningDate},</if>
+            <if test="insulationCode != null">insulation_code = #{insulationCode},</if>
+            <if test="nominalDiameter != null">nominal_diameter = #{nominalDiameter},</if>
+            <if test="nominalWallThickness != null">nominal_wall_thickness = #{nominalWallThickness},</if>
+            <if test="wallThicknessClass != null">wall_thickness_class = #{wallThicknessClass},</if>
+            <if test="mediumName != null">medium_name = #{mediumName},</if>
+            <if test="mediumState != null">medium_state = #{mediumState},</if>
+            <if test="pipelineLength != null">pipeline_length = #{pipelineLength},</if>
+            <if test="startPoint != null">start_point = #{startPoint},</if>
+            <if test="endPoint != null">end_point = #{endPoint},</if>
+            <if test="operatingPressure != null">operating_pressure = #{operatingPressure},</if>
+            <if test="operatingTemperature != null">operating_temperature = #{operatingTemperature},</if>
+            <if test="designPressure != null">design_pressure = #{designPressure},</if>
+            <if test="designTemperature != null">design_temperature = #{designTemperature},</if>
+            <if test="pressureTestType != null">pressure_test_type = #{pressureTestType},</if>
+            <if test="testPressure != null">test_pressure = #{testPressure},</if>
+            <if test="safetyClass != null">safety_class = #{safetyClass},</if>
+            <if test="usageRegistrationCertificate != null">usage_registration_certificate = #{usageRegistrationCertificate},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+        </trim>
+        where pipeline_id = #{pipelineId}
+    </update>
+
+    <delete id="deleteEquipPipelineDataByPipelineId" parameterType="String">
+        delete from equip_pipeline_data where pipeline_id = #{pipelineId}
+    </delete>
+
+    <delete id="deleteEquipPipelineDataByPipelineIds" parameterType="String">
+        delete from equip_pipeline_data where pipeline_id in 
+        <foreach item="pipelineId" collection="array" open="(" separator="," close=")">
+            #{pipelineId}
+        </foreach>
+    </delete>
+</mapper>
