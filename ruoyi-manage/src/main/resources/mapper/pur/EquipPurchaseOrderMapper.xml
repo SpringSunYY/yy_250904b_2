@@ -7,6 +7,7 @@
     <resultMap type="EquipPurchaseOrder" id="EquipPurchaseOrderResult">
         <result property="orderId" column="order_id"/>
         <result property="orderNo" column="order_no"/>
+        <result property="equipName" column="equip_name"/>
         <result property="supplierId" column="supplier_id"/>
         <result property="supplierName" column="supplier_name"/>
         <result property="deptId" column="dept_id"/>
@@ -53,6 +54,7 @@
     <sql id="selectEquipPurchaseOrderVo">
         select order_id,
                order_no,
+               equip_name,
                supplier_id,
                supplier_name,
                dept_id,
@@ -95,6 +97,7 @@
             resultMap="EquipPurchaseOrderEquipPurchaseOrderItemResult">
         select order_id,
                order_no,
+               equip_name,
                supplier_id,
                supplier_name,
                dept_id,
@@ -141,6 +144,7 @@
         insert into equip_purchase_order
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="orderNo != null">order_no,</if>
+            <if test="equipName != null">equip_name,</if>
             <if test="supplierId != null">supplier_id,</if>
             <if test="supplierName != null">supplier_name,</if>
             <if test="deptId != null">dept_id,</if>
@@ -165,6 +169,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderNo != null">#{orderNo},</if>
+            <if test="equipName != null">#{equipName},</if>
             <if test="supplierId != null">#{supplierId},</if>
             <if test="supplierName != null">#{supplierName},</if>
             <if test="deptId != null">#{deptId},</if>
@@ -193,6 +198,7 @@
         update equip_purchase_order
         <trim prefix="SET" suffixOverrides=",">
             <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="equipName != null">equip_name = #{equipName},</if>
             <if test="supplierId != null">supplier_id = #{supplierId},</if>
             <if test="supplierName != null">supplier_name = #{supplierName},</if>
             <if test="deptId != null">dept_id = #{deptId},</if>

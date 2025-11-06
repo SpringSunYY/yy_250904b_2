@@ -97,50 +97,53 @@
       <el-table-column label="订单编号" :show-overflow-tooltip="true" align="center" v-if="columns[1].visible"
                        prop="orderNo"
       />
-      <el-table-column label="供应商ID" align="center" v-if="columns[2].visible" prop="supplierId">
+      <el-table-column label="设备名称" :show-overflow-tooltip="true" align="center" v-if="columns[2].visible"
+                       prop="equipName"
+      />
+      <el-table-column label="供应商ID" align="center" v-if="columns[3].visible" prop="supplierId">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_order" :value="scope.row.supplierId"/>
         </template>
       </el-table-column>
-      <el-table-column label="供应商" :show-overflow-tooltip="true" align="center" v-if="columns[3].visible"
+      <el-table-column label="供应商" :show-overflow-tooltip="true" align="center" v-if="columns[4].visible"
                        prop="supplierName"
       />
-      <el-table-column label="申请部门ID" align="center" v-if="columns[4].visible" prop="deptId">
+      <el-table-column label="申请部门ID" align="center" v-if="columns[5].visible" prop="deptId">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_dept" :value="scope.row.deptId"/>
         </template>
       </el-table-column>
-      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[5].visible"
+      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[6].visible"
                        prop="deptName"
       />
-      <el-table-column label="申请人ID" align="center" v-if="columns[6].visible" prop="applyUserId">
+      <el-table-column label="申请人ID" align="center" v-if="columns[7].visible" prop="applyUserId">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_user" :value="scope.row.applyUserId"/>
         </template>
       </el-table-column>
-      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[7].visible"
+      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[8].visible"
                        prop="applyUserName"
       />
-      <el-table-column label="申请时间" align="center" v-if="columns[8].visible" prop="applyTime" width="180">
+      <el-table-column label="申请时间" align="center" v-if="columns[9].visible" prop="applyTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.applyTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="预计到货时间" align="center" v-if="columns[9].visible" prop="arriveTime" width="180">
+      <el-table-column label="预计到货时间" align="center" v-if="columns[10].visible" prop="arriveTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.arriveTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="预算单价" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
+      <el-table-column label="预算单价" :show-overflow-tooltip="true" align="center" v-if="columns[11].visible"
                        prop="unitAmount"
       />
-      <el-table-column label="预算金额" :show-overflow-tooltip="true" align="center" v-if="columns[11].visible"
+      <el-table-column label="预算金额" :show-overflow-tooltip="true" align="center" v-if="columns[12].visible"
                        prop="budgetAmount"
       />
-      <el-table-column label="采购原因" :show-overflow-tooltip="true" align="center" v-if="columns[12].visible"
+      <el-table-column label="采购原因" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
                        prop="purchasingReason"
       />
-      <el-table-column label="相关附件" align="center" v-if="columns[13].visible" prop="appendix" width="100">
+      <el-table-column label="相关附件" align="center" v-if="columns[14].visible" prop="appendix" width="100">
         <template slot-scope="scope">
           <div v-if="scope.row.appendix">
             <el-tooltip placement="top">
@@ -165,23 +168,23 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="流程状态" :show-overflow-tooltip="true" align="center" v-if="columns[14].visible"
+      <el-table-column label="流程状态" :show-overflow-tooltip="true" align="center" v-if="columns[15].visible"
                        prop="processStatus"
       />
-      <el-table-column label="流程实例ID" align="center" v-if="columns[15].visible" prop="processInstanceId">
+      <el-table-column label="流程实例ID" align="center" v-if="columns[16].visible" prop="processInstanceId">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_process_category" :value="scope.row.processInstanceId"/>
         </template>
       </el-table-column>
-      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"
+      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
                        prop="deployId"
       />
-      <el-table-column label="状态" align="center" v-if="columns[17].visible" prop="orderStatus">
+      <el-table-column label="状态" align="center" v-if="columns[18].visible" prop="orderStatus">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_repair_sratus" :value="scope.row.orderStatus"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"
+      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[19].visible"
                        prop="remark"
       />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="200" fixed="right">
@@ -225,6 +228,9 @@
     <!-- 添加或修改采购订单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="1000px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="设备名称" prop="equipName">
+          <el-input v-model="form.equipName" placeholder="请输入设备名称"/>
+        </el-form-item>
         <el-form-item label="供应商" prop="supplierId">
           <el-select v-model="form.supplierId" placeholder="请选择供应商" @change="handleSupplierChange">
             <el-option
@@ -380,23 +386,24 @@ export default {
       columns: [
         { key: 0, label: '序号', visible: true },
         { key: 1, label: '订单编号', visible: true },
-        { key: 2, label: '供应商ID', visible: false },
-        { key: 3, label: '供应商', visible: true },
-        { key: 4, label: '申请部门ID', visible: false },
-        { key: 5, label: '申请部门', visible: true },
-        { key: 6, label: '申请人ID', visible: false },
-        { key: 7, label: '申请人', visible: true },
-        { key: 8, label: '申请时间', visible: true },
-        { key: 9, label: '预计到货时间', visible: true },
-        { key: 10, label: '预算单价', visible: true },
-        { key: 11, label: '预算金额', visible: true },
-        { key: 12, label: '采购原因', visible: false },
-        { key: 13, label: '相关附件', visible: false },
-        { key: 14, label: '流程状态', visible: false },
-        { key: 15, label: '流程实例ID', visible: false },
-        { key: 16, label: '流程自定义ID', visible: false },
-        { key: 17, label: '状态', visible: false },
-        { key: 18, label: '备注', visible: false }
+        { key: 2, label: '设备名称', visible: true },
+        { key: 3, label: '供应商ID', visible: false },
+        { key: 4, label: '供应商', visible: true },
+        { key: 5, label: '申请部门ID', visible: false },
+        { key: 6, label: '申请部门', visible: true },
+        { key: 7, label: '申请人ID', visible: false },
+        { key: 8, label: '申请人', visible: true },
+        { key: 9, label: '申请时间', visible: true },
+        { key: 10, label: '预计到货时间', visible: true },
+        { key: 11, label: '预算单价', visible: true },
+        { key: 12, label: '预算金额', visible: true },
+        { key: 13, label: '采购原因', visible: false },
+        { key: 14, label: '相关附件', visible: false },
+        { key: 15, label: '流程状态', visible: false },
+        { key: 16, label: '流程实例ID', visible: false },
+        { key: 17, label: '流程自定义ID', visible: false },
+        { key: 18, label: '状态', visible: false },
+        { key: 19, label: '备注', visible: false }
       ],
       dialogVisible: false,
       deployId: '',
