@@ -7,7 +7,8 @@
     <resultMap type="EquipDevice" id="EquipDeviceResult">
         <result property="deviceId" column="device_id"/>
         <result property="deviceNo" column="device_no"/>
-        <result property="equipId" column="equip_id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="orderNo" column="order_no"/>
         <result property="equipName" column="equip_name"/>
         <result property="equipNo" column="equip_no"/>
         <result property="equipModel" column="equip_model"/>
@@ -52,7 +53,8 @@
     <sql id="selectEquipDeviceVo">
         select device_id,
                device_no,
-               equip_id,
+               order_id,
+               order_no,
                equip_name,
                equip_no,
                equip_model,
@@ -91,7 +93,8 @@
     <select id="selectEquipDeviceByDeviceId" parameterType="Long" resultMap="EquipDeviceEquipDeviceItemResult">
         select device_id,
                device_no,
-               equip_id,
+               order_id,
+               order_no,
                equip_name,
                equip_no,
                equip_model,
@@ -131,7 +134,8 @@
         insert into equip_device
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="deviceNo != null">device_no,</if>
-            <if test="equipId != null">equip_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderNo != null">order_no,</if>
             <if test="equipName != null">equip_name,</if>
             <if test="equipNo != null">equip_no,</if>
             <if test="equipModel != null">equip_model,</if>
@@ -160,7 +164,8 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="deviceNo != null">#{deviceNo},</if>
-            <if test="equipId != null">#{equipId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderNo != null">#{orderNo},</if>
             <if test="equipName != null">#{equipName},</if>
             <if test="equipNo != null">#{equipNo},</if>
             <if test="equipModel != null">#{equipModel},</if>
@@ -193,7 +198,8 @@
         update equip_device
         <trim prefix="SET" suffixOverrides=",">
             <if test="deviceNo != null">device_no = #{deviceNo},</if>
-            <if test="equipId != null">equip_id = #{equipId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
             <if test="equipName != null">equip_name = #{equipName},</if>
             <if test="equipNo != null">equip_no = #{equipNo},</if>
             <if test="equipModel != null">equip_model = #{equipModel},</if>

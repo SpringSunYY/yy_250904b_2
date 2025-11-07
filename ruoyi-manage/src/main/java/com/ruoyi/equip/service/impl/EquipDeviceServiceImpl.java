@@ -6,8 +6,9 @@ import com.ruoyi.equip.domain.EquipDevice;
 import com.ruoyi.equip.domain.EquipDeviceItem;
 import com.ruoyi.equip.domain.EquipLedger;
 import com.ruoyi.equip.mapper.EquipDeviceMapper;
-import com.ruoyi.equip.mapper.EquipLedgerMapper;
 import com.ruoyi.equip.service.IEquipDeviceService;
+import com.ruoyi.pur.domain.EquipPurchaseOrder;
+import com.ruoyi.pur.mapper.EquipPurchaseOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +32,7 @@ public class EquipDeviceServiceImpl implements IEquipDeviceService {
     private EquipDeviceMapper equipDeviceMapper;
 
     @Resource
-    private EquipLedgerMapper equipLedgerMapper;
+    private EquipPurchaseOrderMapper equipPurchaseOrderMapper;
 
     // 使用原子Long保证线程安全
     private static final AtomicLong sequence = new AtomicLong(1);
@@ -78,19 +79,22 @@ public class EquipDeviceServiceImpl implements IEquipDeviceService {
             equipDevice.setDeviceNo(deviceNo);
 
         }
-        //如果传入设备编号
-        if (StringUtils.isNotNull(equipDevice.getEquipId())) {
-            EquipLedger equipLedger = equipLedgerMapper.selectEquipLedgerByEquipId(equipDevice.getEquipId());
-            if (StringUtils.isNotNull(equipLedger)) {
-                equipDevice.setEquipName(equipLedger.getEquName());
-                equipDevice.setEquipNo(equipLedger.getEquCode());
-                equipDevice.setEquipModel(equipLedger.getSpecification());
-            }
-        }
+        initDate(equipDevice);
         equipDevice.setCreateTime(DateUtils.getNowDate());
         int rows = equipDeviceMapper.insertEquipDevice(equipDevice);
         insertEquipDeviceItem(equipDevice);
         return rows;
+    }
+
+    private void initDate(EquipDevice equipDevice) {
+        //如果传入设备编号
+        if (StringUtils.isNotNull(equipDevice.getOrderId())) {
+            EquipPurchaseOrder equipPurchaseOrder = equipPurchaseOrderMapper.selectEquipPurchaseOrderByOrderId(equipDevice.getOrderId());
+            if (StringUtils.isNotNull(equipPurchaseOrder)) {
+                equipDevice.setEquipName(equipPurchaseOrder.getEquipName());
+                equipDevice.setOrderNo(equipPurchaseOrder.getOrderNo());
+            }
+        }
     }
 
     /**
@@ -102,15 +106,7 @@ public class EquipDeviceServiceImpl implements IEquipDeviceService {
     @Transactional
     @Override
     public int updateEquipDevice(EquipDevice equipDevice) {
-        //如果传入设备编号
-        if (StringUtils.isNotNull(equipDevice.getEquipId())) {
-            EquipLedger equipLedger = equipLedgerMapper.selectEquipLedgerByEquipId(equipDevice.getEquipId());
-            if (StringUtils.isNotNull(equipLedger)) {
-                equipDevice.setEquipName(equipLedger.getEquName());
-                equipDevice.setEquipNo(equipLedger.getEquCode());
-                equipDevice.setEquipModel(equipLedger.getSpecification());
-            }
-        }
+        initDate(equipDevice);
         equipDeviceMapper.deleteEquipDeviceItemByDeviceId(equipDevice.getDeviceId());
         insertEquipDeviceItem(equipDevice);
         return equipDeviceMapper.updateEquipDevice(equipDevice);

@@ -72,46 +72,49 @@
       <el-table-column label="验收单号" :show-overflow-tooltip="true" align="center" v-if="columns[1].visible"
                        prop="deviceNo"
       />
-      <el-table-column label="设备编号" :show-overflow-tooltip="true" align="center" v-if="columns[2].visible"
-                       prop="equipId"
+      <el-table-column label="订单编号" :show-overflow-tooltip="true" align="center" v-if="columns[2].visible"
+                       prop="orderId"
       />
-      <el-table-column label="设备名称" :show-overflow-tooltip="true" align="center" v-if="columns[3].visible"
+      <el-table-column label="订单编号" :show-overflow-tooltip="true" align="center" v-if="columns[3].visible"
+                       prop="orderNo"
+      />
+      <el-table-column label="设备名称" :show-overflow-tooltip="true" align="center" v-if="columns[4].visible"
                        prop="equipName"
       />
-      <el-table-column label="设备位号" :show-overflow-tooltip="true" align="center" v-if="columns[4].visible"
+      <el-table-column label="设备位号" :show-overflow-tooltip="true" align="center" v-if="columns[5].visible"
                        prop="equipNo"
       />
-      <el-table-column label="设备型号" :show-overflow-tooltip="true" align="center" v-if="columns[5].visible"
+      <el-table-column label="设备型号" :show-overflow-tooltip="true" align="center" v-if="columns[6].visible"
                        prop="equipModel"
       />
-      <el-table-column label="入厂日期" align="center" v-if="columns[6].visible" prop="inDate" width="180">
+      <el-table-column label="入厂日期" align="center" v-if="columns[7].visible" prop="inDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.inDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="安装单位" :show-overflow-tooltip="true" align="center" v-if="columns[7].visible"
+      <el-table-column label="安装单位" :show-overflow-tooltip="true" align="center" v-if="columns[8].visible"
                        prop="instUnit"
       />
-      <el-table-column label="安装负责人" :show-overflow-tooltip="true" align="center" v-if="columns[8].visible"
+      <el-table-column label="安装负责人" :show-overflow-tooltip="true" align="center" v-if="columns[9].visible"
                        prop="instPerson"
       />
-      <el-table-column label="联系电话" :show-overflow-tooltip="true" align="center" v-if="columns[9].visible"
+      <el-table-column label="联系电话" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
                        prop="instPhone"
       />
-      <el-table-column label="安装日期" align="center" v-if="columns[10].visible" prop="instDate" width="180">
+      <el-table-column label="安装日期" align="center" v-if="columns[11].visible" prop="instDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.instDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="安装位置" align="center" v-if="columns[11].visible" prop="instLocation">
+      <el-table-column label="安装位置" align="center" v-if="columns[12].visible" prop="instLocation">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_location" :value="scope.row.instLocation"/>
         </template>
       </el-table-column>
-      <el-table-column label="安装调试单位" :show-overflow-tooltip="true" align="center" v-if="columns[12].visible"
+      <el-table-column label="安装调试单位" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
                        prop="instAdjustUnit"
       />
-      <el-table-column label="相关附件" align="center" v-if="columns[13].visible" prop="appendix" width="100">
+      <el-table-column label="相关附件" align="center" v-if="columns[14].visible" prop="appendix" width="100">
         <template slot-scope="scope">
           <div v-if="scope.row.appendix">
             <el-tooltip placement="top">
@@ -136,36 +139,36 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="验收结果" align="center" v-if="columns[14].visible" prop="acceptanceResult">
+      <el-table-column label="验收结果" align="center" v-if="columns[15].visible" prop="acceptanceResult">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_fun" :value="scope.row.acceptanceResult"/>
         </template>
       </el-table-column>
-      <el-table-column label="验收意见" :show-overflow-tooltip="true" align="center" v-if="columns[15].visible"
+      <el-table-column label="验收意见" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"
                        prop="acceptanceOpinion"
       />
-      <el-table-column label="申请部门ID" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"
+      <el-table-column label="申请部门ID" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
                        prop="deptId"
       />
-      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
+      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"
                        prop="deptName"
       />
-      <el-table-column label="申请人ID" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"
+      <el-table-column label="申请人ID" :show-overflow-tooltip="true" align="center" v-if="columns[19].visible"
                        prop="applyUserId"
       />
-      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[19].visible"
+      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[20].visible"
                        prop="applyUserName"
       />
-      <el-table-column label="任务ID" :show-overflow-tooltip="true" align="center" v-if="columns[20].visible"
+      <el-table-column label="任务ID" :show-overflow-tooltip="true" align="center" v-if="columns[21].visible"
                        prop="taskId"
       />
-      <el-table-column label="流程实例ID" :show-overflow-tooltip="true" align="center" v-if="columns[21].visible"
+      <el-table-column label="流程实例ID" :show-overflow-tooltip="true" align="center" v-if="columns[22].visible"
                        prop="processInstanceId"
       />
-      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[22].visible"
+      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[23].visible"
                        prop="deployId"
       />
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[23].visible"
+      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[24].visible"
                        prop="remark"
       />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" width="200">
@@ -212,30 +215,23 @@
         <el-form-item label="验收单号" prop="deviceNo" v-if="form.deviceId">
           <el-input v-model="form.deviceNo" placeholder="请输入验收单号" readonly/>
         </el-form-item>
-        <el-form-item label="设备" prop="equipId">
-          <el-row>
-            <el-col :span="20">
-              <el-select
-                v-model="form.equipId"
-                placeholder="请选择设备"
-                @change="handleDeviceChange"
-                style="width: 100%"
-              >
-                <el-option
-                  v-for="item in equipList"
-                  :key="item.equipId"
-                  :label="item.equName"
-                  :value="item.equipId"
-                >
-                  <span style="float: left">{{ item.equName }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.equCode }}</span>
-                </el-option>
-              </el-select>
-            </el-col>
-            <el-col :span="4">
-              <el-button type="primary" @click="openEquipSelector" style="margin-left: 10px;">选择设备</el-button>
-            </el-col>
-          </el-row>
+        <el-form-item label="订单" prop="orderId">
+          <el-select
+            v-model="form.orderId"
+            placeholder="请选择订单"
+            @change="handleOrderChange"
+            style="width: 100%"
+          >
+            <el-option
+              v-for="item in orderList"
+              :key="item.orderId"
+              :label="item.orderNo"
+              :value="item.orderId"
+            >
+              <span style="float: left">{{ item.equipName }}</span>
+              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.orderNo }}</span>
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="设备名称" prop="equipName">
           <el-input v-model="form.equipName" placeholder="请输入设备名称"/>
@@ -360,81 +356,6 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-
-    <!-- 设备选择对话框 -->
-    <el-dialog title="选择设备" :visible.sync="equipSelectorOpen" width="800px" append-to-body>
-      <el-form :model="equipQueryParams" ref="equipQueryForm" size="small" :inline="true" label-width="68px">
-        <el-form-item label="设备名称">
-          <el-input
-            v-model="equipQueryParams.equName"
-            placeholder="请输入设备名称"
-            clearable
-            @keyup.enter.native="handleEquipQuery"
-          />
-        </el-form-item>
-        <el-form-item label="设备位号">
-          <el-input
-            v-model="equipQueryParams.equCode"
-            placeholder="请输入设备位号"
-            clearable
-            @keyup.enter.native="handleEquipQuery"
-          />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleEquipQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="resetEquipQuery">重置</el-button>
-        </el-form-item>
-      </el-form>
-
-      <el-table
-        v-loading="equipLoading"
-        :data="equipListSelector"
-        @row-dblclick="handleSelectEquip"
-        max-height="400"
-      >
-        <el-table-column label="设备名称" align="center" prop="equName"/>
-        <el-table-column label="设备位号" align="center" prop="equCode"/>
-        <el-table-column label="设备类型" align="center" prop="type">
-          <template slot-scope="scope">
-            <dict-tag :options="dict.type.equip_type" :value="scope.row.type"/>
-          </template>
-        </el-table-column>
-        <el-table-column label="管理级别" align="center" prop="equipLevels">
-          <template slot-scope="scope">
-            <dict-tag :options="dict.type.equip_levels" :value="scope.row.equipLevels"/>
-          </template>
-        </el-table-column>
-        <el-table-column label="规格型号" align="center" prop="specification"/>
-        <el-table-column label="安装位置" align="center" prop="installLocation">
-          <template slot-scope="scope">
-            <dict-tag :options="dict.type.equip_location" :value="scope.row.installLocation"/>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="text"
-              icon="el-icon-check"
-              @click="handleSelectEquip(scope.row)"
-            >选择
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <pagination
-        v-show="equipTotal>0"
-        :total="equipTotal"
-        :page.sync="equipQueryParams.pageNum"
-        :limit.sync="equipQueryParams.pageSize"
-        @pagination="getEquipList"
-      />
-
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="equipSelectorOpen = false">关 闭</el-button>
-      </div>
-    </el-dialog>
     <TaskDetail :visible.sync="dialogVisible"
                 :task-id="taskId"
                 :proc-ins-id="procInsId"
@@ -444,10 +365,11 @@
 </template>
 
 <script>
-import {addDevice, delDevice, getDevice, listDevice, updateDevice} from '@/api/equip/device'
+import { addDevice, delDevice, getDevice, listDevice, updateDevice } from '@/api/equip/device'
 import FlowRecordList from '@/components/FlowRecordList/index.vue'
 import TaskDetail from '@/components/TaskDetail/index.vue'
-import {listLedger} from '@/api/equip/ledger'
+import { listLedger } from '@/api/equip/ledger'
+import { listOrder } from '@/api/pur/order'
 
 export default {
   name: 'Device',
@@ -460,28 +382,29 @@ export default {
       columns: [
         { key: 0, label: '序号', visible: true },
         { key: 1, label: '验收单号', visible: true },
-        { key: 2, label: '设备编号', visible: false },
-        { key: 3, label: '设备名称', visible: true },
-        { key: 4, label: '设备位号', visible: true },
-        { key: 5, label: '设备型号', visible: true },
-        { key: 6, label: '入厂日期', visible: true },
-        { key: 7, label: '安装单位', visible: true },
-        { key: 8, label: '安装负责人', visible: true },
-        { key: 9, label: '联系电话', visible: true },
-        { key: 10, label: '安装日期', visible: true },
-        { key: 11, label: '安装位置', visible: true },
-        { key: 12, label: '安装调试单位', visible: true },
-        { key: 13, label: '相关附件', visible: false },
-        { key: 14, label: '验收结果', visible: true },
-        { key: 15, label: '验收意见', visible: false },
-        { key: 16, label: '申请部门ID', visible: false },
-        { key: 17, label: '申请部门', visible: false },
-        { key: 18, label: '申请人ID', visible: false },
-        { key: 19, label: '申请人', visible: false },
-        { key: 20, label: '流程实例ID', visible: false },
-        { key: 21, label: '流程自定义ID', visible: false },
-        { key: 22, label: '备注', visible: false },
-        { key: 23, label: '更新时间', visible: false }
+        { key: 2, label: '订单', visible: false },
+        { key: 3, label: '订单编号', visible: true },
+        { key: 4, label: '设备名称', visible: true },
+        { key: 5, label: '设备位号', visible: true },
+        { key: 6, label: '设备型号', visible: true },
+        { key: 7, label: '入厂日期', visible: true },
+        { key: 8, label: '安装单位', visible: true },
+        { key: 9, label: '安装负责人', visible: true },
+        { key: 10, label: '联系电话', visible: true },
+        { key: 11, label: '安装日期', visible: true },
+        { key: 12, label: '安装位置', visible: true },
+        { key: 13, label: '安装调试单位', visible: true },
+        { key: 14, label: '相关附件', visible: false },
+        { key: 15, label: '验收结果', visible: true },
+        { key: 16, label: '验收意见', visible: false },
+        { key: 17, label: '申请部门ID', visible: false },
+        { key: 18, label: '申请部门', visible: false },
+        { key: 19, label: '申请人ID', visible: false },
+        { key: 20, label: '申请人', visible: false },
+        { key: 21, label: '流程实例ID', visible: false },
+        { key: 22, label: '流程自定义ID', visible: false },
+        { key: 23, label: '备注', visible: false },
+        { key: 24, label: '更新时间', visible: false }
       ],
       dialogVisible: false,
       deployId: '',
@@ -516,23 +439,17 @@ export default {
         equipName: null,
         status: null
       },
-      // 是否显示设备选择弹出层
-      equipSelectorOpen: false,
       // 设备查询参数
-      equipQueryParams: {
+      orderQueryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 1000,
         equName: undefined,
         equCode: undefined
       },
-      // 设备列表
-      equipList: [],
-      // 设备选择器列表
-      equipListSelector: [],
-      // 设备总数
-      equipTotal: 0,
+      // 订单列表
+      orderList: [],
       // 设备加载
-      equipLoading: false,
+      orderLoading: false,
       // 表单参数
       form: {},
       // 表单校验
@@ -541,15 +458,9 @@ export default {
   },
   created() {
     this.getList()
-    this.getLedgerList()
+    this.getOrderList()
   },
   methods: {
-    /** 查询设备台账列表 */
-    getLedgerList() {
-      listLedger({ pageSize: 10000 }).then(response => {
-        this.ledgerList = response.rows
-      })
-    },
     //获取文件名 此功能只可以下载只有一个文件的
     getFileName(filePath) {
       if (filePath == null) {
@@ -717,42 +628,34 @@ export default {
       }, `device_${new Date().getTime()}.xlsx`)
     },
     /** 设备选择变化处理 */
-    handleDeviceChange(val) {
+    handleOrderChange(val) {
       // 从设备台账列表中查找选中的设备
-      const selectedDevice = this.equipList.find(item =>
-        item.equipId === val)
-      if (selectedDevice) {
+      const selectedOrder = this.orderList.find(item =>
+        item.orderId === val)
+      if (selectedOrder) {
         // 设置设备名称和设备位号
-        this.form.equipName = selectedDevice.equName
-        this.form.equipNo = selectedDevice.equCode
+        this.form.equipName = selectedOrder.equipName
       } else {
         this.form.deviceName = ''
-        this.form.deviceCode = ''
       }
     },
     /** 获取设备列表 */
-    getEquipList() {
-      this.equipLoading = true
-      listLedger(this.equipQueryParams).then(response => {
-        this.equipListSelector = response.rows
-        this.equipTotal = response.total
-        this.equipLoading = false
-
-        // 同时更新下拉框中的设备列表
-        if (!this.equipQueryParams.equName && !this.equipQueryParams.equCode) {
-          this.equipList = response.rows
-        }
+    getOrderList() {
+      this.orderLoading = true
+      listOrder(this.orderQueryParams).then(response => {
+        this.orderLoading = false
+        this.orderList = response.rows
       })
     },
     /** 设备搜索 */
-    handleEquipQuery() {
-      this.equipQueryParams.pageNum = 1
-      this.getEquipList()
+    handleOrderQuery() {
+      this.orderQueryParams.pageNum = 1
+      this.getOrderList()
     },
     /** 重置设备搜索 */
     resetEquipQuery() {
       this.resetForm('equipQueryForm')
-      this.handleEquipQuery()
+      this.handleOrderQuery()
     },
     /** 选择设备 */
     handleSelectEquip(row) {

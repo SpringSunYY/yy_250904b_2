@@ -13,7 +13,7 @@ import java.util.List;
  * 设备安装验收对象 equip_device
  *
  * @author laogao
- * @date 2025-11-02
+ * @date 2025-11-07
  */
 public class EquipDevice extends BaseEntity {
     private static final long serialVersionUID = 1L;
@@ -31,10 +31,16 @@ public class EquipDevice extends BaseEntity {
     private String deviceNo;
 
     /**
-     * 设备编号
+     * 订单编号
      */
-    @Excel(name = "设备编号")
-    private Long equipId;
+    @Excel(name = "订单编号")
+    private Long orderId;
+
+    /**
+     * 订单编号
+     */
+    @Excel(name = "订单编号")
+    private String orderNo;
 
     /**
      * 设备名称
@@ -179,12 +185,20 @@ public class EquipDevice extends BaseEntity {
         return deviceNo;
     }
 
-    public void setEquipId(Long equipId) {
-        this.equipId = equipId;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
-    public Long getEquipId() {
-        return equipId;
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
     }
 
     public void setEquipName(String equipName) {
@@ -360,7 +374,8 @@ public class EquipDevice extends BaseEntity {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("deviceId", getDeviceId())
                 .append("deviceNo", getDeviceNo())
-                .append("equipId", getEquipId())
+                .append("orderId", getOrderId())
+                .append("orderNo", getOrderNo())
                 .append("equipName", getEquipName())
                 .append("equipNo", getEquipNo())
                 .append("equipModel", getEquipModel())
