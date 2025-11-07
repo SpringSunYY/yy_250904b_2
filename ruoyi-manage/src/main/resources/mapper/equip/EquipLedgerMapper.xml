@@ -45,10 +45,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="equName != null  and equName != ''">and equ_name like concat('%', #{equName}, '%')</if>
             <if test="equCode != null  and equCode != ''">and equ_code = #{equCode}</if>
             <if test="type != null  and type != ''">and type = #{type}</if>
+            <if test="dynamicStaticEquipment != null  and dynamicStaticEquipment != ''">and dynamic_static_equipment =
+                #{dynamicStaticEquipment}
+            </if>
             <if test="equipLevels != null  and equipLevels != ''">and equip_levels = #{equipLevels}</if>
             <if test="installLocation != null  and installLocation != ''">and install_location = #{installLocation}</if>
             <if test="status != null  and status != ''">and status = #{status}</if>
-            <if test="specialEquipment != null  and specialEquipment != ''">and special_equipment = #{specialEquipment}</if>
+            <if test="specialEquipment != null  and specialEquipment != ''">and special_equipment =
+                #{specialEquipment}
+            </if>
         </where>
     </select>
 

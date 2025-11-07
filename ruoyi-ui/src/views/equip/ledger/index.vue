@@ -39,6 +39,16 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="动静设备" prop="dynamicStaticEquipment">
+        <el-select v-model="queryParams.dynamicStaticEquipment" placeholder="请选择动静设备" clearable>
+          <el-option
+            v-for="dict in dict.type.static_dynamic"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -372,10 +382,10 @@
 </template>
 
 <script>
-import {addLedger, delLedger, getLedger, listLedger, updateLedger} from '@/api/equip/ledger'
-import {listSupplier} from '@/api/pur/supplier'
-import {listUser} from '@/api/system/user'
-import {listDept} from '@/api/system/dept'
+import { addLedger, delLedger, getLedger, listLedger, updateLedger } from '@/api/equip/ledger'
+import { listSupplier } from '@/api/pur/supplier'
+import { listUser } from '@/api/system/user'
+import { listDept } from '@/api/system/dept'
 
 export default {
   name: 'Ledger',
@@ -386,7 +396,7 @@ export default {
       columns: [
         { key: 0, label: '序号', visible: false },
         { key: 1, label: '设备来源', visible: true },
-        { key: 2, label: '设备名称',visible: true },
+        { key: 2, label: '设备名称', visible: true },
         { key: 3, label: '设备位号', visible: true },
         { key: 4, label: '设备类型', visible: true },
         { key: 5, label: '管理级别', visible: true },
@@ -397,12 +407,12 @@ export default {
         { key: 7, label: '投入使用日期', visible: true },
         { key: 19, label: '设计/操作参数', visible: true },
         { key: 8, label: '安装位置', visible: true },
-        { key: 9, label: '供应商',visible: true },
-        { key: 10,label: '所属部门', visible: true },
+        { key: 9, label: '供应商', visible: true },
+        { key: 10, label: '所属部门', visible: true },
         { key: 11, label: '责任人', visible: true },
         { key: 12, label: '设备状态', visible: true },
         { key: 13, label: '备注', visible: false },
-        { key: 14, label: '特种设备',visible: true },
+        { key: 14, label: '特种设备', visible: true },
         { key: 15, label: '动静设备', visible: true }
       ],
       // 遮罩层
