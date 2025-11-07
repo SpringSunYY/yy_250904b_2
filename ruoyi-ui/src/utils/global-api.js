@@ -1,11 +1,12 @@
-import {listSupplier} from '@/api/pur/supplier'
-import {listDept} from '@/api/system/dept'
-import {listUser} from '@/api/system/user'
-import {getDicts} from '@/api/system/dict/data'
-import {listLedger} from '@/api/equip/ledger'
-import {listInspe} from '@/api/inspe/inspe'
-import {listPlan} from '@/api/lubr/plan'
-import {listRepairPlan} from '@/api/repair/plan'
+import { listSupplier } from '@/api/pur/supplier'
+import { listDept } from '@/api/system/dept'
+import { listUser } from '@/api/system/user'
+import { getDicts } from '@/api/system/dict/data'
+import { listLedger } from '@/api/equip/ledger'
+import { listInspe } from '@/api/inspe/inspe'
+import { listPlan } from '@/api/lubr/plan'
+import { listRepairPlan } from '@/api/repair/plan'
+import { listOrder } from '@/api/pur/order'
 
 const GlobalApi = {
   //供应商
@@ -72,6 +73,17 @@ const GlobalApi = {
       }
     })
   },
+  //订单列表
+  listOrderForm: async function(query) {
+    const res = await listOrder(query)
+    return res.rows.map(item => {
+      return {
+        label: item.orderNo + ':' + item.equipName,
+        value: item.orderId
+      }
+    })
+  },
+
   //计划列表
   listLubrPlanForm: async function(query) {
     const res = await listPlan(query)

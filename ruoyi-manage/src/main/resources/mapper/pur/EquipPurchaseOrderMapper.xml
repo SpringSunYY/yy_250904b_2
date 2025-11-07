@@ -91,6 +91,7 @@
             <if test="supplierName != null  and supplierName != ''">and supplier_name like concat('%', #{supplierName},
                 '%')
             </if>
+            <if test="orderNo != null and orderNo != ''">and order_no like concat('%', #{orderNo}, '%')</if>
             <if test="deptName != null  and deptName != ''">and dept_name like concat('%', #{deptName}, '%')</if>
             <if test="applyUserName != null  and applyUserName != ''">and apply_user_name like concat('%',
                 #{applyUserName}, '%')
