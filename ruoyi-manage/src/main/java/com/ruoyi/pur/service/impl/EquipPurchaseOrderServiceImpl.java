@@ -1,5 +1,6 @@
 package com.ruoyi.pur.service.impl;
 
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.pur.domain.EquipPurchaseOrder;
@@ -8,6 +9,7 @@ import com.ruoyi.pur.domain.EquipPurchaserSupplier;
 import com.ruoyi.pur.mapper.EquipPurchaseOrderMapper;
 import com.ruoyi.pur.service.IEquipPurchaseOrderService;
 import com.ruoyi.pur.service.IEquipPurchaserSupplierService;
+import com.ruoyi.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,9 @@ public class EquipPurchaseOrderServiceImpl implements IEquipPurchaseOrderService
     @Resource
     private IEquipPurchaserSupplierService equipPurchaserSupplierService;
 
+    @Resource
+    private ISysUserService sysUserService;
+
     /**
      * 查询采购订单
      *
@@ -49,7 +54,16 @@ public class EquipPurchaseOrderServiceImpl implements IEquipPurchaseOrderService
      */
     @Override
     public List<EquipPurchaseOrder> selectEquipPurchaseOrderList(EquipPurchaseOrder equipPurchaseOrder) {
-        return equipPurchaseOrderMapper.selectEquipPurchaseOrderList(equipPurchaseOrder);
+        List<EquipPurchaseOrder> equipPurchaseOrders = equipPurchaseOrderMapper.selectEquipPurchaseOrderList(equipPurchaseOrder);
+        for (EquipPurchaseOrder purchaseOrder : equipPurchaseOrders) {
+            if (StringUtils.isNotNull(purchaseOrder.getAuditUserId())) {
+                SysUser sysUser = sysUserService.selectUserById(purchaseOrder.getAuditUserId());
+                if (StringUtils.isNotNull(sysUser)) {
+                    purchaseOrder.setAuditUserName(sysUser.getUserName());
+                }
+            }
+        }
+        return equipPurchaseOrders;
     }
 
     /**

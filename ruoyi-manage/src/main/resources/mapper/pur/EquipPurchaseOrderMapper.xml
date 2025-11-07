@@ -20,6 +20,9 @@
         <result property="budgetAmount" column="budget_amount"/>
         <result property="purchasingReason" column="purchasing_reason"/>
         <result property="appendix" column="appendix"/>
+        <result property="auditUserId" column="audit_user_id"/>
+        <result property="auditTime" column="audit_time"/>
+        <result property="auditContent" column="audit_content"/>
         <result property="taskId" column="task_id"/>
         <result property="processInstanceId" column="process_instance_id"/>
         <result property="deployId" column="deploy_id"/>
@@ -67,6 +70,9 @@
                budget_amount,
                purchasing_reason,
                appendix,
+               audit_user_id,
+               audit_time,
+               audit_content,
                task_id,
                process_instance_id,
                deploy_id,
@@ -110,6 +116,7 @@
                budget_amount,
                purchasing_reason,
                appendix,
+                audit_user_id, audit_time, audit_content,
                task_id,
                process_instance_id,
                deploy_id,
@@ -157,6 +164,9 @@
             <if test="budgetAmount != null">budget_amount,</if>
             <if test="purchasingReason != null and purchasingReason != ''">purchasing_reason,</if>
             <if test="appendix != null">appendix,</if>
+            <if test="auditUserId != null">audit_user_id,</if>
+            <if test="auditTime != null">audit_time,</if>
+            <if test="auditContent != null">audit_content,</if>
             <if test="taskId != null">task_id,</if>
             <if test="processInstanceId != null">process_instance_id,</if>
             <if test="deployId != null">deploy_id,</if>
@@ -182,6 +192,9 @@
             <if test="budgetAmount != null">#{budgetAmount},</if>
             <if test="purchasingReason != null and purchasingReason != ''">#{purchasingReason},</if>
             <if test="appendix != null">#{appendix},</if>
+            <if test="auditUserId != null">#{auditUserId},</if>
+            <if test="auditTime != null">#{auditTime},</if>
+            <if test="auditContent != null">#{auditContent},</if>
             <if test="taskId != null">#{taskId},</if>
             <if test="processInstanceId != null">#{processInstanceId},</if>
             <if test="deployId != null">#{deployId},</if>
@@ -211,6 +224,9 @@
             <if test="budgetAmount != null">budget_amount = #{budgetAmount},</if>
             <if test="purchasingReason != null">purchasing_reason = #{purchasingReason},</if>
             <if test="appendix != null">appendix = #{appendix},</if>
+            <if test="auditUserId != null">audit_user_id = #{auditUserId},</if>
+            <if test="auditTime != null">audit_time = #{auditTime},</if>
+            <if test="auditContent != null">audit_content = #{auditContent},</if>
             <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
             <if test="taskId != null">task_id = #{taskId},</if>
             <if test="deployId != null">deploy_id = #{deployId},</if>

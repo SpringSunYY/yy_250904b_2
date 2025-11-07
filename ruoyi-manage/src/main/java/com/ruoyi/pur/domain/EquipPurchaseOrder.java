@@ -14,7 +14,7 @@ import java.util.List;
  * 采购订单对象 equip_purchase_order
  *
  * @author laogao
- * @date 2025-11-06
+ * @date 2025-11-07
  */
 public class EquipPurchaseOrder extends BaseEntity {
     private static final long serialVersionUID = 1L;
@@ -110,6 +110,26 @@ public class EquipPurchaseOrder extends BaseEntity {
      */
     @Excel(name = "相关附件")
     private String appendix;
+
+    /**
+     * 审核人
+     */
+    @Excel(name = "审核人")
+    private String auditUserName;
+    private Long auditUserId;
+
+    /**
+     * 审核时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "审核时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date auditTime;
+
+    /**
+     * 审核意见
+     */
+    @Excel(name = "审核意见")
+    private String auditContent;
 
     /**
      * 流程状态
@@ -266,6 +286,38 @@ public class EquipPurchaseOrder extends BaseEntity {
         return appendix;
     }
 
+    public void setAuditUserId(Long auditUserId) {
+        this.auditUserId = auditUserId;
+    }
+
+    public Long getAuditUserId() {
+        return auditUserId;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
+    }
+
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditContent(String auditContent) {
+        this.auditContent = auditContent;
+    }
+
+    public String getAuditContent() {
+        return auditContent;
+    }
+
+    public String getAuditUserName() {
+        return auditUserName;
+    }
+
+    public void setAuditUserName(String auditUserName) {
+        this.auditUserName = auditUserName;
+    }
+
     public void setProcessStatus(String processStatus) {
         this.processStatus = processStatus;
     }
@@ -332,6 +384,9 @@ public class EquipPurchaseOrder extends BaseEntity {
                 .append("budgetAmount", getBudgetAmount())
                 .append("purchasingReason", getPurchasingReason())
                 .append("appendix", getAppendix())
+                .append("auditUserId", getAuditUserId())
+                .append("auditTime", getAuditTime())
+                .append("auditContent", getAuditContent())
                 .append("processStatus", getProcessStatus())
                 .append("taskId", getTaskId())
                 .append("processInstanceId", getProcessInstanceId())

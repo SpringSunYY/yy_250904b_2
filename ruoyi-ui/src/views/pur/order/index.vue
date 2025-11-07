@@ -168,17 +168,28 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="流程状态" :show-overflow-tooltip="true" align="center" v-if="columns[15].visible"
-                       prop="processStatus"
+      <el-table-column label="审核人" :show-overflow-tooltip="true" align="center" v-if="columns[15].visible"
+                       prop="auditUserName"
       />
-      <el-table-column label="流程实例ID" align="center" v-if="columns[16].visible" prop="processInstanceId">
+      <el-table-column label="审核时间" align="center" v-if="columns[16].visible" prop="auditTime" width="180">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_process_category" :value="scope.row.processInstanceId"/>
+          <span>{{ parseTime(scope.row.auditTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
-                       prop="deployId"
+      <el-table-column label="审核意见" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
+                       prop="auditContent"
       />
+<!--      <el-table-column label="流程状态" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"-->
+<!--                       prop="processStatus"-->
+<!--      />-->
+<!--      <el-table-column label="流程实例ID" align="center" v-if="columns[17].visible" prop="processInstanceId">-->
+<!--        <template slot-scope="scope">-->
+<!--          <dict-tag :options="dict.type.sys_process_category" :value="scope.row.processInstanceId"/>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"-->
+<!--                       prop="deployId"-->
+<!--      />-->
       <el-table-column label="状态" align="center" v-if="columns[18].visible" prop="orderStatus">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_repair_sratus" :value="scope.row.orderStatus"/>
@@ -197,14 +208,14 @@
             v-hasPermi="['pur:order:edit']"
           >修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-view"
-            @click="handleProcess(scope.row)"
-            v-hasPermi="['pur:order:list']"
-          >查看流程
-          </el-button>
+          <!--          <el-button
+                      size="mini"
+                      type="text"
+                      icon="el-icon-view"
+                      @click="handleProcess(scope.row)"
+                      v-hasPermi="['pur:order:list']"
+                    >查看流程
+                    </el-button>-->
           <el-button
             size="mini"
             type="text"
@@ -290,6 +301,28 @@
         </el-form-item>
         <el-form-item label="相关附件" prop="appendix">
           <file-upload v-model="form.appendix"/>
+        </el-form-item>
+        <el-form-item label="审核人" prop="auditUserId">
+          <el-select v-model="form.auditUserId" placeholder="请选择审核人">
+            <el-option
+              v-for="item in auditUserList"
+              :key="item.userId"
+              :label="item.nickName"
+              :value="item.userId"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="审核时间" prop="auditTime">
+          <el-date-picker clearable
+                          v-model="form.auditTime"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="请选择审核时间"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="审核意见">
+          <el-input type="textarea" v-model="form.auditContent" :min-height="192"/>
         </el-form-item>
         <!--        <el-form-item label="流程实例" prop="processInstanceId">-->
         <!--          <el-select v-model="form.processInstanceId" placeholder="请选择流程实例">-->
@@ -399,9 +432,12 @@ export default {
         { key: 12, label: '预算金额', visible: true },
         { key: 13, label: '采购原因', visible: false },
         { key: 14, label: '相关附件', visible: false },
-        { key: 15, label: '流程状态', visible: false },
-        { key: 16, label: '流程实例ID', visible: false },
-        { key: 17, label: '流程自定义ID', visible: false },
+        { key: 15, label: '审核人', visible: false },
+        { key: 16, label: '审核时间', visible: false },
+        { key: 17, label: '审核意见', visible: false },
+        // { key: 18, label: '流程状态', visible: false },
+        // { key: 19, label: '流程实例ID', visible: false },
+        // { key: 20, label: '流程自定义ID', visible: false },
         { key: 18, label: '状态', visible: false },
         { key: 19, label: '备注', visible: false }
       ],
@@ -437,6 +473,7 @@ export default {
       deptList: [],
       // 用户列表
       userList: [],
+      auditUserList: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -456,8 +493,17 @@ export default {
     this.getList()
     this.getSupplierList()
     this.getDeptList()
+    this.getAuditUserList()
   },
   methods: {
+    getAuditUserList(){
+      listUser({
+        pageNum: 1,
+        pageSize: 1000
+      }).then(response => {
+        this.auditUserList = response.rows
+      })
+    },
     //获取文件名 此功能只可以下载只有一个文件的
     getFileName(filePath) {
       if (filePath == null) {
@@ -556,6 +602,9 @@ export default {
         applyTime: null,
         budgetAmount: null,
         appendix: null,
+        auditUserId: null,
+        auditTime: null,
+        auditContent: null,
         processInstanceId: null,
         orderStatus: null,
         currentTask: null,
