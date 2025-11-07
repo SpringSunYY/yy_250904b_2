@@ -1,7 +1,7 @@
 package com.ruoyi.vulnerable.service.impl;
 
 import java.util.List;
-import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.vulnerable.mapper.EquipmentVulnerableInfoMapper;
@@ -10,19 +10,19 @@ import com.ruoyi.vulnerable.service.IEquipmentVulnerableInfoService;
 
 /**
  * 易损设备信息Service业务层处理
- * 
+ *
  * @author Laogao
  * @date 2025-11-05
  */
 @Service
-public class EquipmentVulnerableInfoServiceImpl implements IEquipmentVulnerableInfoService 
+public class EquipmentVulnerableInfoServiceImpl implements IEquipmentVulnerableInfoService
 {
     @Autowired
     private EquipmentVulnerableInfoMapper equipmentVulnerableInfoMapper;
 
     /**
      * 查询易损设备信息
-     * 
+     *
      * @param id 易损设备信息主键
      * @return 易损设备信息
      */
@@ -34,7 +34,7 @@ public class EquipmentVulnerableInfoServiceImpl implements IEquipmentVulnerableI
 
     /**
      * 查询易损设备信息列表
-     * 
+     *
      * @param equipmentVulnerableInfo 易损设备信息
      * @return 易损设备信息
      */
@@ -46,7 +46,7 @@ public class EquipmentVulnerableInfoServiceImpl implements IEquipmentVulnerableI
 
     /**
      * 新增易损设备信息
-     * 
+     *
      * @param equipmentVulnerableInfo 易损设备信息
      * @return 结果
      */
@@ -63,7 +63,7 @@ public class EquipmentVulnerableInfoServiceImpl implements IEquipmentVulnerableI
 
     /**
      * 修改易损设备信息
-     * 
+     *
      * @param equipmentVulnerableInfo 易损设备信息
      * @return 结果
      */
@@ -75,7 +75,7 @@ public class EquipmentVulnerableInfoServiceImpl implements IEquipmentVulnerableI
 
     /**
      * 批量删除易损设备信息
-     * 
+     *
      * @param ids 需要删除的易损设备信息主键
      * @return 结果
      */
@@ -87,7 +87,7 @@ public class EquipmentVulnerableInfoServiceImpl implements IEquipmentVulnerableI
 
     /**
      * 删除易损设备信息信息
-     * 
+     *
      * @param id 易损设备信息主键
      * @return 结果
      */

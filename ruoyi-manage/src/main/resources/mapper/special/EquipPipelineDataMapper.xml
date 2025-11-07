@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.special.mapper.EquipPipelineDataMapper">
-    
+
     <resultMap type="EquipPipelineData" id="EquipPipelineDataResult">
         <result property="pipelineId"    column="pipeline_id"    />
         <result property="pipelineNo"    column="pipeline_no"    />
@@ -45,13 +45,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectEquipPipelineDataList" parameterType="EquipPipelineData" resultMap="EquipPipelineDataResult">
         <include refid="selectEquipPipelineDataVo"/>
-        <where>  
-            <if test="pipelineName != null  and pipelineName != ''"> and pipeline_name like concat('%', #{pipelineName}, '%')</if>
-            <if test="pressurePipeline != null  and pressurePipeline != ''"> and pressure_pipeline = #{pressurePipeline}</if>
-            <if test="pipelineClass != null  and pipelineClass != ''"> and pipeline_class = #{pipelineClass}</if>
+        <where>
+            <if test="pipelineName != null  and pipelineName != ''">and pipeline_name like concat('%', #{pipelineName},
+                '%')
+            </if>
+            <if test="pressurePipeline != null  and pressurePipeline != ''">and pressure_pipeline =
+                #{pressurePipeline}
+            </if>
+            <if test="pipelineClass != null  and pipelineClass != ''">and pipeline_class = #{pipelineClass}</if>
         </where>
     </select>
-    
+
     <select id="selectEquipPipelineDataByPipelineId" parameterType="String" resultMap="EquipPipelineDataResult">
         <include refid="selectEquipPipelineDataVo"/>
         where pipeline_id = #{pipelineId}
@@ -172,7 +176,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteEquipPipelineDataByPipelineIds" parameterType="String">
-        delete from equip_pipeline_data where pipeline_id in 
+        delete from equip_pipeline_data where pipeline_id in
         <foreach item="pipelineId" collection="array" open="(" separator="," close=")">
             #{pipelineId}
         </foreach>

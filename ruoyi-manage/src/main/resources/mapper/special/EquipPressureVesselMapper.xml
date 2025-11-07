@@ -1,53 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.special.mapper.EquipPressureVesselMapper">
-    
+
     <resultMap type="EquipPressureVessel" id="EquipPressureVesselResult">
-        <result property="id"    column="id"    />
-        <result property="name"    column="name"    />
-        <result property="specification"    column="specification"    />
-        <result property="volume"    column="volume"    />
-        <result property="equipmentCategory"    column="equipment_category"    />
-        <result property="installationType"    column="installation_type"    />
-        <result property="designPressure"    column="design_pressure"    />
-        <result property="designTemperature"    column="design_temperature"    />
-        <result property="workingPressure"    column="working_pressure"    />
-        <result property="workingTemperature"    column="working_temperature"    />
-        <result property="material"    column="material"    />
-        <result property="medium"    column="medium"    />
-        <result property="netWeight"    column="net_weight"    />
-        <result property="manufacturer"    column="manufacturer"    />
-        <result property="manufactureDate"    column="manufacture_date"    />
-        <result property="manufactureLicenseNo"    column="manufacture_license_no"    />
-        <result property="manufactureSerialNo"    column="manufacture_serial_no"    />
-        <result property="installationUnit"    column="installation_unit"    />
-        <result property="installationDate"    column="installation_date"    />
-        <result property="commissioningDate"    column="commissioning_date"    />
-        <result property="equipmentCode"    column="equipment_code"    />
-        <result property="usageCertificateNo"    column="usage_certificate_no"    />
-        <result property="usageRegistrationCertificate"    column="usage_registration_certificate"    />
-        <result property="remarks"    column="remarks"    />
-        <result property="createdBy"    column="created_by"    />
-        <result property="createdTime"    column="created_time"    />
-        <result property="updatedBy"    column="updated_by"    />
-        <result property="updatedTime"    column="updated_time"    />
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="specification" column="specification"/>
+        <result property="volume" column="volume"/>
+        <result property="equipmentCategory" column="equipment_category"/>
+        <result property="installationType" column="installation_type"/>
+        <result property="designPressure" column="design_pressure"/>
+        <result property="designTemperature" column="design_temperature"/>
+        <result property="workingPressure" column="working_pressure"/>
+        <result property="workingTemperature" column="working_temperature"/>
+        <result property="material" column="material"/>
+        <result property="medium" column="medium"/>
+        <result property="netWeight" column="net_weight"/>
+        <result property="manufacturer" column="manufacturer"/>
+        <result property="manufactureDate" column="manufacture_date"/>
+        <result property="manufactureLicenseNo" column="manufacture_license_no"/>
+        <result property="manufactureSerialNo" column="manufacture_serial_no"/>
+        <result property="installationUnit" column="installation_unit"/>
+        <result property="installationDate" column="installation_date"/>
+        <result property="commissioningDate" column="commissioning_date"/>
+        <result property="equipmentCode" column="equipment_code"/>
+        <result property="usageCertificateNo" column="usage_certificate_no"/>
+        <result property="usageRegistrationCertificate" column="usage_registration_certificate"/>
+        <result property="remarks" column="remarks"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updatedTime" column="updated_time"/>
     </resultMap>
 
     <sql id="selectEquipPressureVesselVo">
-        select id, name, specification, volume, equipment_category, installation_type, design_pressure, design_temperature, working_pressure, working_temperature, material, medium, net_weight, manufacturer, manufacture_date, manufacture_license_no, manufacture_serial_no, installation_unit, installation_date, commissioning_date, equipment_code, usage_certificate_no, usage_registration_certificate, remarks, created_by, created_time, updated_by, updated_time from equip_pressure_vessel
+        select id,
+               name,
+               specification,
+               volume,
+               equipment_category,
+               installation_type,
+               design_pressure,
+               design_temperature,
+               working_pressure,
+               working_temperature,
+               material,
+               medium,
+               net_weight,
+               manufacturer,
+               manufacture_date,
+               manufacture_license_no,
+               manufacture_serial_no,
+               installation_unit,
+               installation_date,
+               commissioning_date,
+               equipment_code,
+               usage_certificate_no,
+               usage_registration_certificate,
+               remarks,
+               created_by,
+               created_time,
+               updated_by,
+               updated_time
+        from equip_pressure_vessel
     </sql>
 
-    <select id="selectEquipPressureVesselList" parameterType="EquipPressureVessel" resultMap="EquipPressureVesselResult">
+    <select id="selectEquipPressureVesselList" parameterType="EquipPressureVessel"
+            resultMap="EquipPressureVesselResult">
         <include refid="selectEquipPressureVesselVo"/>
-        <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="equipmentCategory != null  and equipmentCategory != ''"> and equipment_category = #{equipmentCategory}</if>
-            <if test="installationType != null  and installationType != ''"> and installation_type = #{installationType}</if>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="equipmentCategory != null  and equipmentCategory != ''">and equipment_category =
+                #{equipmentCategory}
+            </if>
+            <if test="installationType != null  and installationType != ''">and installation_type =
+                #{installationType}
+            </if>
         </where>
     </select>
-    
+
     <select id="selectEquipPressureVesselById" parameterType="Long" resultMap="EquipPressureVesselResult">
         <include refid="selectEquipPressureVesselVo"/>
         where id = #{id}
@@ -83,7 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createdTime != null">created_time,</if>
             <if test="updatedBy != null">updated_by,</if>
             <if test="updatedTime != null">updated_time,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">#{name},</if>
             <if test="specification != null">#{specification},</if>
@@ -112,7 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createdTime != null">#{createdTime},</if>
             <if test="updatedBy != null">#{updatedBy},</if>
             <if test="updatedTime != null">#{updatedTime},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateEquipPressureVessel" parameterType="EquipPressureVessel">
@@ -139,7 +172,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="commissioningDate != null">commissioning_date = #{commissioningDate},</if>
             <if test="equipmentCode != null">equipment_code = #{equipmentCode},</if>
             <if test="usageCertificateNo != null">usage_certificate_no = #{usageCertificateNo},</if>
-            <if test="usageRegistrationCertificate != null">usage_registration_certificate = #{usageRegistrationCertificate},</if>
+            <if test="usageRegistrationCertificate != null">usage_registration_certificate =
+                #{usageRegistrationCertificate},
+            </if>
             <if test="remarks != null">remarks = #{remarks},</if>
             <if test="createdBy != null">created_by = #{createdBy},</if>
             <if test="createdTime != null">created_time = #{createdTime},</if>
@@ -150,11 +185,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteEquipPressureVesselById" parameterType="Long">
-        delete from equip_pressure_vessel where id = #{id}
+        delete
+        from equip_pressure_vessel
+        where id = #{id}
     </delete>
 
     <delete id="deleteEquipPressureVesselByIds" parameterType="String">
-        delete from equip_pressure_vessel where id in 
+        delete from equip_pressure_vessel where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

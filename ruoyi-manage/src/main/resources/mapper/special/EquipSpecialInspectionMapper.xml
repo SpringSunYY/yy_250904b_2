@@ -1,50 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.special.mapper.EquipSpecialInspectionMapper">
-    
+
     <resultMap type="EquipSpecialInspection" id="EquipSpecialInspectionResult">
-        <result property="id"    column="id"    />
-        <result property="equipmentName"    column="equipment_name"    />
-        <result property="equipmentType"    column="equipment_type"    />
-        <result property="inspectionType"    column="inspection_type"    />
-        <result property="userUnit"    column="user_unit"    />
-        <result property="manager"    column="manager"    />
-        <result property="contactPhone"    column="contact_phone"    />
-        <result property="verificationDate"    column="verification_date"    />
-        <result property="inspectionCycle"    column="inspection_cycle"    />
-        <result property="nextInspectionDate"    column="next_inspection_date"    />
-        <result property="inspectionConclusion"    column="inspection_conclusion"    />
-        <result property="inspectionAgency"    column="inspection_agency"    />
-        <result property="reportNo"    column="report_no"    />
-        <result property="reportText"    column="report_text"    />
-        <result property="remarks"    column="remarks"    />
-        <result property="createdBy"    column="created_by"    />
-        <result property="createdTime"    column="created_time"    />
-        <result property="updatedBy"    column="updated_by"    />
-        <result property="updatedTime"    column="updated_time"    />
+        <result property="id" column="id"/>
+        <result property="equipmentName" column="equipment_name"/>
+        <result property="equipmentType" column="equipment_type"/>
+        <result property="inspectionType" column="inspection_type"/>
+        <result property="userUnit" column="user_unit"/>
+        <result property="manager" column="manager"/>
+        <result property="contactPhone" column="contact_phone"/>
+        <result property="verificationDate" column="verification_date"/>
+        <result property="inspectionCycle" column="inspection_cycle"/>
+        <result property="nextInspectionDate" column="next_inspection_date"/>
+        <result property="inspectionConclusion" column="inspection_conclusion"/>
+        <result property="inspectionAgency" column="inspection_agency"/>
+        <result property="reportNo" column="report_no"/>
+        <result property="reportText" column="report_text"/>
+        <result property="remarks" column="remarks"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updatedTime" column="updated_time"/>
     </resultMap>
 
     <sql id="selectEquipSpecialInspectionVo">
-        select id, equipment_name, equipment_type, inspection_type, user_unit, manager, contact_phone, verification_date, inspection_cycle, next_inspection_date, inspection_conclusion, inspection_agency, report_no, report_text, remarks, created_by, created_time, updated_by, updated_time from equip_special_inspection
+        select id,
+               equipment_name,
+               equipment_type,
+               inspection_type,
+               user_unit,
+               manager,
+               contact_phone,
+               verification_date,
+               inspection_cycle,
+               next_inspection_date,
+               inspection_conclusion,
+               inspection_agency,
+               report_no,
+               report_text,
+               remarks,
+               created_by,
+               created_time,
+               updated_by,
+               updated_time
+        from equip_special_inspection
     </sql>
 
-    <select id="selectEquipSpecialInspectionList" parameterType="EquipSpecialInspection" resultMap="EquipSpecialInspectionResult">
+    <select id="selectEquipSpecialInspectionList" parameterType="EquipSpecialInspection"
+            resultMap="EquipSpecialInspectionResult">
         <include refid="selectEquipSpecialInspectionVo"/>
-        <where>  
-            <if test="equipmentName != null  and equipmentName != ''"> and equipment_name like concat('%', #{equipmentName}, '%')</if>
-            <if test="equipmentType != null  and equipmentType != ''"> and equipment_type = #{equipmentType}</if>
-            <if test="inspectionType != null  and inspectionType != ''"> and inspection_type = #{inspectionType}</if>
+        <where>
+            <if test="equipmentName != null  and equipmentName != ''">and equipment_name like concat('%',
+                #{equipmentName}, '%')
+            </if>
+            <if test="equipmentType != null  and equipmentType != ''">and equipment_type = #{equipmentType}</if>
+            <if test="inspectionType != null  and inspectionType != ''">and inspection_type = #{inspectionType}</if>
         </where>
     </select>
-    
+
     <select id="selectEquipSpecialInspectionById" parameterType="Long" resultMap="EquipSpecialInspectionResult">
         <include refid="selectEquipSpecialInspectionVo"/>
         where id = #{id}
     </select>
 
-    <insert id="insertEquipSpecialInspection" parameterType="EquipSpecialInspection" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertEquipSpecialInspection" parameterType="EquipSpecialInspection" useGeneratedKeys="true"
+            keyProperty="id">
         insert into equip_special_inspection
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="equipmentName != null">equipment_name,</if>
@@ -65,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createdTime != null">created_time,</if>
             <if test="updatedBy != null">updated_by,</if>
             <if test="updatedTime != null">updated_time,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="equipmentName != null">#{equipmentName},</if>
             <if test="equipmentType != null">#{equipmentType},</if>
@@ -85,7 +108,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createdTime != null">#{createdTime},</if>
             <if test="updatedBy != null">#{updatedBy},</if>
             <if test="updatedTime != null">#{updatedTime},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateEquipSpecialInspection" parameterType="EquipSpecialInspection">
@@ -114,11 +137,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteEquipSpecialInspectionById" parameterType="Long">
-        delete from equip_special_inspection where id = #{id}
+        delete
+        from equip_special_inspection
+        where id = #{id}
     </delete>
 
     <delete id="deleteEquipSpecialInspectionByIds" parameterType="String">
-        delete from equip_special_inspection where id in 
+        delete from equip_special_inspection where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
