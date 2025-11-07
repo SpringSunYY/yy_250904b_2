@@ -179,17 +179,17 @@
       <el-table-column label="审核意见" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
                        prop="auditContent"
       />
-<!--      <el-table-column label="流程状态" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"-->
-<!--                       prop="processStatus"-->
-<!--      />-->
-<!--      <el-table-column label="流程实例ID" align="center" v-if="columns[17].visible" prop="processInstanceId">-->
-<!--        <template slot-scope="scope">-->
-<!--          <dict-tag :options="dict.type.sys_process_category" :value="scope.row.processInstanceId"/>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-<!--      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"-->
-<!--                       prop="deployId"-->
-<!--      />-->
+      <!--      <el-table-column label="流程状态" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"-->
+      <!--                       prop="processStatus"-->
+      <!--      />-->
+      <!--      <el-table-column label="流程实例ID" align="center" v-if="columns[17].visible" prop="processInstanceId">-->
+      <!--        <template slot-scope="scope">-->
+      <!--          <dict-tag :options="dict.type.sys_process_category" :value="scope.row.processInstanceId"/>-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
+      <!--      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"-->
+      <!--                       prop="deployId"-->
+      <!--      />-->
       <el-table-column label="状态" align="center" v-if="columns[18].visible" prop="orderStatus">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_repair_sratus" :value="scope.row.orderStatus"/>
@@ -207,6 +207,13 @@
             @click="handleUpdate(scope.row)"
             v-hasPermi="['pur:order:edit']"
           >修改
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-view"
+            @click="handleView(scope.row)"
+          >查看
           </el-button>
           <!--          <el-button
                       size="mini"
@@ -240,10 +247,10 @@
     <el-dialog :title="title" :visible.sync="open" width="1000px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="设备名称" prop="equipName">
-          <el-input v-model="form.equipName" placeholder="请输入设备名称"/>
+          <el-input :readonly="!isEdit" v-model="form.equipName" placeholder="请输入设备名称"/>
         </el-form-item>
         <el-form-item label="供应商" prop="supplierId">
-          <el-select v-model="form.supplierId" placeholder="请选择供应商" @change="handleSupplierChange">
+          <el-select :disabled="!isEdit" v-model="form.supplierId" placeholder="请选择供应商" @change="handleSupplierChange">
             <el-option
               v-for="item in supplierList"
               :key="item.supplierId"
@@ -253,7 +260,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="申请部门" prop="deptId">
-          <el-select v-model="form.deptId" placeholder="请选择申请部门" @change="handleDeptChange">
+          <el-select :disabled="!isEdit" v-model="form.deptId" placeholder="请选择申请部门" @change="handleDeptChange">
             <el-option
               v-for="item in deptList"
               :key="item.deptId"
@@ -263,7 +270,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="申请人" prop="applyUserId">
-          <el-select v-model="form.applyUserId" placeholder="请选择申请人" @change="handleApplyUserChange">
+          <el-select :disabled="!isEdit" v-model="form.applyUserId" placeholder="请选择申请人" @change="handleApplyUserChange">
             <el-option
               v-for="item in userList"
               :key="item.userId"
@@ -274,6 +281,7 @@
         </el-form-item>
         <el-form-item label="申请时间" prop="applyTime">
           <el-date-picker clearable
+                          :readonly="!isEdit"
                           v-model="form.applyTime"
                           type="date"
                           value-format="yyyy-MM-dd"
@@ -283,6 +291,7 @@
         </el-form-item>
         <el-form-item label="预计到货时间" prop="arriveTime">
           <el-date-picker clearable
+                          :readonly="!isEdit"
                           v-model="form.arriveTime"
                           type="date"
                           value-format="yyyy-MM-dd"
@@ -291,19 +300,19 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="预算单价" prop="unitAmount">
-          <el-input-number :min="0" :precision="2" v-model="form.unitAmount" placeholder="请输入预算单价"/>
+          <el-input-number :disabled="!isEdit" :min="0" :precision="2" v-model="form.unitAmount" placeholder="请输入预算单价"/>
         </el-form-item>
         <el-form-item label="预算金额" prop="budgetAmount">
-          <el-input-number :min="0" :precision="2" v-model="form.budgetAmount" placeholder="请输入预算金额"/>
+          <el-input-number :disabled="!isEdit" :min="0" :precision="2" v-model="form.budgetAmount" placeholder="请输入预算金额"/>
         </el-form-item>
         <el-form-item label="采购原因" prop="purchasingReason">
-          <el-input v-model="form.purchasingReason" type="textarea" placeholder="请输入内容"/>
+          <el-input :readonly="!isEdit" v-model="form.purchasingReason" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
         <el-form-item label="相关附件" prop="appendix">
           <file-upload v-model="form.appendix"/>
         </el-form-item>
         <el-form-item label="审核人" prop="auditUserId">
-          <el-select v-model="form.auditUserId" placeholder="请选择审核人">
+          <el-select :disabled="!isEdit" v-model="form.auditUserId" placeholder="请选择审核人">
             <el-option
               v-for="item in auditUserList"
               :key="item.userId"
@@ -315,6 +324,7 @@
         <el-form-item label="审核时间" prop="auditTime">
           <el-date-picker clearable
                           v-model="form.auditTime"
+                          :readonly="!isEdit"
                           type="date"
                           value-format="yyyy-MM-dd"
                           placeholder="请选择审核时间"
@@ -322,7 +332,7 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="审核意见">
-          <el-input type="textarea" v-model="form.auditContent" :min-height="192"/>
+          <el-input :readonly="!isEdit" type="textarea" v-model="form.auditContent" :min-height="192"/>
         </el-form-item>
         <!--        <el-form-item label="流程实例" prop="processInstanceId">-->
         <!--          <el-select v-model="form.processInstanceId" placeholder="请选择流程实例">-->
@@ -335,7 +345,7 @@
         <!--          </el-select>-->
         <!--        </el-form-item>-->
         <el-divider content-position="center">设备采购订单明细信息</el-divider>
-        <el-row :gutter="10" class="mb8">
+        <el-row :gutter="10" class="mb8" v-if="isEdit">
           <el-col :span="1.5">
             <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAddEquipPurchaseOrderItem">添加
             </el-button>
@@ -353,29 +363,29 @@
           <el-table-column label="序号" align="center" prop="index" width="50"/>
           <el-table-column label="设备名称" prop="equipmentName" width="150">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.equipmentName" placeholder="请输入设备名称"/>
+              <el-input :readonly="!isEdit" v-model="scope.row.equipmentName" placeholder="请输入设备名称"/>
             </template>
           </el-table-column>
           <el-table-column label="规格型号" prop="specification" width="150">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.specification" placeholder="请输入规格型号"/>
+              <el-input :readonly="!isEdit" v-model="scope.row.specification" placeholder="请输入规格型号"/>
             </template>
           </el-table-column>
           <el-table-column label="数量" prop="quantity" width="150">
             <template slot-scope="scope">
-              <el-input-number style="width: 100%" :min="0" v-model="scope.row.quantity" placeholder="请输入数量"/>
+              <el-input-number :disabled="!isEdit" style="width: 100%" :min="0" v-model="scope.row.quantity" placeholder="请输入数量"/>
             </template>
           </el-table-column>
           <el-table-column label="单价" prop="unitPrice" width="150">
             <template slot-scope="scope">
-              <el-input-number style="width: 100%" :min="0" :precision="2" v-model="scope.row.unitPrice"
+              <el-input-number :disabled="!isEdit" style="width: 100%" :min="0" :precision="2" v-model="scope.row.unitPrice"
                                placeholder="请输入单价"
               />
             </template>
           </el-table-column>
           <el-table-column label="金额" prop="totalPrice" width="150">
             <template slot-scope="scope">
-              <el-input-number style="width: 100%" :min="0" :precision="2" v-model="scope.row.totalPrice"
+              <el-input-number :disabled="!isEdit" style="width: 100%" :min="0" :precision="2" v-model="scope.row.totalPrice"
                                placeholder="请输入金额"
               />
             </template>
@@ -383,7 +393,7 @@
         </el-table>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="submitForm" v-if="isEdit">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -486,7 +496,8 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {},
+      isEdit: true,
     }
   },
   created() {
@@ -496,7 +507,18 @@ export default {
     this.getAuditUserList()
   },
   methods: {
-    getAuditUserList(){
+    handleView(row) {
+      this.isEdit = false;
+      this.reset()
+      const orderId = row.orderId || this.ids
+      getOrder(orderId).then(response => {
+        this.form = response.data
+        this.equipPurchaseOrderItemList = response.data.equipPurchaseOrderItemList
+        this.open = true
+        this.title = '修改采购订单'
+      })
+    },
+    getAuditUserList() {
       listUser({
         pageNum: 1,
         pageSize: 1000
@@ -636,12 +658,14 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
+      this.isEdit = true;
       this.reset()
       this.open = true
       this.title = '添加采购订单'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+      this.isEdit = true;
       this.reset()
       const orderId = row.orderId || this.ids
       getOrder(orderId).then(response => {
