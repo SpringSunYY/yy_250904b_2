@@ -65,6 +65,15 @@
         <include refid="selectEquipSpecialInspectionVo"/>
         where id = #{id}
     </select>
+    <select id="selectEquipSecialInspectionByNextInspectionDate"
+           resultMap="EquipSpecialInspectionResult">
+        <include refid="selectEquipSpecialInspectionVo"/>
+        <where>
+            <if test="nextInspectionDate != null">
+                and DATE_FORMAT(next_inspection_date, '%Y-%m-%d') = DATE_FORMAT(#{nextInspectionDate}, '%Y-%m-%d')
+            </if>
+        </where>
+    </select>
 
     <insert id="insertEquipSpecialInspection" parameterType="EquipSpecialInspection" useGeneratedKeys="true"
             keyProperty="id">
