@@ -166,30 +166,30 @@
       <el-table-column label="负责人" :show-overflow-tooltip="true" align="center" v-if="columns[14].visible"
                        prop="responsibleName"
       />
-      <el-table-column label="申请部门ID" :show-overflow-tooltip="true" align="center" v-if="columns[15].visible"
-                       prop="deptId"
-      />
-      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"
-                       prop="deptName"
-      />
-      <el-table-column label="申请人ID" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
-                       prop="applyUserId"
-      />
-      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"
-                       prop="applyUserName"
-      />
-      <el-table-column label="任务ID" :show-overflow-tooltip="true" align="center" v-if="columns[19].visible"
-                       prop="taskId"
-      />
-      <el-table-column label="流程实例ID" align="center" v-if="columns[20].visible" prop="processInstanceId">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_process_category" :value="scope.row.processInstanceId"/>
-        </template>
-      </el-table-column>
-      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[21].visible"
-                       prop="deployId"
-      />
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[22].visible"
+<!--      <el-table-column label="申请部门ID" :show-overflow-tooltip="true" align="center" v-if="columns[15].visible"-->
+<!--                       prop="deptId"-->
+<!--      />-->
+<!--      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"-->
+<!--                       prop="deptName"-->
+<!--      />-->
+<!--      <el-table-column label="申请人ID" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"-->
+<!--                       prop="applyUserId"-->
+<!--      />-->
+<!--      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"-->
+<!--                       prop="applyUserName"-->
+<!--      />-->
+<!--      <el-table-column label="任务ID" :show-overflow-tooltip="true" align="center" v-if="columns[19].visible"-->
+<!--                       prop="taskId"-->
+<!--      />-->
+<!--      <el-table-column label="流程实例ID" align="center" v-if="columns[20].visible" prop="processInstanceId">-->
+<!--        <template slot-scope="scope">-->
+<!--          <dict-tag :options="dict.type.sys_process_category" :value="scope.row.processInstanceId"/>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[21].visible"-->
+<!--                       prop="deployId"-->
+<!--      />-->
+      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[15].visible"
                        prop="remark"
       />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
@@ -202,14 +202,14 @@
             v-hasPermi="['lubr:plan:edit']"
           >修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-view"
-            @click="handleProcess(scope.row)"
-            v-hasPermi="['lubr:plan:list']"
-          >查看流程
-          </el-button>
+<!--          <el-button-->
+<!--            size="mini"-->
+<!--            type="text"-->
+<!--            icon="el-icon-view"-->
+<!--            @click="handleProcess(scope.row)"-->
+<!--            v-hasPermi="['lubr:plan:list']"-->
+<!--          >查看流程-->
+<!--          </el-button>-->
           <el-button
             size="mini"
             type="text"
@@ -518,14 +518,14 @@ export default {
         { key: 12, label: '标准数量(L)', visible: true },
         { key: 13, label: '负责人ID', visible: false },
         { key: 14, label: '负责人', visible: true },
-        { key: 15, label: '申请部门ID', visible: false },
-        { key: 16, label: '申请部门', visible: false },
-        { key: 17, label: '申请人ID', visible: false },
-        { key: 18, label: '申请人', visible: false },
-        { key: 19, label: '任务ID', visible: false },
-        { key: 20, label: '流程实例ID', visible: false },
-        { key: 21, label: '流程自定义ID', visible: false },
-        { key: 22, label: '备注', visible: false }
+        // { key: 15, label: '申请部门ID', visible: false },
+        // { key: 16, label: '申请部门', visible: false },
+        // { key: 17, label: '申请人ID', visible: false },
+        // { key: 18, label: '申请人', visible: false },
+        // { key: 19, label: '任务ID', visible: false },
+        // { key: 20, label: '流程实例ID', visible: false },
+        // { key: 21, label: '流程自定义ID', visible: false },
+        { key: 15, label: '备注', visible: false }
       ],
       dialogVisible: false,
       deployId: '',
