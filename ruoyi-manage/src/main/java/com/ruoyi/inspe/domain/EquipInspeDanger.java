@@ -61,12 +61,6 @@ public class EquipInspeDanger extends BaseEntity {
     private String equipCode;
 
     /**
-     * 有无隐患
-     */
-    @Excel(name = "有无隐患")
-    private Long isDanger;
-
-    /**
      * 隐患等级
      */
     @Excel(name = "隐患等级")
@@ -114,12 +108,14 @@ public class EquipInspeDanger extends BaseEntity {
      * 奖励用户
      */
     @Excel(name = "奖励用户")
+    private String awardUserName;
     private Long awardUserId;
 
     /**
      * 奖励部门
      */
     @Excel(name = "奖励部门")
+    private String awardDeptName;
     private Long awardDeptId;
 
     /**
@@ -132,12 +128,14 @@ public class EquipInspeDanger extends BaseEntity {
      * 惩罚用户
      */
     @Excel(name = "惩罚用户")
+    private String punishUserName;
     private Long punishUserId;
 
     /**
      * 惩罚部门
      */
     @Excel(name = "惩罚部门")
+    private String punishDeptName;
     private Long punishDeptId;
 
     /**
@@ -242,14 +240,6 @@ public class EquipInspeDanger extends BaseEntity {
 
     public String getEquipCode() {
         return equipCode;
-    }
-
-    public void setIsDanger(Long isDanger) {
-        this.isDanger = isDanger;
-    }
-
-    public Long getIsDanger() {
-        return isDanger;
     }
 
     public void setDangerLevel(String dangerLevel) {
@@ -412,6 +402,38 @@ public class EquipInspeDanger extends BaseEntity {
         return deployId;
     }
 
+    public String getAwardUserName() {
+        return awardUserName;
+    }
+
+    public void setAwardUserName(String awardUserName) {
+        this.awardUserName = awardUserName;
+    }
+
+    public String getAwardDeptName() {
+        return awardDeptName;
+    }
+
+    public void setAwardDeptName(String awardDeptName) {
+        this.awardDeptName = awardDeptName;
+    }
+
+    public String getPunishUserName() {
+        return punishUserName;
+    }
+
+    public void setPunishUserName(String punishUserName) {
+        this.punishUserName = punishUserName;
+    }
+
+    public String getPunishDeptName() {
+        return punishDeptName;
+    }
+
+    public void setPunishDeptName(String punishDeptName) {
+        this.punishDeptName = punishDeptName;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -422,7 +444,6 @@ public class EquipInspeDanger extends BaseEntity {
                 .append("equipId", getEquipId())
                 .append("equipName", getEquipName())
                 .append("equipCode", getEquipCode())
-                .append("isDanger", getIsDanger())
                 .append("dangerLevel", getDangerLevel())
                 .append("description", getDescription())
                 .append("responId", getResponId())

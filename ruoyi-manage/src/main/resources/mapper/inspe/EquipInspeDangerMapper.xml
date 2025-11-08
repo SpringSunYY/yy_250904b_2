@@ -12,7 +12,6 @@
         <result property="equipId" column="equip_id"/>
         <result property="equipName" column="equip_name"/>
         <result property="equipCode" column="equip_code"/>
-        <result property="isDanger" column="is_danger"/>
         <result property="dangerLevel" column="danger_level"/>
         <result property="description" column="description"/>
         <result property="responId" column="respon_id"/>
@@ -61,7 +60,6 @@
                equip_id,
                equip_name,
                equip_code,
-               is_danger,
                danger_level,
                description,
                respon_id,
@@ -104,7 +102,6 @@
             <if test="equipId != null">equip_id,</if>
             <if test="equipName != null">equip_name,</if>
             <if test="equipCode != null">equip_code,</if>
-            <if test="isDanger != null">is_danger,</if>
             <if test="dangerLevel != null">danger_level,</if>
             <if test="description != null">description,</if>
             <if test="responId != null">respon_id,</if>
@@ -138,7 +135,6 @@
             <if test="equipId != null">#{equipId},</if>
             <if test="equipName != null">#{equipName},</if>
             <if test="equipCode != null">#{equipCode},</if>
-            <if test="isDanger != null">#{isDanger},</if>
             <if test="dangerLevel != null">#{dangerLevel},</if>
             <if test="description != null">#{description},</if>
             <if test="responId != null">#{responId},</if>
@@ -176,7 +172,6 @@
             <if test="equipId != null">equip_id = #{equipId},</if>
             <if test="equipName != null">equip_name = #{equipName},</if>
             <if test="equipCode != null">equip_code = #{equipCode},</if>
-            <if test="isDanger != null">is_danger = #{isDanger},</if>
             <if test="dangerLevel != null">danger_level = #{dangerLevel},</if>
             <if test="description != null">description = #{description},</if>
             <if test="responId != null">respon_id = #{responId},</if>
