@@ -22,13 +22,7 @@
         <result property="handlerId" column="handler_id"/>
         <result property="handlerName" column="handler_name"/>
         <result property="finishTime" column="finish_time"/>
-        <result property="deptId" column="dept_id"/>
-        <result property="deptName" column="dept_name"/>
-        <result property="applyUserId" column="apply_user_id"/>
-        <result property="applyUserName" column="apply_user_name"/>
-        <result property="taskId" column="task_id"/>
-        <result property="processInstanceId" column="process_instance_id"/>
-        <result property="deployId" column="deploy_id"/>
+        <result property="processImage" column="process_image"/>
         <result property="remark" column="remark"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -54,13 +48,7 @@
                handler_id,
                handler_name,
                finish_time,
-               dept_id,
-               dept_name,
-               apply_user_id,
-               apply_user_name,
-               task_id,
-               process_instance_id,
-               deploy_id,
+               process_image,
                remark,
                create_by,
                create_time,
@@ -102,13 +90,7 @@
             <if test="handlerId != null">handler_id,</if>
             <if test="handlerName != null">handler_name,</if>
             <if test="finishTime != null">finish_time,</if>
-            <if test="deptId != null">dept_id,</if>
-            <if test="deptName != null">dept_name,</if>
-            <if test="applyUserId != null">apply_user_id,</if>
-            <if test="applyUserName != null">apply_user_name,</if>
-            <if test="taskId != null">task_id,</if>
-            <if test="processInstanceId != null">process_instance_id,</if>
-            <if test="deployId != null">deploy_id,</if>
+            <if test="processImage != null">process_image,</if>
             <if test="remark != null">remark,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
@@ -132,13 +114,7 @@
             <if test="handlerId != null">#{handlerId},</if>
             <if test="handlerName != null">#{handlerName},</if>
             <if test="finishTime != null">#{finishTime},</if>
-            <if test="deptId != null">#{deptId},</if>
-            <if test="deptName != null">#{deptName},</if>
-            <if test="applyUserId != null">#{applyUserId},</if>
-            <if test="applyUserName != null">#{applyUserName},</if>
-            <if test="taskId != null">#{taskId},</if>
-            <if test="processInstanceId != null">#{processInstanceId},</if>
-            <if test="deployId != null">#{deployId},</if>
+            <if test="processImage != null">#{processImage},</if>
             <if test="remark != null">#{remark},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
@@ -166,13 +142,7 @@
             <if test="handlerId != null">handler_id = #{handlerId},</if>
             <if test="handlerName != null">handler_name = #{handlerName},</if>
             <if test="finishTime != null">finish_time = #{finishTime},</if>
-            <if test="deptId != null">dept_id = #{deptId},</if>
-            <if test="deptName != null">dept_name = #{deptName},</if>
-            <if test="applyUserId != null">apply_user_id = #{applyUserId},</if>
-            <if test="applyUserName != null">apply_user_name = #{applyUserName},</if>
-            <if test="taskId != null">task_id = #{taskId},</if>
-            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
-            <if test="deployId != null">deploy_id = #{deployId},</if>
+            <if test="processImage != null">process_image = #{processImage},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>

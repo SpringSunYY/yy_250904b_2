@@ -130,26 +130,12 @@
           <span>{{ parseTime(scope.row.finishTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="申请部门ID" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
-                       prop="deptId"
-      />
-      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"
-                       prop="deptName"
-      />
-      <el-table-column label="申请人ID" :show-overflow-tooltip="true" align="center" v-if="columns[19].visible"
-                       prop="applyUserId"
-      />
-      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[20].visible"
-                       prop="applyUserName"
-      />
-      <el-table-column label="任务ID" :show-overflow-tooltip="true" align="center" v-if="columns[21].visible"
-                       prop="taskId"
-      />
-      <el-table-column label="流程实例ID" align="center" v-if="columns[22].visible" prop="processInstanceId"/>
-      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[23].visible"
-                       prop="deployId"
-      />
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[24].visible"
+      <el-table-column label="处理后照片" align="center" v-if="columns[17].visible" prop="processImage" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.processImage" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"
                        prop="remark"
       />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
@@ -162,14 +148,14 @@
             v-hasPermi="['seal:management:edit']"
           >修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-view"
-            @click="handleProcess(scope.row)"
-            v-hasPermi="['seal:management:list']"
-          >查看流程
-          </el-button>
+          <!--          <el-button-->
+          <!--            size="mini"-->
+          <!--            type="text"-->
+          <!--            icon="el-icon-view"-->
+          <!--            @click="handleProcess(scope.row)"-->
+          <!--            v-hasPermi="['seal:management:list']"-->
+          <!--          >查看流程-->
+          <!--          </el-button>-->
           <el-button
             size="mini"
             type="text"
@@ -275,6 +261,18 @@
         <el-form-item label="现场照片" prop="appendix">
           <file-upload v-model="form.appendix" :limit="10" :file-type="['png', 'jpg', 'jpeg']"/>
         </el-form-item>
+        <el-form-item label="处理人" prop="handlerId">
+          <el-select v-model="form.handlerId" placeholder="请选择处理人"
+          >
+            <el-option
+              v-for="user in handleUserList"
+              :key="user.userId"
+              :label="user.userName"
+              :value="user.userId"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="处理措施" prop="handlingMeasures">
           <el-input v-model="form.handlingMeasures" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
@@ -286,6 +284,9 @@
                           placeholder="请选择完成时间"
           >
           </el-date-picker>
+        </el-form-item>
+        <el-form-item label="处理后照片" prop="processImage">
+          <image-upload v-model="form.processImage"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -368,11 +369,11 @@
         <el-button @click="equipSelectorOpen = false">关 闭</el-button>
       </div>
     </el-dialog>
-    <TaskDetail :visible.sync="dialogVisible"
-                :task-id="taskId"
-                :proc-ins-id="procInsId"
-                :deploy-id="deployId"
-    />
+    <!--    <TaskDetail :visible.sync="dialogVisible"-->
+    <!--                :task-id="taskId"-->
+    <!--                :proc-ins-id="procInsId"-->
+    <!--                :deploy-id="deployId"-->
+    <!--    />-->
   </div>
 </template>
 
@@ -407,14 +408,8 @@ export default {
         { key: 14, label: '处理人id', visible: false },
         { key: 15, label: '处理人', visible: true },
         { key: 16, label: '完成时间', visible: true },
-        { key: 17, label: '申请部门ID', visible: false },
-        { key: 18, label: '申请部门', visible: false },
-        { key: 19, label: '申请人ID', visible: false },
-        { key: 20, label: '申请人', visible: false },
-        { key: 21, label: '任务ID', visible: false },
-        { key: 22, label: '流程实例ID', visible: false },
-        { key: 23, label: '流程自定义ID', visible: false },
-        { key: 24, label: '备注', visible: false }
+        { key: 17, label: '处理后照片', visible: true },
+        { key: 18, label: '备注', visible: false }
       ],
       dialogVisible: false,
       deployId: '',
@@ -480,6 +475,13 @@ export default {
         pageSize: 100,
         userName: undefined,
         nickName: undefined
+      },
+      //处理人
+      handleUserList: [],
+      handlerUserQuery: {
+        pageNum: 1,
+        pageSize: 1000,
+        nickName: undefined
       }
     }
   },
@@ -487,8 +489,15 @@ export default {
     this.getList()
     this.getEquipList()
     this.getUserList()
+    this.getHandleUserList()
   },
   methods: {
+    //处理人
+    getHandleUserList() {
+      listUser(this.handleUserList).then(response => {
+        this.handleUserList = response.rows
+      })
+    },
     /** 查看流程**/
     handleProcess(row) {
       if (!row.processInstanceId || !row.deployId || !row.taskId) {
@@ -577,6 +586,9 @@ export default {
       const manageId = row.manageId || this.ids
       getManagement(manageId).then(response => {
         this.form = response.data
+        if (this.form.handlerId) {
+          this.form.handlerId = Number(this.form.handlerId)
+        }
         this.open = true
         this.title = '修改泄露处置'
       })

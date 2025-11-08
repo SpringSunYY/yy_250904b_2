@@ -12,7 +12,7 @@ import java.util.Date;
  * 泄露处置对象 equip_seal_management
  *
  * @author laogao
- * @date 2025-10-24
+ * @date 2025-11-08
  */
 public class EquipSealManagement extends BaseEntity {
     private static final long serialVersionUID = 1L;
@@ -122,46 +122,10 @@ public class EquipSealManagement extends BaseEntity {
     private Date finishTime;
 
     /**
-     * 申请部门ID
+     * 处理后照片
      */
-    @Excel(name = "申请部门ID")
-    private Long deptId;
-
-    /**
-     * 申请部门
-     */
-    @Excel(name = "申请部门")
-    private String deptName;
-
-    /**
-     * 申请人ID
-     */
-    @Excel(name = "申请人ID")
-    private Long applyUserId;
-
-    /**
-     * 申请人
-     */
-    @Excel(name = "申请人")
-    private String applyUserName;
-
-    /**
-     * 任务ID
-     */
-    @Excel(name = "任务ID")
-    private String taskId;
-
-    /**
-     * 流程实例ID
-     */
-    @Excel(name = "流程实例ID")
-    private String processInstanceId;
-
-    /**
-     * 流程自定义ID
-     */
-    @Excel(name = "流程自定义ID")
-    private String deployId;
+    @Excel(name = "处理后照片")
+    private String processImage;
 
     public void setManageId(Long manageId) {
         this.manageId = manageId;
@@ -299,60 +263,12 @@ public class EquipSealManagement extends BaseEntity {
         return finishTime;
     }
 
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
+    public void setProcessImage(String processImage) {
+        this.processImage = processImage;
     }
 
-    public Long getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setApplyUserId(Long applyUserId) {
-        this.applyUserId = applyUserId;
-    }
-
-    public Long getApplyUserId() {
-        return applyUserId;
-    }
-
-    public void setApplyUserName(String applyUserName) {
-        this.applyUserName = applyUserName;
-    }
-
-    public String getApplyUserName() {
-        return applyUserName;
-    }
-
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-
-    public String getTaskId() {
-        return taskId;
-    }
-
-    public void setProcessInstanceId(String processInstanceId) {
-        this.processInstanceId = processInstanceId;
-    }
-
-    public String getProcessInstanceId() {
-        return processInstanceId;
-    }
-
-    public void setDeployId(String deployId) {
-        this.deployId = deployId;
-    }
-
-    public String getDeployId() {
-        return deployId;
+    public String getProcessImage() {
+        return processImage;
     }
 
     @Override
@@ -375,13 +291,7 @@ public class EquipSealManagement extends BaseEntity {
                 .append("handlerId", getHandlerId())
                 .append("handlerName", getHandlerName())
                 .append("finishTime", getFinishTime())
-                .append("deptId", getDeptId())
-                .append("deptName", getDeptName())
-                .append("applyUserId", getApplyUserId())
-                .append("applyUserName", getApplyUserName())
-                .append("taskId", getTaskId())
-                .append("processInstanceId", getProcessInstanceId())
-                .append("deployId", getDeployId())
+                .append("processImage", getProcessImage())
                 .append("remark", getRemark())
                 .append("createBy", getCreateBy())
                 .append("createTime", getCreateTime())

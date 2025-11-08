@@ -61,6 +61,12 @@ public class EquipSealManagementServiceImpl implements IEquipSealManagementServi
      */
     @Override
     public int insertEquipSealManagement(EquipSealManagement equipSealManagement) {
+        initDate(equipSealManagement);
+        equipSealManagement.setCreateTime(DateUtils.getNowDate());
+        return equipSealManagementMapper.insertEquipSealManagement(equipSealManagement);
+    }
+
+    private void initDate(EquipSealManagement equipSealManagement) {
         //如果有设备
         if (StringUtils.isNotNull(equipSealManagement.getEquipId())) {
             EquipLedger equipLedger = equipLedgerMapper.selectEquipLedgerByEquipId(equipSealManagement.getEquipId());
@@ -77,8 +83,13 @@ public class EquipSealManagementServiceImpl implements IEquipSealManagementServi
                 equipSealManagement.setReporterName(sysUser.getUserName());
             }
         }
-        equipSealManagement.setCreateTime(DateUtils.getNowDate());
-        return equipSealManagementMapper.insertEquipSealManagement(equipSealManagement);
+        //如果有处理人
+        if (StringUtils.isNotEmpty(equipSealManagement.getHandlerId())) {
+            SysUser sysUser = sysUserService.selectUserById(Long.parseLong(equipSealManagement.getHandlerId()));
+            if (StringUtils.isNotNull(sysUser)) {
+                equipSealManagement.setHandlerName(sysUser.getUserName());
+            }
+        }
     }
 
     /**
@@ -89,6 +100,7 @@ public class EquipSealManagementServiceImpl implements IEquipSealManagementServi
      */
     @Override
     public int updateEquipSealManagement(EquipSealManagement equipSealManagement) {
+        initDate(equipSealManagement);
         equipSealManagement.setUpdateTime(DateUtils.getNowDate());
         return equipSealManagementMapper.updateEquipSealManagement(equipSealManagement);
     }
