@@ -1,45 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.anticorrosion.mapper.EquipAnticorrosionMapper">
-    
+
     <resultMap type="EquipAnticorrosion" id="EquipAnticorrosionResult">
-        <result property="id"    column="id"    />
-        <result property="recordNo"    column="record_no"    />
-        <result property="equipmentId"    column="equipment_id"    />
-        <result property="equipmentName"    column="equipment_name"    />
-        <result property="equipmentCode"    column="equipment_code"    />
-        <result property="equipLevels"    column="equip_levels"    />
-        <result property="inspectionDate"    column="inspection_date"    />
-        <result property="inspectionId"    column="inspection_id"    />
-        <result property="inspectionDept"    column="inspection_dept"    />
-        <result property="inspectorId"    column="inspector_id"    />
-        <result property="inspector"    column="inspector"    />
-        <result property="point1Thickness"    column="point1_thickness"    />
-        <result property="point2Thickness"    column="point2_thickness"    />
-        <result property="point3Thickness"    column="point3_thickness"    />
-        <result property="remark"    column="remark"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateTime"    column="update_time"    />
+        <result property="id" column="id"/>
+        <result property="recordNo" column="record_no"/>
+        <result property="equipmentId" column="equipment_id"/>
+        <result property="equipmentName" column="equipment_name"/>
+        <result property="equipmentCode" column="equipment_code"/>
+        <result property="equipLevels" column="equip_levels"/>
+        <result property="inspectionDate" column="inspection_date"/>
+        <result property="inspectionId" column="inspection_id"/>
+        <result property="inspectionDept" column="inspection_dept"/>
+        <result property="inspectorId" column="inspector_id"/>
+        <result property="inspector" column="inspector"/>
+        <result property="point1Thickness" column="point1_thickness"/>
+        <result property="point2Thickness" column="point2_thickness"/>
+        <result property="point3Thickness" column="point3_thickness"/>
+        <result property="corrosionRate" column="corrosion_rate"/>
+        <result property="corrosionAssessment" column="corrosion_assessment"/>
+        <result property="remainingUsefulLife" column="remaining_useful_life"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
+
     <sql id="selectEquipAnticorrosionVo">
-        select id, record_no, equipment_id, equipment_name, equipment_code, equip_levels, inspection_date, inspection_id, inspection_dept, inspector_id, inspector, point1_thickness, point2_thickness, point3_thickness, remark, create_by, create_time, update_by, update_time from equip_anticorrosion
+        select id,
+               record_no,
+               equipment_id,
+               equipment_name,
+               equipment_code,
+               equip_levels,
+               inspection_date,
+               inspection_id,
+               inspection_dept,
+               inspector_id,
+               inspector,
+               point1_thickness,
+               point2_thickness,
+               point3_thickness,
+               corrosion_rate,
+               corrosion_assessment,
+               remaining_useful_life,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_anticorrosion
     </sql>
 
     <select id="selectEquipAnticorrosionList" parameterType="EquipAnticorrosion" resultMap="EquipAnticorrosionResult">
         <include refid="selectEquipAnticorrosionVo"/>
-        <where>  
-            <if test="equipmentName != null  and equipmentName != ''"> and equipment_name like concat('%', #{equipmentName}, '%')</if>
-            <if test="equipLevels != null "> and equip_levels = #{equipLevels}</if>
-            <if test="inspectionDept != null  and inspectionDept != ''"> and inspection_dept = #{inspectionDept}</if>
-            <if test="inspector != null  and inspector != ''"> and inspector = #{inspector}</if>
+        <where>
+            <if test="equipmentName != null  and equipmentName != ''">and equipment_name like concat('%',
+                #{equipmentName}, '%')
+            </if>
+            <if test="equipLevels != null ">and equip_levels = #{equipLevels}</if>
+            <if test="inspectionDept != null  and inspectionDept != ''">and inspection_dept = #{inspectionDept}</if>
+            <if test="inspector != null  and inspector != ''">and inspector = #{inspector}</if>
         </where>
     </select>
-    
+
     <select id="selectEquipAnticorrosionById" parameterType="Long" resultMap="EquipAnticorrosionResult">
         <include refid="selectEquipAnticorrosionVo"/>
         where id = #{id}
@@ -61,12 +89,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="point1Thickness != null">point1_thickness,</if>
             <if test="point2Thickness != null">point2_thickness,</if>
             <if test="point3Thickness != null">point3_thickness,</if>
+            <if test="corrosionRate != null">corrosion_rate,</if>
+            <if test="corrosionAssessment != null">corrosion_assessment,</if>
+            <if test="remainingUsefulLife != null">remaining_useful_life,</if>
             <if test="remark != null">remark,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="recordNo != null">#{recordNo},</if>
             <if test="equipmentId != null">#{equipmentId},</if>
@@ -81,12 +112,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="point1Thickness != null">#{point1Thickness},</if>
             <if test="point2Thickness != null">#{point2Thickness},</if>
             <if test="point3Thickness != null">#{point3Thickness},</if>
+            <if test="corrosionRate != null">#{corrosionRate},</if>
+            <if test="corrosionAssessment != null">#{corrosionAssessment},</if>
+            <if test="remainingUsefulLife != null">#{remainingUsefulLife},</if>
             <if test="remark != null">#{remark},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateEquipAnticorrosion" parameterType="EquipAnticorrosion">
@@ -105,6 +139,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="point1Thickness != null">point1_thickness = #{point1Thickness},</if>
             <if test="point2Thickness != null">point2_thickness = #{point2Thickness},</if>
             <if test="point3Thickness != null">point3_thickness = #{point3Thickness},</if>
+            <if test="corrosionRate != null">corrosion_rate = #{corrosionRate},</if>
+            <if test="corrosionAssessment != null">corrosion_assessment = #{corrosionAssessment},</if>
+            <if test="remainingUsefulLife != null">remaining_useful_life = #{remainingUsefulLife},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
@@ -114,12 +151,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
+
     <delete id="deleteEquipAnticorrosionById" parameterType="Long">
-        delete from equip_anticorrosion where id = #{id}
+        delete
+        from equip_anticorrosion
+        where id = #{id}
     </delete>
 
     <delete id="deleteEquipAnticorrosionByIds" parameterType="String">
-        delete from equip_anticorrosion where id in 
+        delete from equip_anticorrosion where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
