@@ -14,6 +14,7 @@
         <result property="equipCode" column="equip_code"/>
         <result property="dangerLevel" column="danger_level"/>
         <result property="description" column="description"/>
+        <result property="appendix" column="appendix"/>
         <result property="responId" column="respon_id"/>
         <result property="responName" column="respon_name"/>
         <result property="deadline" column="deadline"/>
@@ -62,6 +63,7 @@
                equip_code,
                danger_level,
                description,
+               appendix,
                respon_id,
                respon_name,
                deadline,
@@ -104,6 +106,7 @@
             <if test="equipCode != null">equip_code,</if>
             <if test="dangerLevel != null">danger_level,</if>
             <if test="description != null">description,</if>
+            <if test="appendix != null">appendix,</if>
             <if test="responId != null">respon_id,</if>
             <if test="responName != null">respon_name,</if>
             <if test="deadline != null">deadline,</if>
@@ -137,6 +140,7 @@
             <if test="equipCode != null">#{equipCode},</if>
             <if test="dangerLevel != null">#{dangerLevel},</if>
             <if test="description != null">#{description},</if>
+            <if test="appendix != null">#{appendix},</if>
             <if test="responId != null">#{responId},</if>
             <if test="responName != null">#{responName},</if>
             <if test="deadline != null">#{deadline},</if>
@@ -174,6 +178,7 @@
             <if test="equipCode != null">equip_code = #{equipCode},</if>
             <if test="dangerLevel != null">danger_level = #{dangerLevel},</if>
             <if test="description != null">description = #{description},</if>
+            <if test="appendix != null">appendix = #{appendix},</if>
             <if test="responId != null">respon_id = #{responId},</if>
             <if test="responName != null">respon_name = #{responName},</if>
             <if test="deadline != null">deadline = #{deadline},</if>

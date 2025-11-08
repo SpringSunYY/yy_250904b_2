@@ -72,6 +72,13 @@ public class EquipInspeDanger extends BaseEntity {
     @Excel(name = "隐患描述")
     private String description;
 
+
+    /**
+     * 隐患照片
+     */
+    @Excel(name = "隐患照片")
+    private String appendix;
+
     /**
      * 责任人ID
      */
@@ -432,6 +439,14 @@ public class EquipInspeDanger extends BaseEntity {
 
     public void setPunishDeptName(String punishDeptName) {
         this.punishDeptName = punishDeptName;
+    }
+
+    public String getAppendix() {
+        return appendix;
+    }
+
+    public void setAppendix(String appendix) {
+        this.appendix = appendix;
     }
 
     @Override

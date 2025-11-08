@@ -104,65 +104,70 @@
       <el-table-column label="隐患描述" :show-overflow-tooltip="true" align="center" v-if="columns[8].visible"
                        prop="description"
       />
-      <el-table-column label="责任人ID" align="center" v-if="columns[9].visible" prop="responId"/>
-      <el-table-column label="责任人" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
+      <el-table-column label="隐患照片" align="center" v-if="columns[9].visible" prop="appendix" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.appendix" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="责任人ID" align="center" v-if="columns[10].visible" prop="responId"/>
+      <el-table-column label="责任人" :show-overflow-tooltip="true" align="center" v-if="columns[11].visible"
                        prop="responName"
       />
-      <el-table-column label="整改期限" align="center" v-if="columns[11].visible" prop="deadline" width="180">
+      <el-table-column label="整改期限" align="center" v-if="columns[12].visible" prop="deadline" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.deadline, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="验收时间" align="center" v-if="columns[12].visible" prop="approvalTime" width="180">
+      <el-table-column label="验收时间" align="center" v-if="columns[13].visible" prop="approvalTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.approvalTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="验收结果" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
+      <el-table-column label="验收结果" :show-overflow-tooltip="true" align="center" v-if="columns[14].visible"
                        prop="approvalResult"
       />
-      <el-table-column label="奖励用户" :show-overflow-tooltip="true" align="center" v-if="columns[14].visible"
+      <el-table-column label="奖励用户" :show-overflow-tooltip="true" align="center" v-if="columns[15].visible"
                        prop="awardUserName"
       />
-      <el-table-column label="奖励部门" :show-overflow-tooltip="true" align="center" v-if="columns[15].visible"
+      <el-table-column label="奖励部门" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"
                        prop="awardDeptName"
       />
-      <el-table-column label="奖励金额" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"
+      <el-table-column label="奖励金额" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
                        prop="awardAmount"
       />
-      <el-table-column label="惩罚用户" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
+      <el-table-column label="惩罚用户" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"
                        prop="punishUserName"
       />
-      <el-table-column label="惩罚部门" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"
+      <el-table-column label="惩罚部门" :show-overflow-tooltip="true" align="center" v-if="columns[19].visible"
                        prop="punishDeptName"
       />
-      <el-table-column label="惩罚金额" :show-overflow-tooltip="true" align="center" v-if="columns[19].visible"
+      <el-table-column label="惩罚金额" :show-overflow-tooltip="true" align="center" v-if="columns[20].visible"
                        prop="punishAmount"
       />
-      <el-table-column label="申请部门ID" :show-overflow-tooltip="true" align="center" v-if="columns[20].visible"
+      <el-table-column label="申请部门ID" :show-overflow-tooltip="true" align="center" v-if="columns[21].visible"
                        prop="deptId"
       />
-      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[21].visible"
+      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[22].visible"
                        prop="deptName"
       />
-      <el-table-column label="申请人ID" :show-overflow-tooltip="true" align="center" v-if="columns[22].visible"
+      <el-table-column label="申请人ID" :show-overflow-tooltip="true" align="center" v-if="columns[23].visible"
                        prop="applyUserId"
       />
-      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[23].visible"
+      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[24].visible"
                        prop="applyUserName"
       />
-      <el-table-column label="任务ID" :show-overflow-tooltip="true" align="center" v-if="columns[24].visible"
+      <el-table-column label="任务ID" :show-overflow-tooltip="true" align="center" v-if="columns[25].visible"
                        prop="taskId"
       />
-      <el-table-column label="流程实例ID" align="center" v-if="columns[25].visible" prop="processInstanceId">
+      <el-table-column label="流程实例ID" align="center" v-if="columns[26].visible" prop="processInstanceId">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_process_category" :value="scope.row.processInstanceId"/>
         </template>
       </el-table-column>
-      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[26].visible"
+      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[27].visible"
                        prop="deployId"
       />
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[27].visible"
+      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[28].visible"
                        prop="remark"
       />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
@@ -267,6 +272,9 @@
         <!--        </el-form-item>-->
         <el-form-item label="隐患描述" prop="description">
           <el-input v-model="form.description" type="textarea" placeholder="请输入内容"/>
+        </el-form-item>
+        <el-form-item label="隐患照片" prop="appendix">
+          <image-upload v-model="form.appendix"/>
         </el-form-item>
         <el-form-item label="责任人" prop="responId">
           <el-select
@@ -457,25 +465,26 @@ export default {
         // { key: 7, label: '有无隐患', visible: true },
         { key: 7, label: '隐患等级', visible: true },
         { key: 8, label: '隐患描述', visible: true },
-        { key: 9, label: '责任人ID', visible: false },
-        { key: 10, label: '责任人', visible: true },
-        { key: 11, label: '整改期限', visible: true },
-        { key: 12, label: '验收时间', visible: true },
-        { key: 13, label: '验收结果', visible: true },
-        { key: 14, label: '奖励用户', visible: true },
-        { key: 15, label: '奖励部门', visible: true },
-        { key: 16, label: '奖励金额', visible: true },
-        { key: 17, label: '惩罚用户', visible: true },
-        { key: 18, label: '惩罚部门', visible: true },
-        { key: 19, label: '惩罚金额', visible: true },
-        { key: 20, label: '申请部门ID', visible: false },
-        { key: 21, label: '申请部门', visible: false },
-        { key: 22, label: '申请人ID', visible: false },
-        { key: 23, label: '申请人', visible: false },
-        { key: 24, label: '任务ID', visible: false },
-        { key: 25, label: '流程实例ID', visible: false },
-        { key: 26, label: '流程自定义ID', visible: false },
-        { key: 27, label: '备注', visible: false }
+        { key: 9, label: '隐患照片', visible: true },
+        { key: 10, label: '责任人ID', visible: false },
+        { key: 11, label: '责任人', visible: true },
+        { key: 12, label: '整改期限', visible: true },
+        { key: 13, label: '验收时间', visible: true },
+        { key: 14, label: '验收结果', visible: true },
+        { key: 15, label: '奖励用户', visible: true },
+        { key: 16, label: '奖励部门', visible: true },
+        { key: 17, label: '奖励金额', visible: true },
+        { key: 18, label: '惩罚用户', visible: true },
+        { key: 19, label: '惩罚部门', visible: true },
+        { key: 20, label: '惩罚金额', visible: true },
+        { key: 21, label: '申请部门ID', visible: false },
+        { key: 22, label: '申请部门', visible: false },
+        { key: 23, label: '申请人ID', visible: false },
+        { key: 24, label: '申请人', visible: false },
+        { key: 25, label: '任务ID', visible: false },
+        { key: 26, label: '流程实例ID', visible: false },
+        { key: 27, label: '流程自定义ID', visible: false },
+        { key: 28, label: '备注', visible: false }
       ],
       dialogVisible: false,
       deployId: '',
