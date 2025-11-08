@@ -13,21 +13,17 @@
         <result property="participantsIds" column="participants_ids"/>
         <result property="hasDanger" column="has_danger"/>
         <result property="dangerCoun" column="danger_coun"/>
-        <result property="appendix" column="appendix"/>
         <result property="overallStatus" column="overall_status"/>
-        <result property="deptId" column="dept_id"/>
-        <result property="deptName" column="dept_name"/>
-        <result property="applyUserId" column="apply_user_id"/>
-        <result property="applyUserName" column="apply_user_name"/>
-        <result property="taskId" column="task_id"/>
-        <result property="deployId" column="deploy_id"/>
-        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="processMeasures" column="process_measures"/>
+        <result property="processImage" column="process_image"/>
+        <result property="processUserId" column="process_user_id"/>
         <result property="remark" column="remark"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
+
 
     <sql id="selectEquipInspeVo">
         select inspe_id,
@@ -38,15 +34,10 @@
                participants_ids,
                has_danger,
                danger_coun,
-               appendix,
                overall_status,
-               dept_id,
-               dept_name,
-               apply_user_id,
-               apply_user_name,
-               task_id,
-               deploy_id,
-               process_instance_id,
+               process_measures,
+               process_image,
+               process_user_id,
                remark,
                create_by,
                create_time,
@@ -90,15 +81,10 @@
             <if test="participantsIds != null">participants_ids,</if>
             <if test="hasDanger != null">has_danger,</if>
             <if test="dangerCoun != null">danger_coun,</if>
-            <if test="appendix != null">appendix,</if>
             <if test="overallStatus != null">overall_status,</if>
-            <if test="deptId != null">dept_id,</if>
-            <if test="deptName != null">dept_name,</if>
-            <if test="applyUserId != null">apply_user_id,</if>
-            <if test="applyUserName != null">apply_user_name,</if>
-            <if test="taskId != null">task_id,</if>
-            <if test="deployId != null">deploy_id,</if>
-            <if test="processInstanceId != null">process_instance_id,</if>
+            <if test="processMeasures != null">process_measures,</if>
+            <if test="processImage != null">process_image,</if>
+            <if test="processUserId != null">process_user_id,</if>
             <if test="remark != null">remark,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
@@ -113,15 +99,10 @@
             <if test="participantsIds != null">#{participantsIds},</if>
             <if test="hasDanger != null">#{hasDanger},</if>
             <if test="dangerCoun != null">#{dangerCoun},</if>
-            <if test="appendix != null">#{appendix},</if>
             <if test="overallStatus != null">#{overallStatus},</if>
-            <if test="deptId != null">#{deptId},</if>
-            <if test="deptName != null">#{deptName},</if>
-            <if test="applyUserId != null">#{applyUserId},</if>
-            <if test="applyUserName != null">#{applyUserName},</if>
-            <if test="taskId != null">#{taskId},</if>
-            <if test="deployId != null">#{deployId},</if>
-            <if test="processInstanceId != null">#{processInstanceId},</if>
+            <if test="processMeasures != null">#{processMeasures},</if>
+            <if test="processImage != null">#{processImage},</if>
+            <if test="processUserId != null">#{processUserId},</if>
             <if test="remark != null">#{remark},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
@@ -140,15 +121,10 @@
             <if test="participantsIds != null">participants_ids = #{participantsIds},</if>
             <if test="hasDanger != null">has_danger = #{hasDanger},</if>
             <if test="dangerCoun != null">danger_coun = #{dangerCoun},</if>
-            <if test="appendix != null">appendix = #{appendix},</if>
             <if test="overallStatus != null">overall_status = #{overallStatus},</if>
-            <if test="deptId != null">dept_id = #{deptId},</if>
-            <if test="deptName != null">dept_name = #{deptName},</if>
-            <if test="applyUserId != null">apply_user_id = #{applyUserId},</if>
-            <if test="applyUserName != null">apply_user_name = #{applyUserName},</if>
-            <if test="taskId != null">task_id = #{taskId},</if>
-            <if test="deployId != null">deploy_id = #{deployId},</if>
-            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
+            <if test="processMeasures != null">process_measures = #{processMeasures},</if>
+            <if test="processImage != null">process_image = #{processImage},</if>
+            <if test="processUserId != null">process_user_id = #{processUserId},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>

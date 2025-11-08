@@ -127,8 +127,8 @@ public class EquipInspeDangerServiceImpl implements IEquipInspeDangerService
         //如果传入inspeID，
         if (StringUtils.isNotEmpty(equipInspeDanger.getInspeId())) {
             EquipInspe equipInspe = equipInspeMapper.selectEquipInspeByInspeId(Long.parseLong(equipInspeDanger.getInspeId()));
-            if (StringUtils.isNotNull(equipInspe)&&StringUtils.isNotEmpty(equipInspe.getDeptName())) {
-                equipInspeDanger.setInspeNo(equipInspe.getDeptName());
+            if (StringUtils.isNotNull(equipInspe)&&StringUtils.isNotEmpty(equipInspe.getInspeNo())) {
+                equipInspeDanger.setInspeNo(equipInspe.getInspeNo());
             }
         }
         //如果传入设备信息

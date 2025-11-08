@@ -118,26 +118,18 @@
           <dict-tag :options="dict.type.equip_overall" :value="scope.row.overallStatus"/>
         </template>
       </el-table-column>
-      <el-table-column label="申请部门ID" :show-overflow-tooltip="true" align="center" v-if="columns[9].visible"
-                       prop="deptId"
+      <el-table-column label="处理措施" :show-overflow-tooltip="true" align="center" v-if="columns[9].visible"
+                       prop="processMeasures"
       />
-      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
-                       prop="deptName"
+      <el-table-column label="处理后照片" align="center" v-if="columns[10].visible" prop="processImage" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.processImage" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="处理人" :show-overflow-tooltip="true" align="center" v-if="columns[11].visible"
+                       prop="processUserName"
       />
-      <el-table-column label="申请人ID" :show-overflow-tooltip="true" align="center" v-if="columns[11].visible"
-                       prop="applyUserId"
-      />
-      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[12].visible"
-                       prop="applyUserName"
-      />
-      <el-table-column label="任务ID" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
-                       prop="taskId"
-      />
-      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[14].visible"
-                       prop="deployId"
-      />
-      <el-table-column label="流程实例ID" align="center" v-if="columns[15].visible" prop="processInstanceId"/>
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"
+      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[12].visible"
                        prop="remark"
       />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -150,14 +142,14 @@
             v-hasPermi="['inspe:inspe:edit']"
           >修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-view"
-            @click="handleProcess(scope.row)"
-            v-hasPermi="['inspe:inspe:list']"
-          >查看流程
-          </el-button>
+          <!--          <el-button-->
+          <!--            size="mini"-->
+          <!--            type="text"-->
+          <!--            icon="el-icon-view"-->
+          <!--            @click="handleProcess(scope.row)"-->
+          <!--            v-hasPermi="['inspe:inspe:list']"-->
+          <!--          >查看流程-->
+          <!--          </el-button>-->
           <el-button
             size="mini"
             type="text"
@@ -308,6 +300,28 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="处理措施" prop="processMeasures">
+          <el-input v-model="form.processMeasures" type="textarea" placeholder="请输入内容"/>
+        </el-form-item>
+        <el-form-item label="处理后照片" prop="processImage">
+          <image-upload v-model="form.processImage"/>
+        </el-form-item>
+        <el-form-item label="处理人" prop="processUserId">
+          <el-select
+            v-model="form.processUserId"
+            placeholder="请选择处理人"
+            filterable
+            remote
+          >
+            <el-option
+              v-for="item in processUserList"
+              :key="item.userId"
+              :label="item.userName"
+              :value="item.userId"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注"/>
         </el-form-item>
@@ -317,11 +331,11 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-    <TaskDetail :visible.sync="dialogVisible"
-                :task-id="taskId"
-                :proc-ins-id="procInsId"
-                :deploy-id="deployId"
-    />
+    <!--    <TaskDetail :visible.sync="dialogVisible"-->
+    <!--                :task-id="taskId"-->
+    <!--                :proc-ins-id="procInsId"-->
+    <!--                :deploy-id="deployId"-->
+    <!--    />-->
   </div>
 </template>
 
@@ -349,14 +363,10 @@ export default {
         { key: 6, label: '有无隐患', visible: true },
         { key: 7, label: '隐患数量', visible: true },
         { key: 8, label: '整体评价', visible: true },
-        { key: 9, label: '申请部门ID', visible: false },
-        { key: 10, label: '申请部门', visible: false },
-        { key: 11, label: '申请人ID', visible: false },
-        { key: 12, label: '申请人', visible: false },
-        { key: 13, label: '任务ID', visible: false },
-        { key: 14, label: '流程自定义ID', visible: false },
-        { key: 15, label: '流程实例ID', visible: false },
-        { key: 16, label: '备注', visible: false }
+        { key: 9, label: '处理措施', visible: true },
+        { key: 10, label: '处理后照片', visible: true },
+        { key: 11, label: '处理人', visible: true },
+        { key: 12, label: '备注', visible: true }
       ],
       dialogVisible: false,
       deployId: '',
@@ -411,7 +421,8 @@ export default {
       // 压力管道选项
       pressurePipeOptions: [],
       // 设备选项
-      equipOptions: []
+      equipOptions: [],
+      processUserList: []
     }
   },
   created() {
@@ -419,8 +430,14 @@ export default {
     this.loadAllUsersCache() // 加载所有用户缓存
     // 初始化加载设备数据
     this.getEquipments()
+    this.getProcessUserList()
   },
   methods: {
+    getProcessUserList() {
+      listUser({ pageNum: 1, pageSize: 1000 }).then(response => {
+        this.processUserList = response.rows
+      })
+    },
     /** 查看流程**/
     handleProcess(row) {
       if (!row.processInstanceId || !row.deployId || !row.taskId) {
@@ -437,32 +454,32 @@ export default {
       // 如果选择的是压力管道
       if (value === 'pressure_pipe') {
         // 获取压力管道数据（是否压力管道为"是"的管道）
-        this.getPressurePipes();
+        this.getPressurePipes()
       } else {
         // 获取普通设备数据
-        this.getEquipments();
+        this.getEquipments()
       }
 
       // 清空已选择的设备名称
-      this.form.equipName = null;
+      this.form.equipName = null
     },
     /** 获取压力管道数据 */
     getPressurePipes() {
       // 调用API获取"是否压力管道"为"是"的管道数据
       listData({ pressurePipeline: 'Y' }).then(response => {
-        this.pressurePipeOptions = response.rows;
+        this.pressurePipeOptions = response.rows
       }).catch(() => {
-        this.$message.warning('无法加载压力管道数据');
-      });
+        this.$message.warning('无法加载压力管道数据')
+      })
     },
     /** 获取普通设备数据 */
     getEquipments() {
       // 获取普通设备数据
       listLedger({ pageSize: 1000 }).then(response => {
-        this.equipOptions = response.rows;
+        this.equipOptions = response.rows
       }).catch(() => {
-        this.$message.warning('无法加载设备数据');
-      });
+        this.$message.warning('无法加载设备数据')
+      })
     },
     /** 查询设备检查记录列表 */
     getList() {
