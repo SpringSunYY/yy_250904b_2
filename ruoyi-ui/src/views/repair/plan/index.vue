@@ -161,7 +161,7 @@
       <el-table-column label="计划月份" :show-overflow-tooltip="true" align="center" v-if="columns[12].visible"
                        prop="planMonth"
       />
-      <el-table-column label="申请部门ID" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
+<!--      <el-table-column label="申请部门ID" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
                        prop="deptId"
       />
       <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[14].visible"
@@ -181,8 +181,8 @@
       />
       <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[19].visible"
                        prop="deployId"
-      />
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[20].visible"
+      />-->
+      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
                        prop="remark"
       />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -195,14 +195,14 @@
             v-hasPermi="['repair:plan:edit']"
           >修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-view"
-            @click="handleProcess(scope.row)"
-            v-hasPermi="['repair:plan:list']"
-          >查看流程
-          </el-button>
+<!--          <el-button-->
+<!--            size="mini"-->
+<!--            type="text"-->
+<!--            icon="el-icon-view"-->
+<!--            @click="handleProcess(scope.row)"-->
+<!--            v-hasPermi="['repair:plan:list']"-->
+<!--          >查看流程-->
+<!--          </el-button>-->
           <el-button
             size="mini"
             type="text"
@@ -396,11 +396,11 @@
         <el-button @click="equipSelectorOpen = false">关 闭</el-button>
       </div>
     </el-dialog>
-    <TaskDetail :visible.sync="dialogVisible"
-                :task-id="taskId"
-                :proc-ins-id="procInsId"
-                :deploy-id="deployId"
-    />
+<!--    <TaskDetail :visible.sync="dialogVisible"-->
+<!--                :task-id="taskId"-->
+<!--                :proc-ins-id="procInsId"-->
+<!--                :deploy-id="deployId"-->
+<!--    />-->
   </div>
 </template>
 
@@ -431,14 +431,14 @@ export default {
         { key: 10, label: '检维修方案', visible: true },
         { key: 11, label: '计划年度', visible: true },
         { key: 12, label: '计划月份', visible: true },
-        { key: 13, label: '申请部门ID', visible: false },
-        { key: 14, label: '申请部门', visible: false },
-        { key: 15, label: '申请人ID', visible: false },
-        { key: 16, label: '申请人', visible: false },
-        { key: 17, label: '任务ID', visible: false },
-        { key: 18, label: '流程实例ID', visible: false },
-        { key: 19, label: '流程自定义ID', visible: false },
-        { key: 20, label: '备注', visible: false }
+        // { key: 13, label: '申请部门ID', visible: false },
+        // { key: 14, label: '申请部门', visible: false },
+        // { key: 15, label: '申请人ID', visible: false },
+        // { key: 16, label: '申请人', visible: false },
+        // { key: 17, label: '任务ID', visible: false },
+        // { key: 18, label: '流程实例ID', visible: false },
+        // { key: 19, label: '流程自定义ID', visible: false },
+        { key: 13, label: '备注', visible: false }
       ],
       dialogVisible: false,
       deployId: '',
