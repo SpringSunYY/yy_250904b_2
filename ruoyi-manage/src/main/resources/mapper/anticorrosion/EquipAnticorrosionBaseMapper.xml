@@ -1,75 +1,121 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.anticorrosion.mapper.EquipAnticorrosionBaseMapper">
-    
+
     <resultMap type="EquipAnticorrosionBase" id="EquipAnticorrosionBaseResult">
-        <result property="id"    column="id"    />
-        <result property="equipmentId"    column="equipment_id"    />
-        <result property="equipmentName"    column="equipment_name"    />
-        <result property="equipmentCode"    column="equipment_code"    />
-        <result property="equipLevels"    column="equip_levels"    />
-        <result property="originalThickness"    column="original_thickness"    />
-        <result property="minAllowableThickness"    column="min_allowable_thickness"    />
-        <result property="defaultInspectionCycle"    column="default_inspection_cycle"    />
-        <result property="remark"    column="remark"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateTime"    column="update_time"    />
-        <result property="delFlag"    column="del_flag"    />
+        <result property="id" column="id"/>
+        <result property="equipmentId" column="equipment_id"/>
+        <result property="equipmentName" column="equipment_name"/>
+        <result property="equipmentCode" column="equipment_code"/>
+        <result property="equipLevels" column="equip_levels"/>
+        <result property="specification" column="specification"/>
+        <result property="corrosionParts" column="corrosion_parts"/>
+        <result property="material" column="material"/>
+        <result property="medium" column="medium"/>
+        <result property="temperature" column="temperature"/>
+        <result property="pressure" column="pressure"/>
+        <result property="originalThickness" column="original_thickness"/>
+        <result property="minAllowableThickness" column="min_allowable_thickness"/>
+        <result property="defaultInspectionCycle" column="default_inspection_cycle"/>
+        <result property="controlMeasures" column="control_measures"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="delFlag" column="del_flag"/>
     </resultMap>
 
     <sql id="selectEquipAnticorrosionBaseVo">
-        select id, equipment_id, equipment_name, equipment_code, equip_levels, original_thickness, min_allowable_thickness, default_inspection_cycle, remark, create_by, create_time, update_by, update_time, del_flag from equip_anticorrosion_base
+        select id,
+               equipment_id,
+               equipment_name,
+               equipment_code,
+               equip_levels,
+               specification,
+               corrosion_parts,
+               material,
+               medium,
+               temperature,
+               pressure,
+               original_thickness,
+               min_allowable_thickness,
+               default_inspection_cycle,
+               control_measures,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               del_flag
+        from equip_anticorrosion_base
     </sql>
 
-    <select id="selectEquipAnticorrosionBaseList" parameterType="EquipAnticorrosionBase" resultMap="EquipAnticorrosionBaseResult">
+    <select id="selectEquipAnticorrosionBaseList" parameterType="EquipAnticorrosionBase"
+            resultMap="EquipAnticorrosionBaseResult">
         <include refid="selectEquipAnticorrosionBaseVo"/>
-        <where>  
-            <if test="equipmentName != null  and equipmentName != ''"> and equipment_name like concat('%', #{equipmentName}, '%')</if>
-            <if test="equipLevels != null  and equipLevels != ''"> and equip_levels = #{equipLevels}</if>
+        <where>
+            <if test="equipmentName != null  and equipmentName != ''">and equipment_name like concat('%',
+                #{equipmentName}, '%')
+            </if>
+            <if test="equipLevels != null  and equipLevels != ''">and equip_levels = #{equipLevels}</if>
         </where>
     </select>
-    
+
     <select id="selectEquipAnticorrosionBaseById" parameterType="Long" resultMap="EquipAnticorrosionBaseResult">
         <include refid="selectEquipAnticorrosionBaseVo"/>
         where id = #{id}
     </select>
 
-    <insert id="insertEquipAnticorrosionBase" parameterType="EquipAnticorrosionBase" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertEquipAnticorrosionBase" parameterType="EquipAnticorrosionBase" useGeneratedKeys="true"
+            keyProperty="id">
         insert into equip_anticorrosion_base
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="equipmentId != null">equipment_id,</if>
             <if test="equipmentName != null">equipment_name,</if>
             <if test="equipmentCode != null">equipment_code,</if>
             <if test="equipLevels != null">equip_levels,</if>
+            <if test="specification != null">specification,</if>
+            <if test="corrosionParts != null">corrosion_parts,</if>
+            <if test="material != null">material,</if>
+            <if test="medium != null">medium,</if>
+            <if test="temperature != null">temperature,</if>
+            <if test="pressure != null">pressure,</if>
             <if test="originalThickness != null">original_thickness,</if>
             <if test="minAllowableThickness != null">min_allowable_thickness,</if>
             <if test="defaultInspectionCycle != null">default_inspection_cycle,</if>
+            <if test="controlMeasures != null">control_measures,</if>
             <if test="remark != null">remark,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="delFlag != null">del_flag,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="equipmentId != null">#{equipmentId},</if>
             <if test="equipmentName != null">#{equipmentName},</if>
             <if test="equipmentCode != null">#{equipmentCode},</if>
             <if test="equipLevels != null">#{equipLevels},</if>
+            <if test="specification != null">#{specification},</if>
+            <if test="corrosionParts != null">#{corrosionParts},</if>
+            <if test="material != null">#{material},</if>
+            <if test="medium != null">#{medium},</if>
+            <if test="temperature != null">#{temperature},</if>
+            <if test="pressure != null">#{pressure},</if>
             <if test="originalThickness != null">#{originalThickness},</if>
             <if test="minAllowableThickness != null">#{minAllowableThickness},</if>
             <if test="defaultInspectionCycle != null">#{defaultInspectionCycle},</if>
+            <if test="controlMeasures != null">#{controlMeasures},</if>
             <if test="remark != null">#{remark},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="delFlag != null">#{delFlag},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateEquipAnticorrosionBase" parameterType="EquipAnticorrosionBase">
@@ -79,9 +125,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
             <if test="equipmentCode != null">equipment_code = #{equipmentCode},</if>
             <if test="equipLevels != null">equip_levels = #{equipLevels},</if>
+            <if test="specification != null">specification = #{specification},</if>
+            <if test="corrosionParts != null">corrosion_parts = #{corrosionParts},</if>
+            <if test="material != null">material = #{material},</if>
+            <if test="medium != null">medium = #{medium},</if>
+            <if test="temperature != null">temperature = #{temperature},</if>
+            <if test="pressure != null">pressure = #{pressure},</if>
             <if test="originalThickness != null">original_thickness = #{originalThickness},</if>
             <if test="minAllowableThickness != null">min_allowable_thickness = #{minAllowableThickness},</if>
             <if test="defaultInspectionCycle != null">default_inspection_cycle = #{defaultInspectionCycle},</if>
+            <if test="controlMeasures != null">control_measures = #{controlMeasures},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
@@ -91,13 +144,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where id = #{id}
     </update>
-
     <delete id="deleteEquipAnticorrosionBaseById" parameterType="Long">
-        delete from equip_anticorrosion_base where id = #{id}
+        delete
+        from equip_anticorrosion_base
+        where id = #{id}
     </delete>
 
     <delete id="deleteEquipAnticorrosionBaseByIds" parameterType="String">
-        delete from equip_anticorrosion_base where id in 
+        delete from equip_anticorrosion_base where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

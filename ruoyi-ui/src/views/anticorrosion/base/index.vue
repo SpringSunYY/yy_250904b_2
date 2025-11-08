@@ -78,29 +78,51 @@
     <el-table v-loading="loading" :data="baseList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="序号" align="center" v-if="columns[0].visible" prop="id"/>
-      <el-table-column label="设备名称" :show-overflow-tooltip="true" align="center" v-if="columns[1].visible"
+      <el-table-column label="设备ID" align="center" v-if="columns[1].visible" prop="equipmentId"/>
+      <el-table-column label="设备名称" :show-overflow-tooltip="true" align="center" v-if="columns[2].visible"
                        prop="equipmentName"
       />
-      <el-table-column label="设备位号" :show-overflow-tooltip="true" align="center" v-if="columns[2].visible"
+      <el-table-column label="设备位号" :show-overflow-tooltip="true" align="center" v-if="columns[3].visible"
                        prop="equipmentCode"
       />
-      <el-table-column label="设备管理级别" align="center" v-if="columns[3].visible" prop="equipLevels">
+      <el-table-column label="设备管理级别" align="center" v-if="columns[4].visible" prop="equipLevels">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_levels" :value="scope.row.equipLevels"/>
         </template>
       </el-table-column>
-      <el-table-column label="设计厚度(mm)" :show-overflow-tooltip="true" align="center" v-if="columns[4].visible"
+      <el-table-column label="规格型号" :show-overflow-tooltip="true" align="center" v-if="columns[5].visible"
+                       prop="specification"
+      />
+      <el-table-column label="易腐蚀部位" :show-overflow-tooltip="true" align="center" v-if="columns[6].visible"
+                       prop="corrosionParts"
+      />
+      <el-table-column label="材质" :show-overflow-tooltip="true" align="center" v-if="columns[7].visible"
+                       prop="material"
+      />
+      <el-table-column label="介质" :show-overflow-tooltip="true" align="center" v-if="columns[8].visible"
+                       prop="medium"
+      />
+      <el-table-column label="温度" :show-overflow-tooltip="true" align="center" v-if="columns[9].visible"
+                       prop="temperature"
+      />
+      <el-table-column label="压力" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
+                       prop="pressure"
+      />
+      <el-table-column label="设计厚度(mm)" :show-overflow-tooltip="true" align="center" v-if="columns[11].visible"
                        prop="originalThickness"
       />
-      <el-table-column label="最小安全厚度(mm)" :show-overflow-tooltip="true" align="center" v-if="columns[5].visible"
+      <el-table-column label="最小安全厚度(mm)" :show-overflow-tooltip="true" align="center" v-if="columns[12].visible"
                        prop="minAllowableThickness"
       />
-      <el-table-column label="检测周期" align="center" v-if="columns[6].visible" prop="defaultInspectionCycle">
+      <el-table-column label="检测周期" align="center" v-if="columns[13].visible" prop="defaultInspectionCycle">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_inspection_cycle" :value="scope.row.defaultInspectionCycle"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[7].visible"
+      <el-table-column label="控制措施" :show-overflow-tooltip="true" align="center" v-if="columns[14].visible"
+                       prop="controlMeasures"
+      />
+      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[15].visible"
                        prop="remark"
       />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
@@ -174,6 +196,24 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="规格型号" prop="specification">
+          <el-input v-model="form.specification" placeholder="请输入规格型号" readonly/>
+        </el-form-item>
+        <el-form-item label="易腐蚀部位" prop="corrosionParts">
+          <el-input v-model="form.corrosionParts" placeholder="请输入易腐蚀部位"/>
+        </el-form-item>
+        <el-form-item label="材质" prop="material">
+          <el-input v-model="form.material" placeholder="请输入材质"/>
+        </el-form-item>
+        <el-form-item label="介质" prop="medium">
+          <el-input v-model="form.medium" placeholder="请输入介质"/>
+        </el-form-item>
+        <el-form-item label="温度" prop="temperature">
+          <el-input v-model="form.temperature" placeholder="请输入温度"/>
+        </el-form-item>
+        <el-form-item label="压力" prop="pressure">
+          <el-input v-model="form.pressure" placeholder="请输入压力"/>
+        </el-form-item>
         <el-form-item label="设计厚度(mm)" prop="originalThickness">
           <el-input v-model="form.originalThickness" placeholder="请输入设计厚度(mm)"/>
         </el-form-item>
@@ -189,6 +229,9 @@
               :value="dict.value"
             ></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="控制措施" prop="controlMeasures">
+          <el-input v-model="form.controlMeasures" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"/>
@@ -288,14 +331,22 @@ export default {
     return {
       //表格展示列
       columns: [
-        { key: 0, label: '序号', visible: true },
-        { key: 1, label: '设备名称', visible: true },
-        { key: 2, label: '设备位号', visible: true },
-        { key: 3, label: '设备管理级别', visible: true },
-        { key: 4, label: '设计厚度(mm)', visible: true },
-        { key: 5, label: '最小安全厚度(mm)', visible: true },
-        { key: 6, label: '检测周期', visible: true },
-        { key: 7, label: '备注', visible: false }
+        { key: 0, label: '主键ID', visible: true },
+        { key: 1, label: '设备ID', visible: false },
+        { key: 2, label: '设备名称', visible: true },
+        { key: 3, label: '设备位号', visible: true },
+        { key: 4, label: '设备管理级别', visible: true },
+        { key: 5, label: '规格型号', visible: true },
+        { key: 6, label: '易腐蚀部位', visible: true },
+        { key: 7, label: '材质', visible: true },
+        { key: 8, label: '介质', visible: true },
+        { key: 9, label: '温度', visible: true },
+        { key: 10, label: '压力', visible: true },
+        { key: 11, label: '设计厚度(mm)', visible: true },
+        { key: 12, label: '最小安全厚度(mm)', visible: true },
+        { key: 13, label: '检测周期', visible: true },
+        { key: 14, label: '控制措施', visible: true },
+        { key: 15, label: '备注', visible: false }
       ],
       // 遮罩层
       loading: true,
@@ -376,9 +427,16 @@ export default {
         equipmentName: null,
         equipmentCode: null,
         equipLevels: null,
+        specification: null,
+        corrosionParts: null,
+        material: null,
+        medium: null,
+        temperature: null,
+        pressure: null,
         originalThickness: null,
         minAllowableThickness: null,
         defaultInspectionCycle: null,
+        controlMeasures: null,
         remark: null,
         createBy: null,
         createTime: null,
@@ -487,6 +545,7 @@ export default {
       this.form.equipmentName = row.equName
       this.form.equipmentCode = row.equCode
       this.form.equipLevels = row.equipLevels
+      this.form.specification = row.specification
       this.equipSelectorOpen = false
     },
     /** 打开设备选择器 */
@@ -501,6 +560,7 @@ export default {
         this.form.equipmentName = selectedEquip.equName
         this.form.equipmentCode = selectedEquip.equCode
         this.form.equipLevels = selectedEquip.equipLevels
+        this.form.specification = selectedEquip.specification
       }
     }
   }
