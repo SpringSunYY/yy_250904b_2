@@ -242,33 +242,53 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="设备" prop="equipId">
-          <el-row>
-            <el-col :span="20">
-              <el-select
-                v-model="form.equipId"
-                placeholder="请选择设备"
-                @change="handleEquipChange"
-                style="width: 100%"
-              >
-                <el-option
-                  v-for="item in equipList"
-                  :key="item.equipId"
-                  :label="item.equName"
-                  :value="item.equipId"
-                >
-                  <span style="float: left">{{ item.equName }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.equCode }}</span>
-                </el-option>
-              </el-select>
-            </el-col>
-            <el-col :span="4">
-              <el-button type="primary" @click="openEquipSelector" style="margin-left: 10px;">选择设备</el-button>
-            </el-col>
-          </el-row>
+        <el-form-item label="检修计划" prop="planId">
+          <el-select v-model="form.planId" placeholder="请选择检修计划"
+                     filterable
+                     remote
+                     reserve-keyword
+                     :loading="repairPlanLoading"
+                     :remote-method="remoteRepairPlan" @change="handleRepairPlanChange"
+          >
+            <el-option
+              v-for="item in repairPlanList"
+              :key="item.planId"
+              :label="item.planNo"
+              :value="item.planId"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="设备位号" prop="equCode">
-          <el-input v-model="form.equCode" placeholder="设备位号" disabled/>
+        <!--        <el-form-item label="设备" prop="equipId">-->
+        <!--          <el-row>-->
+        <!--            <el-col :span="20">-->
+        <!--              <el-select-->
+        <!--                v-model="form.equipId"-->
+        <!--                placeholder="请选择设备"-->
+        <!--                @change="handleEquipChange"-->
+        <!--                style="width: 100%"-->
+        <!--              >-->
+        <!--                <el-option-->
+        <!--                  v-for="item in equipList"-->
+        <!--                  :key="item.equipId"-->
+        <!--                  :label="item.equName"-->
+        <!--                  :value="item.equipId"-->
+        <!--                >-->
+        <!--                  <span style="float: left">{{ item.equName }}</span>-->
+        <!--                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.equCode }}</span>-->
+        <!--                </el-option>-->
+        <!--              </el-select>-->
+        <!--            </el-col>-->
+        <!--            <el-col :span="4">-->
+        <!--              <el-button type="primary" @click="openEquipSelector" style="margin-left: 10px;">选择设备</el-button>-->
+        <!--            </el-col>-->
+        <!--          </el-row>-->
+        <!--        </el-form-item>-->
+        <el-form-item label="设备" prop="equipName">
+          <el-input v-model="form.equipName" placeholder="设备" disabled/>
+        </el-form-item>
+        <el-form-item label="设备位号" prop="equipCode">
+          <el-input v-model="form.equipCode" placeholder="设备位号" disabled/>
         </el-form-item>
         <el-form-item label="管理等级" prop="equipLevels">
           <el-select v-model="form.equipLevels" placeholder="请选择管理等级" disabled>
@@ -459,6 +479,7 @@
 import { listRecord, getRecord, delRecord, addRecord, updateRecord } from '@/api/repair/record'
 import { listLedger } from '@/api/equip/ledger'
 import TaskDetail from '@/components/TaskDetail/index.vue'
+import { listRepairPlan } from '@/api/repair/plan'
 
 export default {
   name: 'Record',
@@ -545,6 +566,13 @@ export default {
       equipTotal: 0,
       // 设备加载
       equipLoading: false,
+      //维修计划
+      repairPlanList: [],
+      repairPlanLoading: false,
+      repairPlanQuery: {
+        pageNum: 1,
+        pageSize: 100
+      },
       // 表单参数
       form: {},
       // 表单校验
@@ -564,8 +592,42 @@ export default {
   created() {
     this.getList()
     this.getEquipList()
+    this.getRepairPlanList()
   },
   methods: {
+    /** 查询维修计划列表 */
+    getRepairPlanList() {
+      this.repairPlanLoading = true
+      this.repairPlanList = []
+      listRepairPlan(this.repairPlanQuery).then(response => {
+        this.repairPlanLoading = false
+        this.repairPlanList = response.rows
+      })
+    },
+    remoteRepairPlan(query) {
+      this.repairPlanLoading = true
+      this.repairPlanList = []
+      listRepairPlan({
+        pageNum: 1,
+        pageSize: 100,
+        planNo: query
+      }).then(response => {
+        this.repairPlanList = response.rows
+        this.repairPlanLoading = false
+
+      })
+    },
+    handleRepairPlanChange(planId) {
+      const selectedItem = this.repairPlanList.find(item => item.planId === planId)
+      console.log(selectedItem) // 获取到完整的 item 对象
+      if (selectedItem) {
+        this.form.planNo = selectedItem.planNo
+        this.form.equipId = selectedItem.equipId
+        this.form.equipName = selectedItem.equipName
+        this.form.equipLevels = selectedItem.equipLevels
+        this.form.equipCode = selectedItem.equipCode
+      }
+    },
     //获取文件名 此功能只可以下载只有一个文件的
     getFileName(filePath) {
       if (filePath == null) {

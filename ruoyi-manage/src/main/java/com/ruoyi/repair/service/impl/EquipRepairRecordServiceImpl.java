@@ -78,6 +78,16 @@ public class EquipRepairRecordServiceImpl implements IEquipRepairRecordService {
     }
 
     private void initDate(EquipRepairRecord equipRepairRecord) {
+        //如果有计划
+        if (StringUtils.isNotNull(equipRepairRecord.getPlanId())) {
+            EquipRepairPlan equipRepairPlan = equipRepairPlanMapper.selectEquipRepairPlanByPlanId(equipRepairRecord.getPlanId());
+            if (StringUtils.isNotNull(equipRepairPlan)) {
+                equipRepairRecord.setPlanNo(equipRepairPlan.getPlanNo());
+                if (StringUtils.isNotEmpty(equipRepairPlan.getEquipId())) {
+                    equipRepairRecord.setEquipId(equipRepairPlan.getEquipId());
+                }
+            }
+        }
         //如果有设备
         if (StringUtils.isNotEmpty(equipRepairRecord.getEquipId())) {
             EquipLedger equipLedger = equipLedgerMapper.selectEquipLedgerByEquipId(Long.parseLong(equipRepairRecord.getEquipId()));
@@ -85,13 +95,6 @@ public class EquipRepairRecordServiceImpl implements IEquipRepairRecordService {
                 equipRepairRecord.setEquipName(equipLedger.getEquName());
                 equipRepairRecord.setEquipCode(equipLedger.getEquCode());
                 equipRepairRecord.setEquipLevels(equipLedger.getEquipLevels());
-            }
-        }
-        //如果有计划
-        if (StringUtils.isNotNull(equipRepairRecord.getPlanId())) {
-            EquipRepairPlan equipRepairPlan = equipRepairPlanMapper.selectEquipRepairPlanByPlanId(equipRepairRecord.getPlanId());
-            if (StringUtils.isNotNull(equipRepairPlan)) {
-                equipRepairRecord.setPlanNo(equipRepairPlan.getPlanNo());
             }
         }
     }
