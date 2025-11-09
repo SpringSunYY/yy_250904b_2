@@ -228,8 +228,26 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="设备名称" prop="equName">
+        <el-form-item label="设备名称" prop="equName" v-if="form.isOriginal !== 0">
           <el-input v-model="form.equName" placeholder="请输入设备名称"/>
+        </el-form-item>
+        <el-form-item label="设备名称" v-else prop="equName">
+          <el-select v-model="form.equName" placeholder="请选择设备名称"
+                     remote
+                     filterable
+                     reserve-keyword
+                     :remote-method="remotePurOrderList"
+          >
+            <el-option
+              v-for="item in purOrderList"
+              :key="item.orderId"
+              :label="item.equipName"
+              :value="item.equipName"
+            >
+              <span style="float: left">{{ item.equipName }}</span>
+              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.orderNo }}</span>
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="设备位号" prop="equCode">
           <el-input v-model="form.equCode" placeholder="请输入设备位号"/>
@@ -386,6 +404,7 @@ import { addLedger, delLedger, getLedger, listLedger, updateLedger } from '@/api
 import { listSupplier } from '@/api/pur/supplier'
 import { listUser } from '@/api/system/user'
 import { listDept } from '@/api/system/dept'
+import { listOrder } from '@/api/pur/order'
 
 export default {
   name: 'Ledger',
@@ -458,13 +477,26 @@ export default {
         equCode: [
           { required: true, message: '设备位号不能为空', trigger: 'blur' }
         ]
-      }
+      },
+      purOrderList: []
     }
   },
   created() {
     this.getList()
+    this.getPurOrderList()
   },
   methods: {
+    /** 查询采购订单列表 */
+    getPurOrderList() {
+      listOrder({ pageNum: 1, pageSize: 100 }).then(response => {
+        this.purOrderList = response.rows
+      })
+    },
+    remotePurOrderList(keyword) {
+      listOrder({ pageNum: 1, pageSize: 100, equipName: keyword }).then(response => {
+        this.purOrderList = response.rows
+      })
+    },
     /** 查询设备台账列表 */
     getList() {
       this.loading = true

@@ -96,6 +96,7 @@
             <if test="applyUserName != null  and applyUserName != ''">and apply_user_name like concat('%',
                 #{applyUserName}, '%')
             </if>
+            <if test="equipName != null and equipName != ''">and equip_name like concat('%',#{equipName},'%')</if>
             <if test="orderStatus != null  and orderStatus != ''">and order_status = #{orderStatus}</if>
         </where>
     </select>
