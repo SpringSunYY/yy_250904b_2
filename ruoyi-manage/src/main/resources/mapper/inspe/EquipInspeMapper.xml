@@ -14,9 +14,7 @@
         <result property="hasDanger" column="has_danger"/>
         <result property="dangerCoun" column="danger_coun"/>
         <result property="overallStatus" column="overall_status"/>
-        <result property="processMeasures" column="process_measures"/>
-        <result property="processImage" column="process_image"/>
-        <result property="processUserId" column="process_user_id"/>
+        <result property="checkImage" column="check_image"/>
         <result property="remark" column="remark"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -35,9 +33,7 @@
                has_danger,
                danger_coun,
                overall_status,
-               process_measures,
-               process_image,
-               process_user_id,
+               check_image,
                remark,
                create_by,
                create_time,
@@ -82,9 +78,7 @@
             <if test="hasDanger != null">has_danger,</if>
             <if test="dangerCoun != null">danger_coun,</if>
             <if test="overallStatus != null">overall_status,</if>
-            <if test="processMeasures != null">process_measures,</if>
-            <if test="processImage != null">process_image,</if>
-            <if test="processUserId != null">process_user_id,</if>
+            <if test="checkImage != null">check_image,</if>
             <if test="remark != null">remark,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
@@ -100,9 +94,7 @@
             <if test="hasDanger != null">#{hasDanger},</if>
             <if test="dangerCoun != null">#{dangerCoun},</if>
             <if test="overallStatus != null">#{overallStatus},</if>
-            <if test="processMeasures != null">#{processMeasures},</if>
-            <if test="processImage != null">#{processImage},</if>
-            <if test="processUserId != null">#{processUserId},</if>
+            <if test="checkImage != null">#{checkImage},</if>
             <if test="remark != null">#{remark},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
@@ -122,9 +114,7 @@
             <if test="hasDanger != null">has_danger = #{hasDanger},</if>
             <if test="dangerCoun != null">danger_coun = #{dangerCoun},</if>
             <if test="overallStatus != null">overall_status = #{overallStatus},</if>
-            <if test="processMeasures != null">process_measures = #{processMeasures},</if>
-            <if test="processImage != null">process_image = #{processImage},</if>
-            <if test="processUserId != null">process_user_id = #{processUserId},</if>
+            <if test="checkImage != null">check_image = #{checkImage},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
@@ -133,6 +123,7 @@
         </trim>
         where inspe_id = #{inspeId}
     </update>
+
     <delete id="deleteEquipInspeByInspeId" parameterType="Long">
         delete
         from equip_inspe

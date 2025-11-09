@@ -28,9 +28,6 @@ public class EquipInspeServiceImpl implements IEquipInspeService
     @Autowired
     private EquipInspeMapper equipInspeMapper;
 
-    @Resource
-    private ISysUserService sysUserService;
-
     /**
      * 查询设备检查记录
      *
@@ -52,14 +49,7 @@ public class EquipInspeServiceImpl implements IEquipInspeService
     @Override
     public List<EquipInspe> selectEquipInspeList(EquipInspe equipInspe)
     {
-        List<EquipInspe> equipInspes = equipInspeMapper.selectEquipInspeList(equipInspe);
-        for (EquipInspe info : equipInspes) {
-            SysUser sysUser = sysUserService.selectUserById(info.getProcessUserId());
-            if (StringUtils.isNotNull(sysUser)) {
-                info.setProcessUserName(sysUser.getNickName());
-            }
-        }
-        return equipInspes;
+        return equipInspeMapper.selectEquipInspeList(equipInspe);
     }
 
     /**

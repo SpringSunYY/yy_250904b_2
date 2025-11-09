@@ -118,18 +118,12 @@
           <dict-tag :options="dict.type.equip_overall" :value="scope.row.overallStatus"/>
         </template>
       </el-table-column>
-      <el-table-column label="处理措施" :show-overflow-tooltip="true" align="center" v-if="columns[9].visible"
-                       prop="processMeasures"
-      />
-      <el-table-column label="处理后照片" align="center" v-if="columns[10].visible" prop="processImage" width="100">
+      <el-table-column label="检查照片" align="center" v-if="columns[9].visible" prop="checkImage" width="100">
         <template slot-scope="scope">
-          <image-preview :src="scope.row.processImage" :width="50" :height="50"/>
+          <image-preview :src="scope.row.checkImage" :width="50" :height="50"/>
         </template>
       </el-table-column>
-      <el-table-column label="处理人" :show-overflow-tooltip="true" align="center" v-if="columns[11].visible"
-                       prop="processUserName"
-      />
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[12].visible"
+      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
                        prop="remark"
       />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -300,27 +294,8 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="处理措施" prop="processMeasures">
-          <el-input v-model="form.processMeasures" type="textarea" placeholder="请输入内容"/>
-        </el-form-item>
-        <el-form-item label="处理后照片" prop="processImage">
-          <image-upload v-model="form.processImage"/>
-        </el-form-item>
-        <el-form-item label="处理人" prop="processUserId">
-          <el-select
-            v-model="form.processUserId"
-            placeholder="请选择处理人"
-            filterable
-            remote
-          >
-            <el-option
-              v-for="item in processUserList"
-              :key="item.userId"
-              :label="item.userName"
-              :value="item.userId"
-            >
-            </el-option>
-          </el-select>
+        <el-form-item label="检查照片" prop="checkImage">
+          <image-upload v-model="form.checkImage"/>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注"/>
@@ -363,10 +338,8 @@ export default {
         { key: 6, label: '有无隐患', visible: true },
         { key: 7, label: '隐患数量', visible: true },
         { key: 8, label: '整体评价', visible: true },
-        { key: 9, label: '处理措施', visible: true },
-        { key: 10, label: '处理后照片', visible: true },
-        { key: 11, label: '处理人', visible: true },
-        { key: 12, label: '备注', visible: true }
+        { key: 9, label: '检查照片', visible: true },
+        { key: 10, label: '备注', visible: true }
       ],
       dialogVisible: false,
       deployId: '',
