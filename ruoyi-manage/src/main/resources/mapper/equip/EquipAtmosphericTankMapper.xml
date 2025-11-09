@@ -1,51 +1,75 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.equip.mapper.EquipAtmosphericTankMapper">
-    
+
     <resultMap type="EquipAtmosphericTank" id="EquipAtmosphericTankResult">
-        <result property="id"    column="id"    />
-        <result property="equipmentName"    column="equipment_name"    />
-        <result property="equipmentTag"    column="equipment_tag"    />
-        <result property="mainMaterial"    column="main_material"    />
-        <result property="volume"    column="volume"    />
-        <result property="storageMedium"    column="storage_medium"    />
-        <result property="inspectionType"    column="inspection_type"    />
-        <result property="inspectionTime"    column="inspection_time"    />
-        <result property="inspectors"    column="inspectors"    />
-        <result property="inspectionResult"    column="inspection_result"    />
-        <result property="problemDescription"    column="problem_description"    />
-        <result property="disposalMeasures"    column="disposal_measures"    />
-        <result property="inspectionRecord"    column="inspection_record"    />
-        <result property="rectificationRecord"    column="rectification_record"    />
-        <result property="integrityReport"    column="integrity_report"    />
-        <result property="remarks"    column="remarks"    />
-        <result property="createdBy"    column="created_by"    />
-        <result property="createdTime"    column="created_time"    />
-        <result property="updatedBy"    column="updated_by"    />
-        <result property="updatedTime"    column="updated_time"    />
+        <result property="id" column="id"/>
+        <result property="equipmentName" column="equipment_name"/>
+        <result property="equipmentTag" column="equipment_tag"/>
+        <result property="mainMaterial" column="main_material"/>
+        <result property="volume" column="volume"/>
+        <result property="storageMedium" column="storage_medium"/>
+        <result property="inspectionType" column="inspection_type"/>
+        <result property="inspectionTime" column="inspection_time"/>
+        <result property="inspectors" column="inspectors"/>
+        <result property="inspectionResult" column="inspection_result"/>
+        <result property="problemDescription" column="problem_description"/>
+        <result property="disposalMeasures" column="disposal_measures"/>
+        <result property="inspectionRecord" column="inspection_record"/>
+        <result property="rectificationRecord" column="rectification_record"/>
+        <result property="integrityReport" column="integrity_report"/>
+        <result property="remarks" column="remarks"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updatedTime" column="updated_time"/>
     </resultMap>
 
     <sql id="selectEquipAtmosphericTankVo">
-        select id, equipment_name, equipment_tag, main_material, volume, storage_medium, inspection_type, inspection_time, inspectors, inspection_result, problem_description, disposal_measures, inspection_record, rectification_record, integrity_report, remarks, created_by, created_time, updated_by, updated_time from equip_atmospheric_tank
+        select id,
+               equipment_name,
+               equipment_tag,
+               main_material,
+               volume,
+               storage_medium,
+               inspection_type,
+               inspection_time,
+               inspectors,
+               inspection_result,
+               problem_description,
+               disposal_measures,
+               inspection_record,
+               rectification_record,
+               integrity_report,
+               remarks,
+               created_by,
+               created_time,
+               updated_by,
+               updated_time
+        from equip_atmospheric_tank
     </sql>
 
-    <select id="selectEquipAtmosphericTankList" parameterType="EquipAtmosphericTank" resultMap="EquipAtmosphericTankResult">
+    <select id="selectEquipAtmosphericTankList" parameterType="EquipAtmosphericTank"
+            resultMap="EquipAtmosphericTankResult">
         <include refid="selectEquipAtmosphericTankVo"/>
-        <where>  
-            <if test="equipmentName != null  and equipmentName != ''"> and equipment_name like concat('%', #{equipmentName}, '%')</if>
-            <if test="equipmentTag != null  and equipmentTag != ''"> and equipment_tag = #{equipmentTag}</if>
-            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+        <where>
+            <if test="equipmentName != null  and equipmentName != ''">and equipment_name like concat('%',
+                #{equipmentName}, '%')
+            </if>
+            <if test="equipmentTag != null  and equipmentTag != ''">and equipment_tag = #{equipmentTag}</if>
+            <if test="remarks != null  and remarks != ''">and remarks = #{remarks}</if>
         </where>
     </select>
-    
+
     <select id="selectEquipAtmosphericTankById" parameterType="Long" resultMap="EquipAtmosphericTankResult">
         <include refid="selectEquipAtmosphericTankVo"/>
         where id = #{id}
     </select>
 
-    <insert id="insertEquipAtmosphericTank" parameterType="EquipAtmosphericTank" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertEquipAtmosphericTank" parameterType="EquipAtmosphericTank" useGeneratedKeys="true"
+            keyProperty="id">
         insert into equip_atmospheric_tank
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="equipmentName != null and equipmentName != ''">equipment_name,</if>
@@ -67,7 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createdTime != null">created_time,</if>
             <if test="updatedBy != null">updated_by,</if>
             <if test="updatedTime != null">updated_time,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="equipmentName != null and equipmentName != ''">#{equipmentName},</if>
             <if test="equipmentTag != null and equipmentTag != ''">#{equipmentTag},</if>
@@ -88,7 +112,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createdTime != null">#{createdTime},</if>
             <if test="updatedBy != null">#{updatedBy},</if>
             <if test="updatedTime != null">#{updatedTime},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateEquipAtmosphericTank" parameterType="EquipAtmosphericTank">
@@ -118,11 +142,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteEquipAtmosphericTankById" parameterType="Long">
-        delete from equip_atmospheric_tank where id = #{id}
+        delete
+        from equip_atmospheric_tank
+        where id = #{id}
     </delete>
 
     <delete id="deleteEquipAtmosphericTankByIds" parameterType="String">
-        delete from equip_atmospheric_tank where id in 
+        delete from equip_atmospheric_tank where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

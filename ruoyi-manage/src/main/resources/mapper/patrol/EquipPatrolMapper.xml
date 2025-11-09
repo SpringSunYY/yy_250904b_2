@@ -1,65 +1,113 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.patrol.mapper.EquipPatrolMapper">
-    
+
     <resultMap type="EquipPatrol" id="EquipPatrolResult">
-        <result property="patrolId"    column="patrol_id"    />
-        <result property="patrolNo"    column="patrol_no"    />
-        <result property="equipId"    column="equip_id"    />
-        <result property="equipName"    column="equip_name"    />
-        <result property="equipCode"    column="equip_code"    />
-        <result property="userId"    column="user_id"    />
-        <result property="userName"    column="user_name"    />
-        <result property="patrolTime"    column="patrol_time"    />
-        <result property="processInstanceId"    column="process_instance_id"    />
-        <result property="status"    column="status"    />
-        <result property="patrolResult"    column="patrol_result"    />
-        <result property="remark"    column="remark"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateTime"    column="update_time"    />
+        <result property="patrolId" column="patrol_id"/>
+        <result property="patrolNo" column="patrol_no"/>
+        <result property="equipId" column="equip_id"/>
+        <result property="equipName" column="equip_name"/>
+        <result property="equipCode" column="equip_code"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="patrolTime" column="patrol_time"/>
+        <result property="processMeasures" column="process_measures"/>
+        <result property="processImage" column="process_image"/>
+        <result property="processUserId" column="process_user_id"/>
+        <result property="status" column="status"/>
+        <result property="patrolResult" column="patrol_result"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <resultMap id="EquipPatrolEquipPatrolDetailResult" type="EquipPatrol" extends="EquipPatrolResult">
-        <collection property="equipPatrolDetailList" ofType="EquipPatrolDetail" column="patrol_id" select="selectEquipPatrolDetailList" />
+        <collection property="equipPatrolDetailList" ofType="EquipPatrolDetail" column="patrol_id"
+                    select="selectEquipPatrolDetailList"/>
     </resultMap>
 
     <resultMap type="EquipPatrolDetail" id="EquipPatrolDetailResult">
-        <result property="detailId"    column="detail_id"    />
-        <result property="patrolId"    column="patrol_id"    />
-        <result property="itemId"    column="item_id"    />
-        <result property="itemName"    column="item_name"    />
-        <result property="standard"    column="standard"    />
-        <result property="result"    column="result"    />
-        <result property="problem"    column="problem"    />
-        <result property="images"    column="images"    />
-        <result property="remark"    column="remark"    />
+        <result property="detailId" column="detail_id"/>
+        <result property="patrolId" column="patrol_id"/>
+        <result property="itemId" column="item_id"/>
+        <result property="itemName" column="item_name"/>
+        <result property="standard" column="standard"/>
+        <result property="result" column="result"/>
+        <result property="problem" column="problem"/>
+        <result property="images" column="images"/>
+        <result property="remark" column="remark"/>
     </resultMap>
 
     <sql id="selectEquipPatrolVo">
-        select patrol_id, patrol_no, equip_id, equip_name, equip_code, user_id, user_name, patrol_time, process_instance_id, status, patrol_result, remark, create_by, create_time, update_by, update_time from equip_patrol
+        select patrol_id,
+               patrol_no,
+               equip_id,
+               equip_name,
+               equip_code,
+               user_id,
+               user_name,
+               patrol_time,
+               patrol_result,
+               problem,
+               process_measures,
+               process_image,
+               process_user_id,
+               status,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from equip_patrol
     </sql>
 
     <select id="selectEquipPatrolList" parameterType="EquipPatrol" resultMap="EquipPatrolResult">
         <include refid="selectEquipPatrolVo"/>
-        <where>  
-            <if test="equipName != null  and equipName != ''"> and equip_name like concat('%', #{equipName}, '%')</if>
-            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
-            <if test="status != null  and status != ''"> and status = #{status}</if>
+        <where>
+            <if test="equipName != null  and equipName != ''">and equip_name like concat('%', #{equipName}, '%')</if>
+            <if test="userName != null  and userName != ''">and user_name like concat('%', #{userName}, '%')</if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
         </where>
     </select>
-    
+
     <select id="selectEquipPatrolByPatrolId" parameterType="Long" resultMap="EquipPatrolEquipPatrolDetailResult">
-        select patrol_id, patrol_no, equip_id, equip_name, equip_code, user_id, user_name, patrol_time, process_instance_id, status, patrol_result, remark, create_by, create_time, update_by, update_time
+        select patrol_id,
+               patrol_no,
+               equip_id,
+               equip_name,
+               equip_code,
+               user_id,
+               user_name,
+               patrol_time,
+               patrol_result,
+               problem,
+               process_measures,
+               process_image,
+               process_user_id,
+               status,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
         from equip_patrol
         where patrol_id = #{patrolId}
     </select>
 
     <select id="selectEquipPatrolDetailList" resultMap="EquipPatrolDetailResult">
-        select detail_id, patrol_id, item_id, item_name, standard, result, problem, images, remark
+        select detail_id,
+               patrol_id,
+               item_id,
+               item_name,
+               standard,
+               result,
+               problem,
+               images,
+               remark
         from equip_patrol_detail
         where patrol_id = #{patrol_id}
     </select>
@@ -74,15 +122,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="userId != null">user_id,</if>
             <if test="userName != null">user_name,</if>
             <if test="patrolTime != null">patrol_time,</if>
-            <if test="processInstanceId != null">process_instance_id,</if>
-            <if test="status != null">status,</if>
             <if test="patrolResult != null">patrol_result,</if>
+            <if test="problem != null">problem,</if>
+            <if test="processMeasures != null">process_measures,</if>
+            <if test="processImage != null">process_image,</if>
+            <if test="processUserId != null">process_user_id,</if>
+            <if test="status != null">status,</if>
             <if test="remark != null">remark,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="patrolNo != null">#{patrolNo},</if>
             <if test="equipId != null">#{equipId},</if>
@@ -91,15 +142,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="userId != null">#{userId},</if>
             <if test="userName != null">#{userName},</if>
             <if test="patrolTime != null">#{patrolTime},</if>
-            <if test="processInstanceId != null">#{processInstanceId},</if>
-            <if test="status != null">#{status},</if>
             <if test="patrolResult != null">#{patrolResult},</if>
+            <if test="problem != null">#{problem},</if>
+            <if test="processMeasures != null">#{processMeasures},</if>
+            <if test="processImage != null">#{processImage},</if>
+            <if test="processUserId != null">#{processUserId},</if>
+            <if test="status != null">#{status},</if>
             <if test="remark != null">#{remark},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateEquipPatrol" parameterType="EquipPatrol">
@@ -112,9 +166,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="userId != null">user_id = #{userId},</if>
             <if test="userName != null">user_name = #{userName},</if>
             <if test="patrolTime != null">patrol_time = #{patrolTime},</if>
-            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
-            <if test="status != null">status = #{status},</if>
             <if test="patrolResult != null">patrol_result = #{patrolResult},</if>
+            <if test="problem != null">problem = #{problem},</if>
+            <if test="processMeasures != null">process_measures = #{processMeasures},</if>
+            <if test="processImage != null">process_image = #{processImage},</if>
+            <if test="processUserId != null">process_user_id = #{processUserId},</if>
+            <if test="status != null">status = #{status},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
@@ -125,31 +182,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteEquipPatrolByPatrolId" parameterType="Long">
-        delete from equip_patrol where patrol_id = #{patrolId}
+        delete
+        from equip_patrol
+        where patrol_id = #{patrolId}
     </delete>
 
     <delete id="deleteEquipPatrolByPatrolIds" parameterType="String">
-        delete from equip_patrol where patrol_id in 
+        delete from equip_patrol where patrol_id in
         <foreach item="patrolId" collection="array" open="(" separator="," close=")">
             #{patrolId}
         </foreach>
     </delete>
-    
+
     <delete id="deleteEquipPatrolDetailByPatrolIds" parameterType="String">
-        delete from equip_patrol_detail where patrol_id in 
+        delete from equip_patrol_detail where patrol_id in
         <foreach item="patrolId" collection="array" open="(" separator="," close=")">
             #{patrolId}
         </foreach>
     </delete>
 
     <delete id="deleteEquipPatrolDetailByPatrolId" parameterType="Long">
-        delete from equip_patrol_detail where patrol_id = #{patrolId}
+        delete
+        from equip_patrol_detail
+        where patrol_id = #{patrolId}
     </delete>
 
     <insert id="batchEquipPatrolDetail">
-        insert into equip_patrol_detail( detail_id, patrol_id, item_id, item_name, standard, result, problem, images, remark) values
+        insert into equip_patrol_detail( detail_id, patrol_id, item_id, item_name, standard, result, problem, images,
+        remark) values
         <foreach item="item" index="index" collection="list" separator=",">
-            ( #{item.detailId}, #{item.patrolId}, #{item.itemId}, #{item.itemName}, #{item.standard}, #{item.result}, #{item.problem}, #{item.images}, #{item.remark})
+            ( #{item.detailId}, #{item.patrolId}, #{item.itemId}, #{item.itemName}, #{item.standard}, #{item.result},
+            #{item.problem}, #{item.images}, #{item.remark})
         </foreach>
     </insert>
 </mapper>

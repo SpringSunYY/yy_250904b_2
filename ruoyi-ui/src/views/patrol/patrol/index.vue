@@ -121,12 +121,23 @@
           <span v-else>--</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="status" v-if="columns[8].visible">
+      <el-table-column label="处理措施" :show-overflow-tooltip="true" align="center" v-if="columns[8].visible"
+                       prop="processMeasures"
+      />
+      <el-table-column label="处理后照片" align="center" v-if="columns[9].visible" prop="processImage" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.processImage" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="处理人" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
+                       prop="processUserName"
+      />
+      <el-table-column label="状态" align="center" prop="status" v-if="columns[11].visible">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_repair_sratus" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" v-if="columns[9].visible"/>
+      <el-table-column label="备注" align="center" prop="remark" v-if="columns[12].visible"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -228,14 +239,36 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="流程实例" prop="processInstanceId">
-          <el-select v-model="form.processInstanceId" placeholder="请选择流程实例">
+        <!--        <el-form-item label="流程实例" prop="processInstanceId">-->
+        <!--          <el-select v-model="form.processInstanceId" placeholder="请选择流程实例">-->
+        <!--            <el-option-->
+        <!--              v-for="dict in dict.type.sys_process_category"-->
+        <!--              :key="dict.value"-->
+        <!--              :label="dict.label"-->
+        <!--              :value="dict.value"-->
+        <!--            ></el-option>-->
+        <!--          </el-select>-->
+        <!--        </el-form-item>-->
+        <el-form-item label="处理措施" prop="processMeasures">
+          <el-input v-model="form.processMeasures" type="textarea" placeholder="请输入内容"/>
+        </el-form-item>
+        <el-form-item label="处理后照片" prop="processImage">
+          <image-upload v-model="form.processImage"/>
+        </el-form-item>
+        <el-form-item label="处理人" prop="processUserId">
+          <el-select
+            v-model="form.processUserId"
+            placeholder="请选择处理人"
+            filterable
+            remote
+          >
             <el-option
-              v-for="dict in dict.type.sys_process_category"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            ></el-option>
+              v-for="item in processUserList"
+              :key="item.userId"
+              :label="item.userName"
+              :value="item.userId"
+            >
+            </el-option>
           </el-select>
         </el-form-item>
         <el-divider content-position="center">巡检记录明细信息</el-divider>
@@ -397,6 +430,7 @@ export default {
   dicts: ['equip_user', 'equip_patrol', 'equip_repair_sratus', 'equip_ledger', 'sys_process_category', 'equip_type', 'equip_levels', 'equip_location'],
   data() {
     return {
+      processUserList: [],
       //表格展示列
       columns: [
         { key: 0, label: '序号', visible: true },
@@ -407,8 +441,11 @@ export default {
         { key: 5, label: '巡检时间', visible: true },
         { key: 6, label: '巡检结果', visible: true },
         { key: 7, label: '问题描述', visible: true },
-        { key: 8, label: '状态', visible: true },
-        { key: 9, label: '备注', visible: false }
+        { key: 8, label: '处理措施', visible: true },
+        { key: 9, label: '处理后照片', visible: true },
+        { key: 10, label: '处理人', visible: true },
+        { key: 11, label: '状态', visible: true },
+        { key: 12, label: '备注', visible: false }
       ],
       // 遮罩层
       loading: true,
@@ -496,12 +533,18 @@ export default {
     this.getList()
     this.getEquipList()
     this.getDeptList()
+    this.getProcessUserList()
     // 调试信息：查看字典数据
     this.$nextTick(() => {
       console.log('equip_patrol字典数据:', this.dict.type.equip_patrol)
     })
   },
   methods: {
+    getProcessUserList() {
+      listUser({ pageNum: 1, pageSize: 1000 }).then(response => {
+        this.processUserList = response.rows
+      })
+    },
     /** 查询巡检记录列表 */
     getList() {
       this.loading = true
