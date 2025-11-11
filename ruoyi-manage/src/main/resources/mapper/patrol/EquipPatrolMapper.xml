@@ -18,6 +18,8 @@
         <result property="processUserId" column="process_user_id"/>
         <result property="status" column="status"/>
         <result property="patrolResult" column="patrol_result"/>
+        <result property="problemImages" column="problem_images"/>
+        <result property="problem" column="problem"/>
         <result property="remark" column="remark"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -52,6 +54,7 @@
                user_name,
                patrol_time,
                patrol_result,
+               problem_images,
                problem,
                process_measures,
                process_image,
@@ -84,6 +87,7 @@
                user_name,
                patrol_time,
                patrol_result,
+               problem_images,
                problem,
                process_measures,
                process_image,
@@ -123,6 +127,7 @@
             <if test="userName != null">user_name,</if>
             <if test="patrolTime != null">patrol_time,</if>
             <if test="patrolResult != null">patrol_result,</if>
+            <if test="problemImages != null">problem_images,</if>
             <if test="problem != null">problem,</if>
             <if test="processMeasures != null">process_measures,</if>
             <if test="processImage != null">process_image,</if>
@@ -143,6 +148,7 @@
             <if test="userName != null">#{userName},</if>
             <if test="patrolTime != null">#{patrolTime},</if>
             <if test="patrolResult != null">#{patrolResult},</if>
+            <if test="problemImages != null">#{problemImages},</if>
             <if test="problem != null">#{problem},</if>
             <if test="processMeasures != null">#{processMeasures},</if>
             <if test="processImage != null">#{processImage},</if>
@@ -167,6 +173,7 @@
             <if test="userName != null">user_name = #{userName},</if>
             <if test="patrolTime != null">patrol_time = #{patrolTime},</if>
             <if test="patrolResult != null">patrol_result = #{patrolResult},</if>
+            <if test="problemImages != null">problem_images = #{problemImages},</if>
             <if test="problem != null">problem = #{problem},</if>
             <if test="processMeasures != null">process_measures = #{processMeasures},</if>
             <if test="processImage != null">process_image = #{processImage},</if>

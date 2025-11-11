@@ -128,14 +128,14 @@
       <el-table-column label="测点3厚度(mm)" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
                        prop="point3Thickness"
       />
-      <el-table-column label="腐蚀速率" :show-overflow-tooltip="true" align="center" v-if="columns[11].visible"
-                       prop="corrosionRate"
+      <el-table-column label="腐蚀速率（mm/a）" :show-overflow-tooltip="true" align="center" v-if="columns[11].visible"
+                 prop="corrosionRate"
       />
       <el-table-column label="防腐蚀评估" :show-overflow-tooltip="true" align="center" v-if="columns[12].visible"
                        prop="corrosionAssessment"
       />
-      <el-table-column label="剩余使用寿命" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
-                       prop="remainingUsefulLife"
+      <el-table-column label="剩余使用寿命（a）" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
+                 prop="remainingUsefulLife"
       />
       <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[14].visible"
                        prop="remark"
@@ -261,14 +261,14 @@
         <el-form-item label="测点3厚度(mm)" prop="point3Thickness">
           <el-input v-model="form.point3Thickness" placeholder="请输入测点3厚度(mm)"/>
         </el-form-item>
-        <el-form-item label="腐蚀速率" prop="corrosionRate">
-          <el-input v-model="form.corrosionRate" placeholder="请输入腐蚀速率"/>
+        <el-form-item label="腐蚀速率（mm/a）" prop="corrosionRate">
+          <el-input v-model="form.corrosionRate" placeholder="请输入腐蚀速率（mm/a）"/>
         </el-form-item>
         <el-form-item label="防腐蚀评估" prop="corrosionAssessment">
           <el-input v-model="form.corrosionAssessment" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
-        <el-form-item label="剩余使用寿命" prop="remainingUsefulLife">
-          <el-input v-model="form.remainingUsefulLife" placeholder="请输入剩余使用寿命"/>
+        <el-form-item label="剩余使用寿命（a）" prop="remainingUsefulLife">
+          <el-input v-model="form.remainingUsefulLife" placeholder="请输入剩余使用寿命（a）"/>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"/>
@@ -406,9 +406,9 @@ export default {
         { key: 8, label: '测点1厚度(mm)', visible: true },
         { key: 9, label: '测点2厚度(mm)', visible: true },
         { key: 10, label: '测点3厚度(mm)', visible: true },
-        { key: 11, label: '腐蚀速率', visible: true },
+        { key: 11, label: '腐蚀速率（mm/a）', visible: true },
         { key: 12, label: '防腐蚀评估', visible: true },
-        { key: 13, label: '剩余使用寿命', visible: true },
+        { key: 13, label: '剩余使用寿命（a）', visible: true },
         { key: 14, label: '备注', visible: false }
       ],
       // 遮罩层

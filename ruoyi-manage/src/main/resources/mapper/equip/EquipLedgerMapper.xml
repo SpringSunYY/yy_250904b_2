@@ -27,6 +27,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="responsiblePerson"    column="responsible_person"    />
         <result property="status"    column="status"    />
         <result property="specialEquipment"    column="special_equipment"    />
+        <result property="equipmentPhotos" column="equipment_photos" />
+        <result property="nameplatePhotos" column="nameplate_photos" />
+        <result property="technicalData" column="technical_data" />
         <result property="remark"    column="remark"    />
         <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
@@ -35,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectEquipLedgerVo">
-        select equip_id, is_original, equ_name, equ_code, type, equip_levels, specification, put_intro_date, equipment_material, purchase_date, factory_date, dynamic_static_equipment, design_operating_parameters, install_location, supplier_id, supplier_name, department_id, department_name, responsible_person_id, responsible_person, status, special_equipment, remark, create_by, create_time, update_by, update_time from equip_ledger
+        select equip_id, is_original, equ_name, equ_code, type, equip_levels, specification, put_intro_date, equipment_material, purchase_date, factory_date, dynamic_static_equipment, design_operating_parameters, install_location, supplier_id, supplier_name, department_id, department_name, responsible_person_id, responsible_person, status, special_equipment, equipment_photos, nameplate_photos, technical_data, remark, create_by, create_time, update_by, update_time from equip_ledger
     </sql>
 
     <select id="selectEquipLedgerList" parameterType="EquipLedger" resultMap="EquipLedgerResult">
@@ -86,6 +89,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="responsiblePerson != null">responsible_person,</if>
             <if test="status != null">status,</if>
             <if test="specialEquipment != null">special_equipment,</if>
+            <if test="equipmentPhotos != null">equipment_photos,</if>
+            <if test="nameplatePhotos != null">nameplate_photos,</if>
+            <if test="technicalData != null">technical_data,</if>
             <if test="remark != null">remark,</if>
 
             <if test="createBy != null">create_by,</if>
@@ -115,6 +121,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="responsiblePerson != null">#{responsiblePerson},</if>
             <if test="status != null">#{status},</if>
             <if test="specialEquipment != null">#{specialEquipment},</if>
+            <if test="equipmentPhotos != null">#{equipmentPhotos},</if>
+            <if test="nameplatePhotos != null">#{nameplatePhotos},</if>
+            <if test="technicalData != null">#{technicalData},</if>
             <if test="remark != null">#{remark},</if>
 
             <if test="createBy != null">#{createBy},</if>
@@ -148,6 +157,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="responsiblePerson != null">responsible_person = #{responsiblePerson},</if>
             <if test="status != null">status = #{status},</if>
             <if test="specialEquipment != null">special_equipment = #{specialEquipment},</if>
+            <if test="equipmentPhotos != null">equipment_photos = #{equipmentPhotos},</if>
+            <if test="nameplatePhotos != null">nameplate_photos = #{nameplatePhotos},</if>
+            <if test="technicalData != null">technical_data = #{technicalData},</if>
             <if test="remark != null">remark = #{remark},</if>
 
             <if test="createBy != null">create_by = #{createBy},</if>

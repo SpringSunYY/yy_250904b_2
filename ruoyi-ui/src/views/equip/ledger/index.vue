@@ -177,14 +177,50 @@
           <dict-tag :options="dict.type.equip_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
-                       prop="remark"
-      />
       <el-table-column label="特种设备" align="center" prop="specialEquipment" v-if="columns[14].visible">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.specialEquipment"/>
         </template>
       </el-table-column>
+      <!-- 添加的三列 -->
+      <el-table-column label="设备照片" align="center" prop="equipmentPhotos" v-if="columns[20].visible" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.equipmentPhotos" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="铭牌照片" align="center" prop="nameplatePhotos" v-if="columns[21].visible" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.nameplatePhotos" :width="50" :height="50"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="技术资料" align="center" prop="technicalData" v-if="columns[22].visible" width="100">
+        <template slot-scope="scope">
+          <div v-if="scope.row.technicalData">
+            <el-tooltip placement="top">
+              <div slot="content">
+                <div v-for="(file,index) in scope.row.technicalData.split(',')"
+                     :key="index"
+                     style="text-align: left;padding: 5px;"
+                >
+                  <el-link
+                    :download="getFileName(file)"
+                    :href="baseUrl+file"
+                    :underline="false"
+                    target="_blank"
+                    style="color: white;font-size: 12px"
+                  >
+                    <span style="cursor: pointer;"> {{ getFileName(file) }} </span>
+                  </el-link>
+                </div>
+              </div>
+              <span style="cursor: pointer; color: #409EFF;">查看文件</span>
+            </el-tooltip>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
+                       prop="remark"
+      />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -390,6 +426,16 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="设备照片" prop="equipmentPhotos">
+          <image-upload v-model="form.equipmentPhotos"/>
+        </el-form-item>
+        <el-form-item label="铭牌照片" prop="nameplatePhotos">
+          <image-upload v-model="form.nameplatePhotos"/>
+        </el-form-item>
+        <el-form-item label="技术资料" prop="technicalData">
+          <file-upload v-model="form.technicalData"/>
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -411,6 +457,7 @@ export default {
   dicts: ['equip_source', 'equip_levels', 'equip_dept', 'equip_user', 'equip_status', 'equip_order', 'equip_type', 'equip_location', 'sys_yes_no', 'static_dynamic'],
   data() {
     return {
+      baseUrl: process.env.VUE_APP_BASE_API,
       //表格展示列
       columns: [
         { key: 0, label: '序号', visible: false },
@@ -430,9 +477,13 @@ export default {
         { key: 10, label: '所属部门', visible: true },
         { key: 11, label: '责任人', visible: true },
         { key: 12, label: '设备状态', visible: true },
-        { key: 13, label: '备注', visible: false },
         { key: 14, label: '特种设备', visible: true },
-        { key: 15, label: '动静设备', visible: true }
+        { key: 15, label: '动静设备', visible: true },
+        // 新增的三列
+        { key: 20, label: '设备照片', visible: true },
+        { key: 21, label: '铭牌照片', visible: true },
+        { key: 22, label: '技术资料', visible: true },
+        { key: 13, label: '备注', visible: false } // 移动到技术资料后面
       ],
       // 遮罩层
       loading: true,
@@ -486,6 +537,14 @@ export default {
     this.getPurOrderList()
   },
   methods: {
+    //获取文件名 此功能只可以下载只有一个文件的
+    getFileName(filePath) {
+      if (filePath == null) {
+        return ''
+      }
+      // 提取文件名或根据需求生成文件名
+      return filePath.substring(filePath.lastIndexOf('/') + 1)
+    },
     /** 查询采购订单列表 */
     getPurOrderList() {
       listOrder({ pageNum: 1, pageSize: 100 }).then(response => {
@@ -536,6 +595,9 @@ export default {
         responsiblePerson: null,
         status: null,
         specialEquipment: null,
+        equipmentPhotos: null,
+        nameplatePhotos: null,
+        technicalData: null,
         remark: null,
         createBy: null,
         createTime: null,

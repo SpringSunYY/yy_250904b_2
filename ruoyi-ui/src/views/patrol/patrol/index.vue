@@ -103,41 +103,38 @@
           <span>{{ parseTime(scope.row.patrolTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="巡检结果" align="center" prop="patrolResult" v-if="columns[6].visible">
+      <el-table-column label="巡检结果" align="center"prop="patrolResult" v-if="columns[6].visible">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_patrol" :value="scope.row.patrolResult"/>
         </template>
       </el-table-column>
-      <el-table-column label="问题描述" align="center" prop="problem" v-if="columns[7].visible">
+      <el-table-column label="问题照片" align="center"prop="problemImages" v-if="columns[7].visible" width="100">
         <template slot-scope="scope">
-          <div
-            v-if="scope.row.equipPatrolDetailList && Array.isArray(scope.row.equipPatrolDetailList) && scope.row.equipPatrolDetailList.length > 0"
-          >
-            <div v-for="(detail, index) in scope.row.equipPatrolDetailList" :key="index">
-              <span v-if="detail && detail.problem && detail.problem.trim() !== ''">{{ detail.problem }}</span>
-              <span v-else>--</span>
-            </div>
-          </div>
-          <span v-else>--</span>
+          <image-preview :src="scope.row.problemImages" :width="50" :height="50"/>
         </template>
       </el-table-column>
-      <el-table-column label="处理措施" :show-overflow-tooltip="true" align="center" v-if="columns[8].visible"
+      <el-table-column label="问题描述" align="center"prop="problem" v-if="columns[8].visible">
+        <template slot-scope="scope">
+          <span>{{ scope.row.problem || '--' }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="处理措施" :show-overflow-tooltip="true" align="center" v-if="columns[9].visible"
                        prop="processMeasures"
       />
-      <el-table-column label="处理后照片" align="center" v-if="columns[9].visible" prop="processImage" width="100">
+      <el-table-column label="处理后照片" align="center" v-if="columns[10].visible" prop="processImage" width="100">
         <template slot-scope="scope">
           <image-preview :src="scope.row.processImage" :width="50" :height="50"/>
         </template>
       </el-table-column>
-      <el-table-column label="处理人" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
+      <el-table-column label="处理人" :show-overflow-tooltip="true" align="center" v-if="columns[11].visible"
                        prop="processUserName"
       />
-      <el-table-column label="状态" align="center" prop="status" v-if="columns[11].visible">
+      <el-table-column label="状态" align="center" prop="status" v-if="columns[12].visible">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_repair_sratus" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" v-if="columns[12].visible"/>
+      <el-table-column label="备注" align="center" prop="remark" v-if="columns[13].visible"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -239,16 +236,12 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <!--        <el-form-item label="流程实例" prop="processInstanceId">-->
-        <!--          <el-select v-model="form.processInstanceId" placeholder="请选择流程实例">-->
-        <!--            <el-option-->
-        <!--              v-for="dict in dict.type.sys_process_category"-->
-        <!--              :key="dict.value"-->
-        <!--              :label="dict.label"-->
-        <!--              :value="dict.value"-->
-        <!--            ></el-option>-->
-        <!--          </el-select>-->
-        <!--        </el-form-item>-->
+        <el-form-item label="问题照片" prop="problemImages">
+          <image-upload v-model="form.problemImages"/>
+        </el-form-item>
+        <el-form-item label="问题描述" prop="problem">
+          <el-input v-model="form.problem" type="textarea" placeholder="请输入问题描述"/>
+        </el-form-item>
         <el-form-item label="处理措施" prop="processMeasures">
           <el-input v-model="form.processMeasures" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
@@ -434,18 +427,19 @@ export default {
       //表格展示列
       columns: [
         { key: 0, label: '序号', visible: true },
-        { key: 1, label: '巡检单号', visible: true },
-        { key: 2, label: '设备名称', visible: true },
-        { key: 3, label: '设备位号', visible: true },
-        { key: 4, label: '巡检人', visible: true },
-        { key: 5, label: '巡检时间', visible: true },
-        { key: 6, label: '巡检结果', visible: true },
-        { key: 7, label: '问题描述', visible: true },
-        { key: 8, label: '处理措施', visible: true },
-        { key: 9, label: '处理后照片', visible: true },
-        { key: 10, label: '处理人', visible: true },
-        { key: 11, label: '状态', visible: true },
-        { key: 12, label: '备注', visible: false }
+        { key: 1, label: '巡检单号',visible: true },
+        { key: 2, label: '设备名称',visible: true },
+        { key: 3, label: '设备位号',visible: true },
+        { key: 4, label: '巡检人',visible: true },
+        { key: 5, label: '巡检时间',visible: true },
+        { key: 6, label: '巡检结果',visible: true },
+        { key: 7, label: '问题照片',visible: true },
+        { key: 8, label: '问题描述',visible: true },
+        { key: 9, label: '处理措施',visible: true },
+        { key: 10, label: '处理后照片',visible: true },
+        { key: 11, label: '处理人',visible: true },
+        { key: 12, label: '状态',visible: true },
+        { key: 13, label: '备注',visible: false }
       ],
       // 遮罩层
       loading: true,
@@ -643,6 +637,8 @@ export default {
         userName: null,
         patrolTime: null,
         patrolResult: null,
+        problemImages: null,
+        problem: null,
         processInstanceId: null,
         status: null,
         remark: null,

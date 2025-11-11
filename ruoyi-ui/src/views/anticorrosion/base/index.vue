@@ -98,14 +98,18 @@
       />
       <el-table-column label="材质" :show-overflow-tooltip="true" align="center" v-if="columns[7].visible"
                        prop="material"
-      />
+      >
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.special_material" :value="scope.row.material"/>
+        </template>
+      </el-table-column>
       <el-table-column label="介质" :show-overflow-tooltip="true" align="center" v-if="columns[8].visible"
                        prop="medium"
       />
-      <el-table-column label="温度" :show-overflow-tooltip="true" align="center" v-if="columns[9].visible"
+      <el-table-column label="温度(℃)" :show-overflow-tooltip="true" align="center" v-if="columns[9].visible"
                        prop="temperature"
       />
-      <el-table-column label="压力" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
+      <el-table-column label="压力(MPa)" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
                        prop="pressure"
       />
       <el-table-column label="设计厚度(mm)" :show-overflow-tooltip="true" align="center" v-if="columns[11].visible"
@@ -203,15 +207,22 @@
           <el-input v-model="form.corrosionParts" placeholder="请输入易腐蚀部位"/>
         </el-form-item>
         <el-form-item label="材质" prop="material">
-          <el-input v-model="form.material" placeholder="请输入材质"/>
+          <el-select v-model="form.material" placeholder="请选择材质">
+            <el-option
+              v-for="dict in dict.type.special_material"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="介质" prop="medium">
           <el-input v-model="form.medium" placeholder="请输入介质"/>
         </el-form-item>
-        <el-form-item label="温度" prop="temperature">
+        <el-form-item label="温度（℃）" prop="temperature">
           <el-input v-model="form.temperature" placeholder="请输入温度"/>
         </el-form-item>
-        <el-form-item label="压力" prop="pressure">
+        <el-form-item label="压力(MPa)" prop="pressure">
           <el-input v-model="form.pressure" placeholder="请输入压力"/>
         </el-form-item>
         <el-form-item label="设计厚度(mm)" prop="originalThickness">
@@ -326,7 +337,7 @@ import { listLedger } from '@/api/equip/ledger'
 
 export default {
   name: 'Base',
-  dicts: ['equip_levels', 'equip_ledger', 'equip_inspection_cycle', 'equip_type', 'equip_location'],
+  dicts: ['equip_levels', 'equip_ledger', 'equip_inspection_cycle', 'equip_type', 'equip_location', 'special_material'],
   data() {
     return {
       //表格展示列
@@ -340,8 +351,8 @@ export default {
         { key: 6, label: '易腐蚀部位', visible: true },
         { key: 7, label: '材质', visible: true },
         { key: 8, label: '介质', visible: true },
-        { key: 9, label: '温度', visible: true },
-        { key: 10, label: '压力', visible: true },
+        { key: 9, label: '温度（℃）', visible: true },
+        { key: 10, label: '压力(MPa)', visible: true },
         { key: 11, label: '设计厚度(mm)', visible: true },
         { key: 12, label: '最小安全厚度(mm)', visible: true },
         { key: 13, label: '检测周期', visible: true },

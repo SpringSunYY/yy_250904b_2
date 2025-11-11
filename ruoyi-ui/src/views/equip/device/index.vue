@@ -75,46 +75,43 @@
       <el-table-column label="订单编号" :show-overflow-tooltip="true" align="center" v-if="columns[2].visible"
                        prop="orderId"
       />
-      <el-table-column label="订单编号" :show-overflow-tooltip="true" align="center" v-if="columns[3].visible"
-                       prop="orderNo"
-      />
-      <el-table-column label="设备名称" :show-overflow-tooltip="true" align="center" v-if="columns[4].visible"
+      <el-table-column label="设备名称" :show-overflow-tooltip="true" align="center" v-if="columns[3].visible"
                        prop="equipName"
       />
-      <el-table-column label="设备位号" :show-overflow-tooltip="true" align="center" v-if="columns[5].visible"
+      <el-table-column label="设备位号" :show-overflow-tooltip="true" align="center" v-if="columns[4].visible"
                        prop="equipNo"
       />
-      <el-table-column label="设备型号" :show-overflow-tooltip="true" align="center" v-if="columns[6].visible"
+      <el-table-column label="设备型号" :show-overflow-tooltip="true" align="center" v-if="columns[5].visible"
                        prop="equipModel"
       />
-      <el-table-column label="入厂日期" align="center" v-if="columns[7].visible" prop="inDate" width="180">
+      <el-table-column label="入厂日期" align="center" v-if="columns[6].visible" prop="inDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.inDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="安装单位" :show-overflow-tooltip="true" align="center" v-if="columns[8].visible"
+      <el-table-column label="安装单位" :show-overflow-tooltip="true" align="center" v-if="columns[7].visible"
                        prop="instUnit"
       />
-      <el-table-column label="安装负责人" :show-overflow-tooltip="true" align="center" v-if="columns[9].visible"
+      <el-table-column label="安装负责人" :show-overflow-tooltip="true" align="center" v-if="columns[8].visible"
                        prop="instPerson"
       />
-      <el-table-column label="联系电话" :show-overflow-tooltip="true" align="center" v-if="columns[10].visible"
+      <el-table-column label="联系电话" :show-overflow-tooltip="true" align="center" v-if="columns[9].visible"
                        prop="instPhone"
       />
-      <el-table-column label="安装日期" align="center" v-if="columns[11].visible" prop="instDate" width="180">
+      <el-table-column label="安装日期" align="center" v-if="columns[10].visible" prop="instDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.instDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="安装位置" align="center" v-if="columns[12].visible" prop="instLocation">
+      <el-table-column label="安装位置" align="center" v-if="columns[11].visible" prop="instLocation">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_location" :value="scope.row.instLocation"/>
         </template>
       </el-table-column>
-      <el-table-column label="安装调试单位" :show-overflow-tooltip="true" align="center" v-if="columns[13].visible"
+      <el-table-column label="安装调试单位" :show-overflow-tooltip="true" align="center" v-if="columns[12].visible"
                        prop="instAdjustUnit"
       />
-      <el-table-column label="相关附件" align="center" v-if="columns[14].visible" prop="appendix" width="100">
+      <el-table-column label="相关附件" align="center" v-if="columns[13].visible" prop="appendix" width="100">
         <template slot-scope="scope">
           <div v-if="scope.row.appendix">
             <el-tooltip placement="top">
@@ -139,36 +136,27 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="验收结果" align="center" v-if="columns[15].visible" prop="acceptanceResult">
+      <el-table-column label="验收结果" align="center" v-if="columns[14].visible" prop="acceptanceResult">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.equip_fun" :value="scope.row.acceptanceResult"/>
         </template>
       </el-table-column>
-      <el-table-column label="验收意见" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"
+      <el-table-column label="验收意见" :show-overflow-tooltip="true" align="center" v-if="columns[15].visible"
                        prop="acceptanceOpinion"
       />
-      <el-table-column label="申请部门ID" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
-                       prop="deptId"
-      />
-      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"
+      <el-table-column label="申请部门" :show-overflow-tooltip="true" align="center" v-if="columns[16].visible"
                        prop="deptName"
       />
-      <el-table-column label="申请人ID" :show-overflow-tooltip="true" align="center" v-if="columns[19].visible"
-                       prop="applyUserId"
-      />
-      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[20].visible"
+      <el-table-column label="申请人" :show-overflow-tooltip="true" align="center" v-if="columns[17].visible"
                        prop="applyUserName"
       />
-      <el-table-column label="任务ID" :show-overflow-tooltip="true" align="center" v-if="columns[21].visible"
+      <el-table-column label="任务ID" :show-overflow-tooltip="true" align="center" v-if="columns[18].visible"
                        prop="taskId"
       />
-      <el-table-column label="流程实例ID" :show-overflow-tooltip="true" align="center" v-if="columns[22].visible"
-                       prop="processInstanceId"
-      />
-      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[23].visible"
+      <el-table-column label="流程自定义ID" :show-overflow-tooltip="true" align="center" v-if="columns[19].visible"
                        prop="deployId"
       />
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[24].visible"
+      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" v-if="columns[20].visible"
                        prop="remark"
       />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" width="200">
@@ -397,14 +385,12 @@ export default {
         { key: 14, label: '相关附件', visible: false },
         { key: 15, label: '验收结果', visible: true },
         { key: 16, label: '验收意见', visible: false },
-        { key: 17, label: '申请部门ID', visible: false },
-        { key: 18, label: '申请部门', visible: false },
-        { key: 19, label: '申请人ID', visible: false },
-        { key: 20, label: '申请人', visible: false },
-        { key: 21, label: '流程实例ID', visible: false },
-        { key: 22, label: '流程自定义ID', visible: false },
-        { key: 23, label: '备注', visible: false },
-        { key: 24, label: '更新时间', visible: false }
+        { key: 17, label: '申请部门', visible: false },
+        { key: 18, label: '申请人', visible: false },
+        { key: 19, label: '任务ID', visible: false },
+        { key: 20, label: '流程自定义ID', visible: false },
+        { key: 21, label: '备注', visible: false },
+        { key: 22, label: '更新时间', visible: false }
       ],
       dialogVisible: false,
       deployId: '',

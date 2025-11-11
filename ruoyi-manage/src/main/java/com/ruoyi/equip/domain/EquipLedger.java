@@ -105,6 +105,18 @@ public class EquipLedger extends BaseEntity
     @Excel(name = "特种设备")
     private String specialEquipment;
 
+    /** 设备照片 */
+    @Excel(name = "设备照片")
+    private String equipmentPhotos;
+
+    /** 铭牌照片 */
+    @Excel(name = "铭牌照片")
+    private String nameplatePhotos;
+
+    /** 技术资料 */
+    @Excel(name = "技术资料")
+    private String technicalData;
+
     public void setEquipId(Long equipId) 
     {
         this.equipId = equipId;
@@ -326,6 +338,30 @@ public class EquipLedger extends BaseEntity
         return specialEquipment;
     }
 
+    public String getEquipmentPhotos() {
+        return equipmentPhotos;
+    }
+
+    public void setEquipmentPhotos(String equipmentPhotos) {
+        this.equipmentPhotos = equipmentPhotos;
+    }
+
+    public String getNameplatePhotos() {
+        return nameplatePhotos;
+    }
+
+    public void setNameplatePhotos(String nameplatePhotos) {
+        this.nameplatePhotos = nameplatePhotos;
+    }
+
+    public String getTechnicalData() {
+        return technicalData;
+    }
+
+    public void setTechnicalData(String technicalData) {
+        this.technicalData = technicalData;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -346,6 +382,9 @@ public class EquipLedger extends BaseEntity
             .append("responsiblePerson", getResponsiblePerson())
             .append("status", getStatus())
             .append("specialEquipment", getSpecialEquipment())
+            .append("equipmentPhotos", getEquipmentPhotos())
+            .append("nameplatePhotos", getNameplatePhotos())
+            .append("technicalData", getTechnicalData())
             .append("remark", getRemark())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())

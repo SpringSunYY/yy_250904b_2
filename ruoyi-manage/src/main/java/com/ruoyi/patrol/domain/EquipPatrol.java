@@ -74,6 +74,12 @@ public class EquipPatrol extends BaseEntity {
     private String patrolResult;
 
     /**
+     * 问题照片
+     */
+    @Excel(name = "问题照片")
+    private String problemImages;
+
+    /**
      * 问题描述
      */
     @Excel(name = "问题描述")
@@ -181,6 +187,14 @@ public class EquipPatrol extends BaseEntity {
         return patrolResult;
     }
 
+    public void setProblemImages(String problemImages) {
+        this.problemImages = problemImages;
+    }
+
+    public String getProblemImages() {
+        return problemImages;
+    }
+
     public void setProblem(String problem) {
         this.problem = problem;
     }
@@ -249,6 +263,7 @@ public class EquipPatrol extends BaseEntity {
                 .append("userName", getUserName())
                 .append("patrolTime", getPatrolTime())
                 .append("patrolResult", getPatrolResult())
+                .append("problemImages", getProblemImages())
                 .append("problem", getProblem())
                 .append("processMeasures", getProcessMeasures())
                 .append("processImage", getProcessImage())
