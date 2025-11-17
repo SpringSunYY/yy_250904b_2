@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.process.mapper.BizSiteInspectionsMapper">
+    
+    <resultMap type="BizSiteInspections" id="BizSiteInspectionsResult">
+        <result property="id"    column="id"    />
+        <result property="inspectionCode"    column="inspection_code"    />
+        <result property="choiceId"    column="choice_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="inspectionDatetime"    column="inspection_datetime"    />
+        <result property="weatherCondition"    column="weather_condition"    />
+        <result property="workLocation"    column="work_location"    />
+        <result property="inspectorName"    column="inspector_name"    />
+        <result property="contractorAttendant"    column="contractor_attendant"    />
+        <result property="hasHazards"    column="has_hazards"    />
+        <result property="hazardsCount"    column="hazards_count"    />
+        <result property="attachments"    column="attachments"    />
+        <result property="notes"    column="notes"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizSiteInspectionsVo">
+        select id, inspection_code, choice_id, project_name, contractor_name, inspection_datetime, weather_condition, work_location, inspector_name, contractor_attendant, has_hazards, hazards_count, attachments, notes, created_by, created_at, updated_by, updated_at from biz_site_inspections
+    </sql>
+
+    <select id="selectBizSiteInspectionsList" parameterType="BizSiteInspections" resultMap="BizSiteInspectionsResult">
+        <include refid="selectBizSiteInspectionsVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="contractorName != null  and contractorName != ''"> and contractor_name like concat('%', #{contractorName}, '%')</if>
+            <if test="hasHazards != null  and hasHazards != ''"> and has_hazards = #{hasHazards}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizSiteInspectionsById" parameterType="Long" resultMap="BizSiteInspectionsResult">
+        <include refid="selectBizSiteInspectionsVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBizSiteInspectionsByInspectionCode" parameterType="String" resultMap="BizSiteInspectionsResult">
+        <include refid="selectBizSiteInspectionsVo"/>
+        where inspection_code = #{inspectionCode}
+        LIMIT 1
+    </select>
+
+    <insert id="insertBizSiteInspections" parameterType="BizSiteInspections" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_site_inspections
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="inspectionCode != null and inspectionCode != ''">inspection_code,</if>
+            <if test="choiceId != null">choice_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="contractorName != null">contractor_name,</if>
+            <if test="inspectionDatetime != null">inspection_datetime,</if>
+            <if test="weatherCondition != null">weather_condition,</if>
+            <if test="workLocation != null">work_location,</if>
+            <if test="inspectorName != null">inspector_name,</if>
+            <if test="contractorAttendant != null">contractor_attendant,</if>
+            <if test="hasHazards != null">has_hazards,</if>
+            <if test="hazardsCount != null">hazards_count,</if>
+            <if test="attachments != null">attachments,</if>
+            <if test="notes != null">notes,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="inspectionCode != null and inspectionCode != ''">#{inspectionCode},</if>
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="contractorName != null">#{contractorName},</if>
+            <if test="inspectionDatetime != null">#{inspectionDatetime},</if>
+            <if test="weatherCondition != null">#{weatherCondition},</if>
+            <if test="workLocation != null">#{workLocation},</if>
+            <if test="inspectorName != null">#{inspectorName},</if>
+            <if test="contractorAttendant != null">#{contractorAttendant},</if>
+            <if test="hasHazards != null">#{hasHazards},</if>
+            <if test="hazardsCount != null">#{hazardsCount},</if>
+            <if test="attachments != null">#{attachments},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizSiteInspections" parameterType="BizSiteInspections">
+        update biz_site_inspections
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inspectionCode != null and inspectionCode != ''">inspection_code = #{inspectionCode},</if>
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="contractorName != null">contractor_name = #{contractorName},</if>
+            <if test="inspectionDatetime != null">inspection_datetime = #{inspectionDatetime},</if>
+            <if test="weatherCondition != null">weather_condition = #{weatherCondition},</if>
+            <if test="workLocation != null">work_location = #{workLocation},</if>
+            <if test="inspectorName != null">inspector_name = #{inspectorName},</if>
+            <if test="contractorAttendant != null">contractor_attendant = #{contractorAttendant},</if>
+            <if test="hasHazards != null">has_hazards = #{hasHazards},</if>
+            <if test="hazardsCount != null">hazards_count = #{hazardsCount},</if>
+            <if test="attachments != null">attachments = #{attachments},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizSiteInspectionsById" parameterType="Long">
+        delete from biz_site_inspections where id = #{id}
+    </delete>
+
+    <delete id="deleteBizSiteInspectionsByIds" parameterType="String">
+        delete from biz_site_inspections where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

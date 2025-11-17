@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.prepare.mapper.BizSafetyBriefingMapper">
+    
+    <resultMap type="BizSafetyBriefing" id="BizSafetyBriefingResult">
+        <result property="id"    column="id"    />
+        <result property="briefingCode"    column="briefing_code"    />
+        <result property="choiceId"    column="choice_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="briefingType"    column="briefing_type"    />
+        <result property="briefingTime"    column="briefing_time"    />
+        <result property="briefingTopic"    column="briefing_topic"    />
+        <result property="informer"    column="informer"    />
+        <result property="briefingDuration"    column="briefing_duration"    />
+        <result property="meetingSummary"    column="meeting_summary"    />
+        <result property="briefingDocument"    column="briefing_document"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizSafetyBriefingVo">
+        select id, briefing_code, choice_id, project_name, contractor_name, briefing_type, briefing_time, briefing_topic, informer, briefing_duration, meeting_summary, briefing_document, remarks, created_by, created_at, updated_by, updated_at from biz_safety_briefing
+    </sql>
+
+    <select id="selectBizSafetyBriefingList" parameterType="BizSafetyBriefing" resultMap="BizSafetyBriefingResult">
+        <include refid="selectBizSafetyBriefingVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="contractorName != null  and contractorName != ''"> and contractor_name like concat('%', #{contractorName}, '%')</if>
+            <if test="briefingType != null  and briefingType != ''"> and briefing_type = #{briefingType}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizSafetyBriefingById" parameterType="Long" resultMap="BizSafetyBriefingResult">
+        <include refid="selectBizSafetyBriefingVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBizSafetyBriefing" parameterType="BizSafetyBriefing" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_safety_briefing
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="briefingCode != null">briefing_code,</if>
+            <if test="choiceId != null">choice_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="contractorName != null">contractor_name,</if>
+            <if test="briefingType != null">briefing_type,</if>
+            <if test="briefingTime != null">briefing_time,</if>
+            <if test="briefingTopic != null">briefing_topic,</if>
+            <if test="informer != null">informer,</if>
+            <if test="briefingDuration != null">briefing_duration,</if>
+            <if test="meetingSummary != null">meeting_summary,</if>
+            <if test="briefingDocument != null">briefing_document,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="briefingCode != null">#{briefingCode},</if>
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="contractorName != null">#{contractorName},</if>
+            <if test="briefingType != null">#{briefingType},</if>
+            <if test="briefingTime != null">#{briefingTime},</if>
+            <if test="briefingTopic != null">#{briefingTopic},</if>
+            <if test="informer != null">#{informer},</if>
+            <if test="briefingDuration != null">#{briefingDuration},</if>
+            <if test="meetingSummary != null">#{meetingSummary},</if>
+            <if test="briefingDocument != null">#{briefingDocument},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizSafetyBriefing" parameterType="BizSafetyBriefing">
+        update biz_safety_briefing
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="briefingCode != null">briefing_code = #{briefingCode},</if>
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="contractorName != null">contractor_name = #{contractorName},</if>
+            <if test="briefingType != null">briefing_type = #{briefingType},</if>
+            <if test="briefingTime != null">briefing_time = #{briefingTime},</if>
+            <if test="briefingTopic != null">briefing_topic = #{briefingTopic},</if>
+            <if test="informer != null">informer = #{informer},</if>
+            <if test="briefingDuration != null">briefing_duration = #{briefingDuration},</if>
+            <if test="meetingSummary != null">meeting_summary = #{meetingSummary},</if>
+            <if test="briefingDocument != null">briefing_document = #{briefingDocument},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizSafetyBriefingById" parameterType="Long">
+        delete from biz_safety_briefing where id = #{id}
+    </delete>
+
+    <delete id="deleteBizSafetyBriefingByIds" parameterType="String">
+        delete from biz_safety_briefing where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.contents.mapper.BizContractorBlacklistMapper">
+    
+    <resultMap type="BizContractorBlacklist" id="BizContractorBlacklistResult">
+        <result property="blackId"    column="black_id"    />
+        <result property="auditId"    column="audit_id"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="blacklistDate"    column="blacklist_date"    />
+        <result property="blacklistReason"    column="blacklist_reason"    />
+        <result property="penaltyAmount"    column="penalty_amount"    />
+        <result property="penaltyPeriod"    column="penalty_period"    />
+        <result property="releaseDate"    column="release_date"    />
+        <result property="attachment"    column="attachment"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizContractorBlacklistVo">
+        select black_id, audit_id, contractor_name, blacklist_date, blacklist_reason, penalty_amount, penalty_period, release_date, attachment, remarks, created_by, created_at, updated_by, updated_at from biz_contractor_blacklist
+    </sql>
+
+    <select id="selectBizContractorBlacklistList" parameterType="BizContractorBlacklist" resultMap="BizContractorBlacklistResult">
+        <include refid="selectBizContractorBlacklistVo"/>
+        <where>  
+            <if test="contractorName != null  and contractorName != ''"> and contractor_name like concat('%', #{contractorName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectBizContractorBlacklistByBlackId" parameterType="Long" resultMap="BizContractorBlacklistResult">
+        <include refid="selectBizContractorBlacklistVo"/>
+        where black_id = #{blackId}
+    </select>
+
+    <insert id="insertBizContractorBlacklist" parameterType="BizContractorBlacklist" useGeneratedKeys="true" keyProperty="blackId">
+        insert into biz_contractor_blacklist
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="auditId != null">audit_id,</if>
+            <if test="contractorName != null and contractorName != ''">contractor_name,</if>
+            <if test="blacklistDate != null">blacklist_date,</if>
+            <if test="blacklistReason != null">blacklist_reason,</if>
+            <if test="penaltyAmount != null">penalty_amount,</if>
+            <if test="penaltyPeriod != null">penalty_period,</if>
+            <if test="releaseDate != null">release_date,</if>
+            <if test="attachment != null">attachment,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="auditId != null">#{auditId},</if>
+            <if test="contractorName != null and contractorName != ''">#{contractorName},</if>
+            <if test="blacklistDate != null">#{blacklistDate},</if>
+            <if test="blacklistReason != null">#{blacklistReason},</if>
+            <if test="penaltyAmount != null">#{penaltyAmount},</if>
+            <if test="penaltyPeriod != null">#{penaltyPeriod},</if>
+            <if test="releaseDate != null">#{releaseDate},</if>
+            <if test="attachment != null">#{attachment},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizContractorBlacklist" parameterType="BizContractorBlacklist">
+        update biz_contractor_blacklist
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="auditId != null">audit_id = #{auditId},</if>
+            <if test="contractorName != null and contractorName != ''">contractor_name = #{contractorName},</if>
+            <if test="blacklistDate != null">blacklist_date = #{blacklistDate},</if>
+            <if test="blacklistReason != null">blacklist_reason = #{blacklistReason},</if>
+            <if test="penaltyAmount != null">penalty_amount = #{penaltyAmount},</if>
+            <if test="penaltyPeriod != null">penalty_period = #{penaltyPeriod},</if>
+            <if test="releaseDate != null">release_date = #{releaseDate},</if>
+            <if test="attachment != null">attachment = #{attachment},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where black_id = #{blackId}
+    </update>
+
+    <delete id="deleteBizContractorBlacklistByBlackId" parameterType="Long">
+        delete from biz_contractor_blacklist where black_id = #{blackId}
+    </delete>
+
+    <delete id="deleteBizContractorBlacklistByBlackIds" parameterType="String">
+        delete from biz_contractor_blacklist where black_id in 
+        <foreach item="blackId" collection="array" open="(" separator="," close=")">
+            #{blackId}
+        </foreach>
+    </delete>
+</mapper>

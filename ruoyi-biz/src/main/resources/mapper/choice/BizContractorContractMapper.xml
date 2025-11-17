@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.choice.mapper.BizContractorContractMapper">
+
+    <resultMap type="BizContractorContract" id="BizContractorContractResult">
+        <result property="id" column="id"/>
+        <result property="choiceId" column="choice_id"/>
+        <result property="projectName" column="project_name"/>
+        <result property="contractorName" column="contractor_name"/>
+        <result property="projectContract" column="project_contract"/>
+        <result property="signingTime" column="Signing_time"/>
+        <result property="safetyManagementAgreement" column="safety_management_agreement"/>
+        <result property="signingDate" column="signing_date"/>
+        <result property="constructionPlan" column="construction_plan"/>
+        <result property="reviewTime" column="review_time"/>
+        <result property="safeWorkProcedures" column="safe_work_procedures"/>
+        <result property="emergencyResponsePlan" column="emergency_response_plan"/>
+        <result property="reviewDate" column="review_date"/>
+        <result property="remarks" column="remarks"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="selectBizContractorContractVo">
+        select id,
+               choice_id,
+               project_name,
+               contractor_name,
+               project_contract,
+               Signing_time,
+               safety_management_agreement,
+               signing_date,
+               construction_plan,
+               review_time,
+               safe_work_procedures,
+               emergency_response_plan,
+               review_date,
+               remarks,
+               created_by,
+               created_at,
+               updated_by,
+               updated_at
+        from biz_contractor_contract
+    </sql>
+
+    <select id="selectBizContractorContractList" parameterType="BizContractorContract"
+            resultMap="BizContractorContractResult">
+        <include refid="selectBizContractorContractVo"/>
+        <where>
+            <if test="projectName != null  and projectName != ''">and project_name like concat('%', #{projectName},
+                '%')
+            </if>
+            <if test="contractorName != null  and contractorName != ''">and contractor_name like concat('%',
+                #{contractorName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBizContractorContractById" parameterType="Long" resultMap="BizContractorContractResult">
+        <include refid="selectBizContractorContractVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectContractorContractStatistics" resultType="com.ruoyi.statistics.domain.ro.BizStatisticsRo">
+        select choice_id as name, count(1) as value from biz_contractor_contract
+        <where>
+            <if test="choiceIds != null and choiceIds.size() > 0">
+                and choice_id in
+                <foreach item="item" collection="choiceIds" separator="," open="(" close=")" index="">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        group by choice_id
+    </select>
+
+    <insert id="insertBizContractorContract" parameterType="BizContractorContract" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into biz_contractor_contract
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="choiceId != null">choice_id,</if>
+            <if test="projectName != null and projectName != ''">project_name,</if>
+            <if test="contractorName != null and contractorName != ''">contractor_name,</if>
+            <if test="projectContract != null">project_contract,</if>
+            <if test="signingTime != null">Signing_time,</if>
+            <if test="safetyManagementAgreement != null">safety_management_agreement,</if>
+            <if test="signingDate != null">signing_date,</if>
+            <if test="constructionPlan != null">construction_plan,</if>
+            <if test="reviewTime != null">review_time,</if>
+            <if test="safeWorkProcedures != null">safe_work_procedures,</if>
+            <if test="emergencyResponsePlan != null">emergency_response_plan,</if>
+            <if test="reviewDate != null">review_date,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="projectName != null and projectName != ''">#{projectName},</if>
+            <if test="contractorName != null and contractorName != ''">#{contractorName},</if>
+            <if test="projectContract != null">#{projectContract},</if>
+            <if test="signingTime != null">#{signingTime},</if>
+            <if test="safetyManagementAgreement != null">#{safetyManagementAgreement},</if>
+            <if test="signingDate != null">#{signingDate},</if>
+            <if test="constructionPlan != null">#{constructionPlan},</if>
+            <if test="reviewTime != null">#{reviewTime},</if>
+            <if test="safeWorkProcedures != null">#{safeWorkProcedures},</if>
+            <if test="emergencyResponsePlan != null">#{emergencyResponsePlan},</if>
+            <if test="reviewDate != null">#{reviewDate},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBizContractorContract" parameterType="BizContractorContract">
+        update biz_contractor_contract
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="projectName != null and projectName != ''">project_name = #{projectName},</if>
+            <if test="contractorName != null and contractorName != ''">contractor_name = #{contractorName},</if>
+            <if test="projectContract != null">project_contract = #{projectContract},</if>
+            <if test="signingTime != null">Signing_time = #{signingTime},</if>
+            <if test="safetyManagementAgreement != null">safety_management_agreement = #{safetyManagementAgreement},
+            </if>
+            <if test="signingDate != null">signing_date = #{signingDate},</if>
+            <if test="constructionPlan != null">construction_plan = #{constructionPlan},</if>
+            <if test="reviewTime != null">review_time = #{reviewTime},</if>
+            <if test="safeWorkProcedures != null">safe_work_procedures = #{safeWorkProcedures},</if>
+            <if test="emergencyResponsePlan != null">emergency_response_plan = #{emergencyResponsePlan},</if>
+            <if test="reviewDate != null">review_date = #{reviewDate},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizContractorContractById" parameterType="Long">
+        delete
+        from biz_contractor_contract
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteBizContractorContractByIds" parameterType="String">
+        delete from biz_contractor_contract where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.choice.mapper.BizContractorChoiceMapper">
+
+    <resultMap type="BizContractorChoice" id="BizContractorChoiceResult">
+        <result property="choiceId" column="choice_id"/>
+        <result property="projectId" column="project_id"/>
+        <result property="projectName" column="project_name"/>
+        <result property="qualId" column="qual_id"/>
+        <result property="selectedContractor" column="selected_contractor"/>
+        <result property="attachment" column="attachment"/>
+        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="processStatus" column="process_status"/>
+        <result property="currentNode" column="current_node"/>
+        <result property="currentHandler" column="current_handler"/>
+        <result property="approvalTime" column="approval_time"/>
+        <result property="approver" column="approver"/>
+        <result property="approvalResult" column="approval_result"/>
+        <result property="remarks" column="remarks"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="selectBizContractorChoiceVo">
+        select choice_id,
+               project_id,
+               project_name,
+               qual_id,
+               selected_contractor,
+               attachment,
+               process_instance_id,
+               process_status,
+               current_node,
+               current_handler,
+               approval_time,
+               approver,
+               approval_result,
+               remarks,
+               created_by,
+               created_at,
+               updated_by,
+               updated_at
+        from biz_contractor_choice
+    </sql>
+
+    <select id="selectBizContractorChoiceList" parameterType="BizContractorChoice"
+            resultMap="BizContractorChoiceResult">
+        <include refid="selectBizContractorChoiceVo"/>
+        <where>
+            <if test="projectName != null  and projectName != ''">and project_name like concat('%', #{projectName},
+                '%')
+            </if>
+            <if test="selectedContractor != null  and selectedContractor != ''">and selected_contractor like concat('%',
+                #{selectedContractor}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBizContractorChoiceByChoiceId" parameterType="Long" resultMap="BizContractorChoiceResult">
+        <include refid="selectBizContractorChoiceVo"/>
+        where choice_id = #{choiceId}
+    </select>
+    <select id="selectContractorChoiceStatistics" resultMap="BizContractorChoiceResult">
+        <include refid="selectBizContractorChoiceVo"/>
+        <where>
+            <if test="startDate != null and startDate != '' and endDate!= null and endDate != ''">
+                and created_at >= #{startDate}
+                and created_at &lt; DATE_ADD(#{endDate}, INTERVAL 1
+                <choose>
+                    <when test="dateType == 'day'">DAY</when>
+                    <when test="dateType == 'month'">MONTH</when>
+                    <when test="dateType == 'quarter'">QUARTER</when>
+                    <when test="dateType == 'year'">YEAR</when>
+                    <otherwise>DAY</otherwise>
+                </choose>
+                )
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertBizContractorChoice" parameterType="BizContractorChoice" useGeneratedKeys="true"
+            keyProperty="choiceId">
+        insert into biz_contractor_choice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">project_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="qualId != null">qual_id,</if>
+            <if test="selectedContractor != null">selected_contractor,</if>
+            <if test="attachment != null">attachment,</if>
+            <if test="processInstanceId != null">process_instance_id,</if>
+            <if test="processStatus != null">process_status,</if>
+            <if test="currentNode != null">current_node,</if>
+            <if test="currentHandler != null">current_handler,</if>
+            <if test="approvalTime != null">approval_time,</if>
+            <if test="approver != null">approver,</if>
+            <if test="approvalResult != null">approval_result,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">#{projectId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="qualId != null">#{qualId},</if>
+            <if test="selectedContractor != null">#{selectedContractor},</if>
+            <if test="attachment != null">#{attachment},</if>
+            <if test="processInstanceId != null">#{processInstanceId},</if>
+            <if test="processStatus != null">#{processStatus},</if>
+            <if test="currentNode != null">#{currentNode},</if>
+            <if test="currentHandler != null">#{currentHandler},</if>
+            <if test="approvalTime != null">#{approvalTime},</if>
+            <if test="approver != null">#{approver},</if>
+            <if test="approvalResult != null">#{approvalResult},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBizContractorChoice" parameterType="BizContractorChoice">
+        update biz_contractor_choice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectId != null">project_id = #{projectId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="qualId != null">qual_id = #{qualId},</if>
+            <if test="selectedContractor != null">selected_contractor = #{selectedContractor},</if>
+            <if test="attachment != null">attachment = #{attachment},</if>
+            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
+            <if test="processStatus != null">process_status = #{processStatus},</if>
+            <if test="currentNode != null">current_node = #{currentNode},</if>
+            <if test="currentHandler != null">current_handler = #{currentHandler},</if>
+            <if test="approvalTime != null">approval_time = #{approvalTime},</if>
+            <if test="approver != null">approver = #{approver},</if>
+            <if test="approvalResult != null">approval_result = #{approvalResult},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where choice_id = #{choiceId}
+    </update>
+
+    <delete id="deleteBizContractorChoiceByChoiceId" parameterType="Long">
+        delete
+        from biz_contractor_choice
+        where choice_id = #{choiceId}
+    </delete>
+
+    <delete id="deleteBizContractorChoiceByChoiceIds" parameterType="String">
+        delete from biz_contractor_choice where choice_id in
+        <foreach item="choiceId" collection="array" open="(" separator="," close=")">
+            #{choiceId}
+        </foreach>
+    </delete>
+</mapper>

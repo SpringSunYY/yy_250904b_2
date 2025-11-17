@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.prepare.mapper.BizCoordinationMeetingMapper">
+    
+    <resultMap type="BizCoordinationMeeting" id="BizCoordinationMeetingResult">
+        <result property="meetingId"    column="meeting_id"    />
+        <result property="meetingCode"    column="meeting_code"    />
+        <result property="choiceId"    column="choice_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="meetingTopic"    column="meeting_topic"    />
+        <result property="meetingTime"    column="meeting_time"    />
+        <result property="meetingLocation"    column="meeting_location"    />
+        <result property="meetingDuration"    column="meeting_duration"    />
+        <result property="meetingDocument"    column="meeting_document"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizCoordinationMeetingVo">
+        select meeting_id, meeting_code, choice_id, project_name, contractor_name, meeting_topic, meeting_time, meeting_location, meeting_duration, meeting_document, remarks, created_by, created_at, updated_by, updated_at from biz_coordination_meeting
+    </sql>
+
+    <select id="selectBizCoordinationMeetingList" parameterType="BizCoordinationMeeting" resultMap="BizCoordinationMeetingResult">
+        <include refid="selectBizCoordinationMeetingVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="contractorName != null  and contractorName != ''"> and contractor_name like concat('%', #{contractorName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectBizCoordinationMeetingByMeetingId" parameterType="Long" resultMap="BizCoordinationMeetingResult">
+        <include refid="selectBizCoordinationMeetingVo"/>
+        where meeting_id = #{meetingId}
+    </select>
+
+    <insert id="insertBizCoordinationMeeting" parameterType="BizCoordinationMeeting" useGeneratedKeys="true" keyProperty="meetingId">
+        insert into biz_coordination_meeting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="meetingCode != null">meeting_code,</if>
+            <if test="choiceId != null">choice_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="contractorName != null">contractor_name,</if>
+            <if test="meetingTopic != null">meeting_topic,</if>
+            <if test="meetingTime != null">meeting_time,</if>
+            <if test="meetingLocation != null">meeting_location,</if>
+            <if test="meetingDuration != null">meeting_duration,</if>
+            <if test="meetingDocument != null">meeting_document,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="meetingCode != null">#{meetingCode},</if>
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="contractorName != null">#{contractorName},</if>
+            <if test="meetingTopic != null">#{meetingTopic},</if>
+            <if test="meetingTime != null">#{meetingTime},</if>
+            <if test="meetingLocation != null">#{meetingLocation},</if>
+            <if test="meetingDuration != null">#{meetingDuration},</if>
+            <if test="meetingDocument != null">#{meetingDocument},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizCoordinationMeeting" parameterType="BizCoordinationMeeting">
+        update biz_coordination_meeting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="meetingCode != null">meeting_code = #{meetingCode},</if>
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="contractorName != null">contractor_name = #{contractorName},</if>
+            <if test="meetingTopic != null">meeting_topic = #{meetingTopic},</if>
+            <if test="meetingTime != null">meeting_time = #{meetingTime},</if>
+            <if test="meetingLocation != null">meeting_location = #{meetingLocation},</if>
+            <if test="meetingDuration != null">meeting_duration = #{meetingDuration},</if>
+            <if test="meetingDocument != null">meeting_document = #{meetingDocument},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where meeting_id = #{meetingId}
+    </update>
+
+    <delete id="deleteBizCoordinationMeetingByMeetingId" parameterType="Long">
+        delete from biz_coordination_meeting where meeting_id = #{meetingId}
+    </delete>
+
+    <delete id="deleteBizCoordinationMeetingByMeetingIds" parameterType="String">
+        delete from biz_coordination_meeting where meeting_id in 
+        <foreach item="meetingId" collection="array" open="(" separator="," close=")">
+            #{meetingId}
+        </foreach>
+    </delete>
+</mapper>

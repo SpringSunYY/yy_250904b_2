@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.process.mapper.BizSafetyLogsMapper">
+    
+    <resultMap type="BizSafetyLogs" id="BizSafetyLogsResult">
+        <result property="logId"    column="log_id"    />
+        <result property="logCode"    column="log_code"    />
+        <result property="choiceId"    column="choice_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="logDate"    column="log_date"    />
+        <result property="todayWorkContent"    column="today_work_content"    />
+        <result property="companySiteManager"    column="company_site_manager"    />
+        <result property="workerCount"    column="worker_count"    />
+        <result property="workersReviewed"    column="workers_reviewed"    />
+        <result property="workContentChanged"    column="work_content_changed"    />
+        <result property="workLocationChanged"    column="work_location_changed"    />
+        <result property="hasSpecialWork"    column="has_special_work"    />
+        <result property="specialWorkType"    column="special_work_type"    />
+        <result property="specialWorkContent"    column="special_work_content"    />
+        <result property="hasAccident"    column="has_accident"    />
+        <result property="accidentBrief"    column="accident_brief"    />
+        <result property="communicationCoordination"    column="communication_coordination"    />
+        <result property="attachments"    column="attachments"    />
+        <result property="notes"    column="notes"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizSafetyLogsVo">
+        select log_id, log_code, choice_id, project_name, contractor_name, log_date, today_work_content, company_site_manager, worker_count, workers_reviewed, work_content_changed, work_location_changed, has_special_work, special_work_type, special_work_content, has_accident, accident_brief, communication_coordination, attachments, notes, created_by, created_at, updated_by, updated_at from biz_safety_logs
+    </sql>
+
+    <select id="selectBizSafetyLogsList" parameterType="BizSafetyLogs" resultMap="BizSafetyLogsResult">
+        <include refid="selectBizSafetyLogsVo"/>
+        <where>  
+            <if test="workContentChanged != null  and workContentChanged != ''"> and work_content_changed = #{workContentChanged}</if>
+            <if test="workLocationChanged != null  and workLocationChanged != ''"> and work_location_changed = #{workLocationChanged}</if>
+            <if test="hasSpecialWork != null  and hasSpecialWork != ''"> and has_special_work = #{hasSpecialWork}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizSafetyLogsByLogId" parameterType="Long" resultMap="BizSafetyLogsResult">
+        <include refid="selectBizSafetyLogsVo"/>
+        where log_id = #{logId}
+    </select>
+
+    <select id="selectBizSafetyLogsByLogCode" parameterType="String" resultMap="BizSafetyLogsResult">
+        <include refid="selectBizSafetyLogsVo"/>
+        where log_code = #{logCode}
+    </select>
+
+    <insert id="insertBizSafetyLogs" parameterType="BizSafetyLogs" useGeneratedKeys="true" keyProperty="logId">
+        insert into biz_safety_logs
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logCode != null">log_code,</if>
+            <if test="choiceId != null">choice_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="contractorName != null">contractor_name,</if>
+            <if test="logDate != null">log_date,</if>
+            <if test="todayWorkContent != null">today_work_content,</if>
+            <if test="companySiteManager != null">company_site_manager,</if>
+            <if test="workerCount != null">worker_count,</if>
+            <if test="workersReviewed != null">workers_reviewed,</if>
+            <if test="workContentChanged != null">work_content_changed,</if>
+            <if test="workLocationChanged != null">work_location_changed,</if>
+            <if test="hasSpecialWork != null">has_special_work,</if>
+            <if test="specialWorkType != null">special_work_type,</if>
+            <if test="specialWorkContent != null">special_work_content,</if>
+            <if test="hasAccident != null">has_accident,</if>
+            <if test="accidentBrief != null">accident_brief,</if>
+            <if test="communicationCoordination != null">communication_coordination,</if>
+            <if test="attachments != null">attachments,</if>
+            <if test="notes != null">notes,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logCode != null">#{logCode},</if>
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="contractorName != null">#{contractorName},</if>
+            <if test="logDate != null">#{logDate},</if>
+            <if test="todayWorkContent != null">#{todayWorkContent},</if>
+            <if test="companySiteManager != null">#{companySiteManager},</if>
+            <if test="workerCount != null">#{workerCount},</if>
+            <if test="workersReviewed != null">#{workersReviewed},</if>
+            <if test="workContentChanged != null">#{workContentChanged},</if>
+            <if test="workLocationChanged != null">#{workLocationChanged},</if>
+            <if test="hasSpecialWork != null">#{hasSpecialWork},</if>
+            <if test="specialWorkType != null">#{specialWorkType},</if>
+            <if test="specialWorkContent != null">#{specialWorkContent},</if>
+            <if test="hasAccident != null">#{hasAccident},</if>
+            <if test="accidentBrief != null">#{accidentBrief},</if>
+            <if test="communicationCoordination != null">#{communicationCoordination},</if>
+            <if test="attachments != null">#{attachments},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizSafetyLogs" parameterType="BizSafetyLogs">
+        update biz_safety_logs
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="logCode != null">log_code = #{logCode},</if>
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="contractorName != null">contractor_name = #{contractorName},</if>
+            <if test="logDate != null">log_date = #{logDate},</if>
+            <if test="todayWorkContent != null">today_work_content = #{todayWorkContent},</if>
+            <if test="companySiteManager != null">company_site_manager = #{companySiteManager},</if>
+            <if test="workerCount != null">worker_count = #{workerCount},</if>
+            <if test="workersReviewed != null">workers_reviewed = #{workersReviewed},</if>
+            <if test="workContentChanged != null">work_content_changed = #{workContentChanged},</if>
+            <if test="workLocationChanged != null">work_location_changed = #{workLocationChanged},</if>
+            <if test="hasSpecialWork != null">has_special_work = #{hasSpecialWork},</if>
+            <if test="specialWorkType != null">special_work_type = #{specialWorkType},</if>
+            <if test="specialWorkContent != null">special_work_content = #{specialWorkContent},</if>
+            <if test="hasAccident != null">has_accident = #{hasAccident},</if>
+            <if test="accidentBrief != null">accident_brief = #{accidentBrief},</if>
+            <if test="communicationCoordination != null">communication_coordination = #{communicationCoordination},</if>
+            <if test="attachments != null">attachments = #{attachments},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where log_id = #{logId}
+    </update>
+
+    <delete id="deleteBizSafetyLogsByLogId" parameterType="Long">
+        delete from biz_safety_logs where log_id = #{logId}
+    </delete>
+
+    <delete id="deleteBizSafetyLogsByLogIds" parameterType="String">
+        delete from biz_safety_logs where log_id in 
+        <foreach item="logId" collection="array" open="(" separator="," close=")">
+            #{logId}
+        </foreach>
+    </delete>
+</mapper>

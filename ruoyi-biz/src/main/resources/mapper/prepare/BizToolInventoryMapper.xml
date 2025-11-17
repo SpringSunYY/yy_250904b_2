@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.prepare.mapper.BizToolInventoryMapper">
+
+    <resultMap type="BizToolInventory" id="BizToolInventoryResult">
+        <result property="toolId" column="tool_id"/>
+        <result property="toolCode" column="tool_code"/>
+        <result property="choiceId" column="choice_id"/>
+        <result property="projectName" column="project_name"/>
+        <result property="contractorName" column="contractor_name"/>
+        <result property="toolName" column="tool_name"/>
+        <result property="toolType" column="tool_type"/>
+        <result property="toolModel" column="tool_model"/>
+        <result property="manufacturer" column="manufacturer"/>
+        <result property="productionDate" column="production_date"/>
+        <result property="purchaseDate" column="purchase_date"/>
+        <result property="toolStatus" column="tool_status"/>
+        <result property="integrityCheck" column="integrity_check"/>
+        <result property="securityStandards" column="security_standards"/>
+        <result property="jobSafety" column="job_safety"/>
+        <result property="photo" column="photo"/>
+        <result property="remarks" column="remarks"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="selectBizToolInventoryVo">
+        select tool_id,
+               tool_code,
+               choice_id,
+               project_name,
+               contractor_name,
+               tool_name,
+               tool_type,
+               tool_model,
+               manufacturer,
+               production_date,
+               purchase_date,
+               tool_status,
+               integrity_check,
+               security_standards,
+               job_safety,
+               photo,
+               remarks,
+               created_by,
+               created_at,
+               updated_by,
+               updated_at
+        from biz_tool_inventory
+    </sql>
+
+    <select id="selectBizToolInventoryList" parameterType="BizToolInventory" resultMap="BizToolInventoryResult">
+        <include refid="selectBizToolInventoryVo"/>
+        <where>
+            <if test="projectName != null  and projectName != ''">and project_name like concat('%', #{projectName},
+                '%')
+            </if>
+            <if test="contractorName != null  and contractorName != ''">and contractor_name like concat('%',
+                #{contractorName}, '%')
+            </if>
+            <if test="toolName != null  and toolName != ''">and tool_name like concat('%', #{toolName}, '%')</if>
+            <if test="toolType != null  and toolType != ''">and tool_type = #{toolType}</if>
+        </where>
+    </select>
+
+    <select id="selectBizToolInventoryByToolId" parameterType="Long" resultMap="BizToolInventoryResult">
+        <include refid="selectBizToolInventoryVo"/>
+        where tool_id = #{toolId}
+    </select>
+    <select id="selectToolInventoryStatistics" resultType="com.ruoyi.statistics.domain.ro.BizStatisticsToolRo">
+        select count(*) as value,created_at date ,integrity_check as integrityCheck from biz_tool_inventory
+        <where>
+            <if test="choiceId != null">and choice_id = #{choiceId}</if>
+            <if test="startDate != null and startDate != '' and endDate!= null and endDate != ''">
+                and created_at >= #{startDate}
+                and created_at &lt; DATE_ADD(#{endDate}, INTERVAL 1
+                <choose>
+                    <when test="dateType == 'day'">DAY</when>
+                    <when test="dateType == 'month'">MONTH</when>
+                    <when test="dateType == 'quarter'">QUARTER</when>
+                    <when test="dateType == 'year'">YEAR</when>
+                    <otherwise>DAY</otherwise>
+                </choose>
+                )
+            </if>
+        </where>
+        group by created_at,integrity_check
+    </select>
+
+    <insert id="insertBizToolInventory" parameterType="BizToolInventory" useGeneratedKeys="true" keyProperty="toolId">
+        insert into biz_tool_inventory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="toolCode != null">tool_code,</if>
+            <if test="choiceId != null">choice_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="contractorName != null and contractorName != ''">contractor_name,</if>
+            <if test="toolName != null and toolName != ''">tool_name,</if>
+            <if test="toolType != null">tool_type,</if>
+            <if test="toolModel != null">tool_model,</if>
+            <if test="manufacturer != null">manufacturer,</if>
+            <if test="productionDate != null">production_date,</if>
+            <if test="purchaseDate != null">purchase_date,</if>
+            <if test="toolStatus != null">tool_status,</if>
+            <if test="integrityCheck != null">integrity_check,</if>
+            <if test="securityStandards != null">security_standards,</if>
+            <if test="jobSafety != null">job_safety,</if>
+            <if test="photo != null">photo,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="toolCode != null">#{toolCode},</if>
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="contractorName != null and contractorName != ''">#{contractorName},</if>
+            <if test="toolName != null and toolName != ''">#{toolName},</if>
+            <if test="toolType != null">#{toolType},</if>
+            <if test="toolModel != null">#{toolModel},</if>
+            <if test="manufacturer != null">#{manufacturer},</if>
+            <if test="productionDate != null">#{productionDate},</if>
+            <if test="purchaseDate != null">#{purchaseDate},</if>
+            <if test="toolStatus != null">#{toolStatus},</if>
+            <if test="integrityCheck != null">#{integrityCheck},</if>
+            <if test="securityStandards != null">#{securityStandards},</if>
+            <if test="jobSafety != null">#{jobSafety},</if>
+            <if test="photo != null">#{photo},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBizToolInventory" parameterType="BizToolInventory">
+        update biz_tool_inventory
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="toolCode != null">tool_code = #{toolCode},</if>
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="contractorName != null and contractorName != ''">contractor_name = #{contractorName},</if>
+            <if test="toolName != null and toolName != ''">tool_name = #{toolName},</if>
+            <if test="toolType != null">tool_type = #{toolType},</if>
+            <if test="toolModel != null">tool_model = #{toolModel},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="productionDate != null">production_date = #{productionDate},</if>
+            <if test="purchaseDate != null">purchase_date = #{purchaseDate},</if>
+            <if test="toolStatus != null">tool_status = #{toolStatus},</if>
+            <if test="integrityCheck != null">integrity_check = #{integrityCheck},</if>
+            <if test="securityStandards != null">security_standards = #{securityStandards},</if>
+            <if test="jobSafety != null">job_safety = #{jobSafety},</if>
+            <if test="photo != null">photo = #{photo},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where tool_id = #{toolId}
+    </update>
+
+    <delete id="deleteBizToolInventoryByToolId" parameterType="Long">
+        delete
+        from biz_tool_inventory
+        where tool_id = #{toolId}
+    </delete>
+
+    <delete id="deleteBizToolInventoryByToolIds" parameterType="String">
+        delete from biz_tool_inventory where tool_id in
+        <foreach item="toolId" collection="array" open="(" separator="," close=")">
+            #{toolId}
+        </foreach>
+    </delete>
+</mapper>

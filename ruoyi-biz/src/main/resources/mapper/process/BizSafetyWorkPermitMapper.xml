@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.process.mapper.BizSafetyWorkPermitMapper">
+    
+    <resultMap type="BizSafetyWorkPermit" id="BizSafetyWorkPermitResult">
+        <result property="permitId"    column="permit_id"    />
+        <result property="logsId"    column="logs_id"    />
+        <result property="logsCode"    column="logs_code"    />
+        <result property="specialWork"    column="special_work"    />
+        <result property="specialWorkLocation"    column="special_work_location"    />
+        <result property="specialWorkType"    column="special_work_type"    />
+        <result property="safetyWorkPermitNo"    column="safety_work_permit_no"    />
+        <result property="relatedWork"    column="related_work"    />
+        <result property="workPeriod"    column="work_period"    />
+        <result property="workTeamLeader"    column="work_team_leader"    />
+        <result property="siteGuardian"    column="site_guardian"    />
+        <result property="dailyPermitStatus"    column="daily_permit_status"    />
+        <result property="attachment"    column="attachment"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectBizSafetyWorkPermitVo">
+        select p.permit_id, p.logs_id, p.special_work, p.special_work_location, p.special_work_type, p.safety_work_permit_no, p.related_work, p.work_period, p.work_team_leader, p.site_guardian, p.daily_permit_status, p.attachment, p.remark, p.create_by, p.create_time, p.update_by, p.update_time from biz_safety_work_permit p
+    </sql>
+
+    <select id="selectBizSafetyWorkPermitList" parameterType="BizSafetyWorkPermit" resultMap="BizSafetyWorkPermitResult">
+        <include refid="selectBizSafetyWorkPermitVo"/>
+        <where>  
+            <if test="specialWorkType != null  and specialWorkType != ''"> and special_work_type = #{specialWorkType}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizSafetyWorkPermitByPermitId" parameterType="Long" resultMap="BizSafetyWorkPermitResult">
+        <include refid="selectBizSafetyWorkPermitVo"/>
+        where permit_id = #{permitId}
+    </select>
+
+    <insert id="insertBizSafetyWorkPermit" parameterType="BizSafetyWorkPermit" useGeneratedKeys="true" keyProperty="permitId">
+        insert into biz_safety_work_permit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logsId != null">logs_id,</if>
+            <if test="specialWork != null">special_work,</if>
+            <if test="specialWorkLocation != null">special_work_location,</if>
+            <if test="specialWorkType != null">special_work_type,</if>
+            <if test="safetyWorkPermitNo != null">safety_work_permit_no,</if>
+            <if test="workPeriod != null">work_period,</if>
+            <if test="workTeamLeader != null">work_team_leader,</if>
+            <if test="siteGuardian != null">site_guardian,</if>
+            <if test="dailyPermitStatus != null">daily_permit_status,</if>
+            <if test="relatedWork != null">related_work,</if>
+            <if test="attachment != null">attachment,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logsId != null">#{logsId},</if>
+            <if test="specialWork != null">#{specialWork},</if>
+            <if test="specialWorkLocation != null">#{specialWorkLocation},</if>
+            <if test="specialWorkType != null">#{specialWorkType},</if>
+            <if test="safetyWorkPermitNo != null">#{safetyWorkPermitNo},</if>
+            <if test="workPeriod != null">#{workPeriod},</if>
+            <if test="workTeamLeader != null">#{workTeamLeader},</if>
+            <if test="siteGuardian != null">#{siteGuardian},</if>
+            <if test="dailyPermitStatus != null">#{dailyPermitStatus},</if>
+            <if test="relatedWork != null">#{relatedWork},</if>
+            <if test="attachment != null">#{attachment},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizSafetyWorkPermit" parameterType="BizSafetyWorkPermit">
+        update biz_safety_work_permit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="logsId != null">logs_id = #{logsId},</if>
+            <if test="specialWork != null">special_work = #{specialWork},</if>
+            <if test="specialWorkLocation != null">special_work_location = #{specialWorkLocation},</if>
+            <if test="specialWorkType != null">special_work_type = #{specialWorkType},</if>
+            <if test="safetyWorkPermitNo != null">safety_work_permit_no = #{safetyWorkPermitNo},</if>
+            <if test="workPeriod != null">work_period = #{workPeriod},</if>
+            <if test="workTeamLeader != null">work_team_leader = #{workTeamLeader},</if>
+            <if test="siteGuardian != null">site_guardian = #{siteGuardian},</if>
+            <if test="dailyPermitStatus != null">daily_permit_status = #{dailyPermitStatus},</if>
+            <if test="relatedWork != null">related_work = #{relatedWork},</if>
+            <if test="attachment != null">attachment = #{attachment},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where permit_id = #{permitId}
+    </update>
+
+    <delete id="deleteBizSafetyWorkPermitByPermitId" parameterType="Long">
+        delete from biz_safety_work_permit where permit_id = #{permitId}
+    </delete>
+
+    <delete id="deleteBizSafetyWorkPermitByPermitIds" parameterType="String">
+        delete from biz_safety_work_permit where permit_id in 
+        <foreach item="permitId" collection="array" open="(" separator="," close=")">
+            #{permitId}
+        </foreach>
+    </delete>
+</mapper>

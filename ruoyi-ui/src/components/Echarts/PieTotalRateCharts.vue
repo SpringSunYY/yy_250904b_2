@@ -32,9 +32,9 @@ export default {
     chartData: {
       type: Array,
       default: () => [
-        { name: '一级问题', value: 100 },
-        { name: '二级问题', value: 20 },
-        { name: '三级问题', value: 30 }
+        {name: '一级问题', value: 100},
+        {name: '二级问题', value: 20},
+        {name: '三级问题', value: 30}
       ]
     },
     // 总数
@@ -116,7 +116,8 @@ export default {
       if (!data || !data.length) {
         return
       }
-
+      //过滤掉值为0的项
+      data = data.filter(item => Number(item.value) > 0)
       // 销毁已有实例
       if (this.chart) {
         this.chart.dispose()
@@ -167,7 +168,7 @@ export default {
         // tooltip: 使用 totalValue 计算千分比 (‰)
         tooltip: {
           trigger: 'item',
-          formatter: function(params) {
+          formatter: function (params) {
             // 使用外部捕获的 totalValue
             const permillage = (params.value / totalValue * rateValue).toFixed(2)
             return `${params.name}: ${params.value} (${permillage}${rateSymbol})`
@@ -190,7 +191,7 @@ export default {
               color: '#fff',
               fontSize: 14,
               // 使用自定义函数格式化，计算千分比
-              formatter: function(params) {
+              formatter: function (params) {
                 // 使用外部捕获的 totalValue
                 const permillage = (params.value / totalValue * rateValue).toFixed(2)
                 return `${params.name}\n${params.value} (${permillage}${rateSymbol})`
@@ -227,7 +228,7 @@ export default {
                 return `${totalNameValue}\n\n${totalValue}`
               }
             },
-            data: [{ value: 1, name: 'Total Placeholder' }]
+            data: [{value: 1, name: 'Total Placeholder'}]
           }
         ]
       }

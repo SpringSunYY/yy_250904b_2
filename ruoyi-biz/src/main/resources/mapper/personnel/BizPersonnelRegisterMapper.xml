@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.personnel.mapper.BizPersonnelRegisterMapper">
+    
+    <resultMap type="BizPersonnelRegister" id="BizPersonnelRegisterResult">
+        <result property="personnelId"    column="personnel_id"    />
+        <result property="choiceId"    column="choice_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="idCardNumber"    column="id_card_number"    />
+        <result property="personnelName"    column="personnel_name"    />
+        <result property="title"    column="title"    />
+        <result property="gender"    column="gender"    />
+        <result property="age"    column="age"    />
+        <result property="workType"    column="work_type"    />
+        <result property="contactPhone"    column="contact_phone"    />
+        <result property="homeAddress"    column="home_address"    />
+        <result property="physicalExamDate"    column="physical_exam_date"    />
+        <result property="physicalExamResult"    column="physical_exam_result"    />
+        <result property="physicalExamRecord"    column="physical_exam_record"    />
+        <result property="entryFactoryTime"    column="entry_factory_time"    />
+        <result property="exitFactoryTime"    column="exit_factory_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizPersonnelRegisterVo">
+        select personnel_id, choice_id, project_name, contractor_name, id_card_number, personnel_name, title, gender, age, work_type, contact_phone, home_address, physical_exam_date, physical_exam_result, physical_exam_record, entry_factory_time, exit_factory_time, remarks, created_by, created_at, updated_by, updated_at from biz_personnel_register
+    </sql>
+
+    <select id="selectBizPersonnelRegisterList" parameterType="BizPersonnelRegister" resultMap="BizPersonnelRegisterResult">
+        <include refid="selectBizPersonnelRegisterVo"/>
+        <where>  
+            <if test="contractorName != null  and contractorName != ''"> and contractor_name like concat('%', #{contractorName}, '%')</if>
+            <if test="personnelName != null  and personnelName != ''"> and personnel_name like concat('%', #{personnelName}, '%')</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizPersonnelRegisterByPersonnelId" parameterType="Long" resultMap="BizPersonnelRegisterResult">
+        <include refid="selectBizPersonnelRegisterVo"/>
+        where personnel_id = #{personnelId}
+    </select>
+
+    <insert id="insertBizPersonnelRegister" parameterType="BizPersonnelRegister" useGeneratedKeys="true" keyProperty="personnelId">
+        insert into biz_personnel_register
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="choiceId != null">choice_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="contractorName != null">contractor_name,</if>
+            <if test="idCardNumber != null and idCardNumber != ''">id_card_number,</if>
+            <if test="personnelName != null">personnel_name,</if>
+            <if test="title != null">title,</if>
+            <if test="gender != null">gender,</if>
+            <if test="age != null">age,</if>
+            <if test="workType != null">work_type,</if>
+            <if test="contactPhone != null">contact_phone,</if>
+            <if test="homeAddress != null">home_address,</if>
+            <if test="physicalExamDate != null">physical_exam_date,</if>
+            <if test="physicalExamResult != null">physical_exam_result,</if>
+            <if test="physicalExamRecord != null">physical_exam_record,</if>
+            <if test="entryFactoryTime != null">entry_factory_time,</if>
+            <if test="exitFactoryTime != null">exit_factory_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="contractorName != null">#{contractorName},</if>
+            <if test="idCardNumber != null and idCardNumber != ''">#{idCardNumber},</if>
+            <if test="personnelName != null">#{personnelName},</if>
+            <if test="title != null">#{title},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="age != null">#{age},</if>
+            <if test="workType != null">#{workType},</if>
+            <if test="contactPhone != null">#{contactPhone},</if>
+            <if test="homeAddress != null">#{homeAddress},</if>
+            <if test="physicalExamDate != null">#{physicalExamDate},</if>
+            <if test="physicalExamResult != null">#{physicalExamResult},</if>
+            <if test="physicalExamRecord != null">#{physicalExamRecord},</if>
+            <if test="entryFactoryTime != null">#{entryFactoryTime},</if>
+            <if test="exitFactoryTime != null">#{exitFactoryTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizPersonnelRegister" parameterType="BizPersonnelRegister">
+        update biz_personnel_register
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="contractorName != null">contractor_name = #{contractorName},</if>
+            <if test="idCardNumber != null and idCardNumber != ''">id_card_number = #{idCardNumber},</if>
+            <if test="personnelName != null">personnel_name = #{personnelName},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="workType != null">work_type = #{workType},</if>
+            <if test="contactPhone != null">contact_phone = #{contactPhone},</if>
+            <if test="homeAddress != null">home_address = #{homeAddress},</if>
+            <if test="physicalExamDate != null">physical_exam_date = #{physicalExamDate},</if>
+            <if test="physicalExamResult != null">physical_exam_result = #{physicalExamResult},</if>
+            <if test="physicalExamRecord != null">physical_exam_record = #{physicalExamRecord},</if>
+            <if test="entryFactoryTime != null">entry_factory_time = #{entryFactoryTime},</if>
+            <if test="exitFactoryTime != null">exit_factory_time = #{exitFactoryTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where personnel_id = #{personnelId}
+    </update>
+
+    <delete id="deleteBizPersonnelRegisterByPersonnelId" parameterType="Long">
+        delete from biz_personnel_register where personnel_id = #{personnelId}
+    </delete>
+
+    <delete id="deleteBizPersonnelRegisterByPersonnelIds" parameterType="String">
+        delete from biz_personnel_register where personnel_id in 
+        <foreach item="personnelId" collection="array" open="(" separator="," close=")">
+            #{personnelId}
+        </foreach>
+    </delete>
+</mapper>

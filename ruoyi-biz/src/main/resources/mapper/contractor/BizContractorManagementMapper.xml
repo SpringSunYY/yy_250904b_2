@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.contractor.mapper.BizContractorManagementMapper">
+    
+    <resultMap type="BizContractorManagement" id="BizContractorManagementResult">
+        <result property="nanageId"    column="nanage_id"    />
+        <result property="systemCode"    column="system_code"    />
+        <result property="systemName"    column="system_name"    />
+        <result property="version"    column="version"    />
+        <result property="publishDate"    column="publish_date"    />
+        <result property="effectiveDate"    column="effective_date"    />
+        <result property="revisionDate"    column="revision_date"    />
+        <result property="changeDescription"    column="change_description"    />
+        <result property="managementStatus"    column="management_status"    />
+        <result property="responsibleDepartment"    column="responsible_department"    />
+        <result property="systemContent"    column="system_content"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizContractorManagementVo">
+        select nanage_id, system_code, system_name, version, publish_date, effective_date, revision_date, change_description, management_status, responsible_department, system_content, created_by, created_at, remarks, updated_by, updated_at from biz_contractor_management
+    </sql>
+
+    <select id="selectBizContractorManagementList" parameterType="BizContractorManagement" resultMap="BizContractorManagementResult">
+        <include refid="selectBizContractorManagementVo"/>
+        <where>  
+            <if test="systemName != null  and systemName != ''"> and system_name like concat('%', #{systemName}, '%')</if>
+            <if test="managementStatus != null  and managementStatus != ''"> and management_status = #{managementStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizContractorManagementByNanageId" parameterType="Long" resultMap="BizContractorManagementResult">
+        <include refid="selectBizContractorManagementVo"/>
+        where nanage_id = #{nanageId}
+    </select>
+
+    <insert id="insertBizContractorManagement" parameterType="BizContractorManagement" useGeneratedKeys="true" keyProperty="nanageId">
+        insert into biz_contractor_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="systemCode != null">system_code,</if>
+            <if test="systemName != null and systemName != ''">system_name,</if>
+            <if test="version != null">version,</if>
+            <if test="publishDate != null">publish_date,</if>
+            <if test="effectiveDate != null">effective_date,</if>
+            <if test="revisionDate != null">revision_date,</if>
+            <if test="changeDescription != null">change_description,</if>
+            <if test="managementStatus != null">management_status,</if>
+            <if test="responsibleDepartment != null">responsible_department,</if>
+            <if test="systemContent != null">system_content,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="systemCode != null">#{systemCode},</if>
+            <if test="systemName != null and systemName != ''">#{systemName},</if>
+            <if test="version != null">#{version},</if>
+            <if test="publishDate != null">#{publishDate},</if>
+            <if test="effectiveDate != null">#{effectiveDate},</if>
+            <if test="revisionDate != null">#{revisionDate},</if>
+            <if test="changeDescription != null">#{changeDescription},</if>
+            <if test="managementStatus != null">#{managementStatus},</if>
+            <if test="responsibleDepartment != null">#{responsibleDepartment},</if>
+            <if test="systemContent != null">#{systemContent},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizContractorManagement" parameterType="BizContractorManagement">
+        update biz_contractor_management
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="systemCode != null">system_code = #{systemCode},</if>
+            <if test="systemName != null and systemName != ''">system_name = #{systemName},</if>
+            <if test="version != null">version = #{version},</if>
+            <if test="publishDate != null">publish_date = #{publishDate},</if>
+            <if test="effectiveDate != null">effective_date = #{effectiveDate},</if>
+            <if test="revisionDate != null">revision_date = #{revisionDate},</if>
+            <if test="changeDescription != null">change_description = #{changeDescription},</if>
+            <if test="managementStatus != null">management_status = #{managementStatus},</if>
+            <if test="responsibleDepartment != null">responsible_department = #{responsibleDepartment},</if>
+            <if test="systemContent != null">system_content = #{systemContent},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where nanage_id = #{nanageId}
+    </update>
+
+    <delete id="deleteBizContractorManagementByNanageId" parameterType="Long">
+        delete from biz_contractor_management where nanage_id = #{nanageId}
+    </delete>
+
+    <delete id="deleteBizContractorManagementByNanageIds" parameterType="String">
+        delete from biz_contractor_management where nanage_id in 
+        <foreach item="nanageId" collection="array" open="(" separator="," close=")">
+            #{nanageId}
+        </foreach>
+    </delete>
+</mapper>

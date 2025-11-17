@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.training.mapper.BizTrainingRecordsMapper">
+
+    <resultMap type="BizTrainingRecords" id="BizTrainingRecordsResult">
+        <result property="id" column="id"/>
+        <result property="choiceId" column="choice_id"/>
+        <result property="trainingCode" column="training_code"/>
+        <result property="trainingName" column="training_name"/>
+        <result property="projectName" column="project_name"/>
+        <result property="contractorName" column="contractor_name"/>
+        <result property="trainingType" column="training_type"/>
+        <result property="trainingDate" column="training_date"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="trainingHours" column="training_hours"/>
+        <result property="trainingContent" column="training_content"/>
+        <result property="trainingDepartment" column="training_department"/>
+        <result property="trainer" column="trainer"/>
+        <result property="trainingLocation" column="training_location"/>
+        <result property="plannedAttendees" column="planned_attendees"/>
+        <result property="actualAttendees" column="actual_attendees"/>
+        <result property="trainingStatus" column="training_status"/>
+        <result property="trainingPictures" column="training_pictures"/>
+        <result property="qualificationCertificate" column="qualification_certificate"/>
+        <result property="remarks" column="remarks"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="selectBizTrainingRecordsVo">
+        select id,
+               choice_id,
+               training_code,
+               training_name,
+               project_name,
+               contractor_name,
+               training_type,
+               training_date,
+               start_time,
+               end_time,
+               training_hours,
+               training_content,
+               training_department,
+               trainer,
+               training_location,
+               planned_attendees,
+               actual_attendees,
+               training_status,
+               training_pictures,
+               qualification_certificate,
+               remarks,
+               created_by,
+               created_at,
+               updated_by,
+               updated_at
+        from biz_training_records
+    </sql>
+
+    <select id="selectBizTrainingRecordsList" parameterType="BizTrainingRecords" resultMap="BizTrainingRecordsResult">
+        <include refid="selectBizTrainingRecordsVo"/>
+        <where>
+            <if test="trainingType != null  and trainingType != ''">and training_type = #{trainingType}</if>
+            <if test="projectName != null  and projectName != ''">and project_name like concat('%', #{projectName},
+                '%')
+            </if>
+            <if test="contractorName != null  and contractorName != ''">and contractor_name like concat('%',
+                #{contractorName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBizTrainingRecordsById" parameterType="Long" resultMap="BizTrainingRecordsResult">
+        <include refid="selectBizTrainingRecordsVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectBizTrainingRecordsListByStatistics"
+           resultMap="BizTrainingRecordsResult">
+        <include refid="selectBizTrainingRecordsVo"/>
+        <where>
+            <if test="choiceId != null">and choice_id = #{choiceId}</if>
+            <if test="trainingType != null">and training_type = #{trainingType}</if>
+            <if test="startDate != null and startDate != '' and endDate!= null and endDate != ''">
+                and created_at >= #{startDate}
+                and created_at &lt; DATE_ADD(#{endDate}, INTERVAL 1
+                <choose>
+                    <when test="dateType == 'day'">DAY</when>
+                    <when test="dateType == 'month'">MONTH</when>
+                    <when test="dateType == 'quarter'">QUARTER</when>
+                    <when test="dateType == 'year'">YEAR</when>
+                    <otherwise>DAY</otherwise>
+                </choose>
+                )
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertBizTrainingRecords" parameterType="BizTrainingRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_training_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="choiceId != null">choice_id,</if>
+            <if test="trainingCode != null and trainingCode != ''">training_code,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="contractorName != null">contractor_name,</if>
+            <if test="trainingName != null and trainingName != ''">training_name,</if>
+            <if test="trainingType != null">training_type,</if>
+            <if test="trainingDate != null">training_date,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="trainingHours != null">training_hours,</if>
+            <if test="trainingContent != null">training_content,</if>
+            <if test="trainingDepartment != null">training_department,</if>
+            <if test="trainer != null">trainer,</if>
+            <if test="trainingLocation != null">training_location,</if>
+            <if test="plannedAttendees != null">planned_attendees,</if>
+            <if test="actualAttendees != null">actual_attendees,</if>
+            <if test="trainingStatus != null">training_status,</if>
+            <if test="trainingPictures != null">training_pictures,</if>
+            <if test="qualificationCertificate != null">qualification_certificate,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="trainingCode != null and trainingCode != ''">#{trainingCode},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="contractorName != null">#{contractorName},</if>
+            <if test="trainingName != null and trainingName != ''">#{trainingName},</if>
+            <if test="trainingType != null">#{trainingType},</if>
+            <if test="trainingDate != null">#{trainingDate},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="trainingHours != null">#{trainingHours},</if>
+            <if test="trainingContent != null">#{trainingContent},</if>
+            <if test="trainingDepartment != null">#{trainingDepartment},</if>
+            <if test="trainer != null">#{trainer},</if>
+            <if test="trainingLocation != null">#{trainingLocation},</if>
+            <if test="plannedAttendees != null">#{plannedAttendees},</if>
+            <if test="actualAttendees != null">#{actualAttendees},</if>
+            <if test="trainingStatus != null">#{trainingStatus},</if>
+            <if test="trainingPictures != null">#{trainingPictures},</if>
+            <if test="qualificationCertificate != null">#{qualificationCertificate},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBizTrainingRecords" parameterType="BizTrainingRecords">
+        update biz_training_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="trainingCode != null and trainingCode != ''">training_code = #{trainingCode},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="contractorName != null">contractor_name = #{contractorName},</if>
+            <if test="trainingName != null and trainingName != ''">training_name = #{trainingName},</if>
+            <if test="trainingType != null">training_type = #{trainingType},</if>
+            <if test="trainingDate != null">training_date = #{trainingDate},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="trainingHours != null">training_hours = #{trainingHours},</if>
+            <if test="trainingContent != null">training_content = #{trainingContent},</if>
+            <if test="trainingDepartment != null">training_department = #{trainingDepartment},</if>
+            <if test="trainer != null">trainer = #{trainer},</if>
+            <if test="trainingLocation != null">training_location = #{trainingLocation},</if>
+            <if test="plannedAttendees != null">planned_attendees = #{plannedAttendees},</if>
+            <if test="actualAttendees != null">actual_attendees = #{actualAttendees},</if>
+            <if test="trainingStatus != null">training_status = #{trainingStatus},</if>
+            <if test="trainingPictures != null">training_pictures = #{trainingPictures},</if>
+            <if test="qualificationCertificate != null">qualification_certificate = #{qualificationCertificate},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizTrainingRecordsById" parameterType="Long">
+        delete
+        from biz_training_records
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteBizTrainingRecordsByIds" parameterType="String">
+        delete from biz_training_records where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

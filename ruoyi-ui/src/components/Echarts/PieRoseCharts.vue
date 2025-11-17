@@ -39,10 +39,10 @@ export default {
     chartData: {
       type: Array,
       default: () => [
-        { name: '加工成本', value: 920 },
-        { name: '实验成本', value: 458 },
-        { name: '能源成本', value: 653 },
-        { name: '研发成本', value: 372 }
+        {name: '加工成本', value: 920},
+        {name: '实验成本', value: 458},
+        {name: '能源成本', value: 653},
+        {name: '研发成本', value: 372}
       ]
     },
     //标题
@@ -108,7 +108,15 @@ export default {
      */
     setOptions(data) {
       if (!this.chart) return
-
+      //计算所有value的总数，并且删除value为0的项
+      let pieData = [];
+      const total = data.reduce((acc, item) => {
+        if (Number(item.value) > 0) {
+          acc += Number(item.value)
+          pieData.push(item)
+        }
+        return acc;
+      }, 0);
       const option = {
         title: {
           text: this.chartTitle,
@@ -126,22 +134,19 @@ export default {
           textStyle: {
             color: '#FFF'
           },
-          formatter: '{b} <br/> 值: {c} ({d}%)'
+          formatter: (params) => {
+            return `总计 ${total} <br/>${params.name} <br/> 值: ${params.value} (${params.percent}%)`;
+          }
         },
 
         legend: {
           show: true,
-
           orient: 'horizontal',
-
           type: 'scroll',
-
           left: '5%',
           right: '5%',
           bottom: '5%',
-
           height: 60,
-
           textStyle: {
             color: '#FFF'
           },
@@ -161,8 +166,8 @@ export default {
             radius: ['0%', '7%'],
             center: this.pieCenter,
             silent: true,
-            label: { show: false },
-            data: [{ value: 0, itemStyle: { color: '#FFF' } }]
+            label: {show: false},
+            data: [{value: 0, itemStyle: {color: '#FFF'}}]
           },
           // 背景装饰1 半透明圆 zlevel: 3
           {
@@ -171,8 +176,8 @@ export default {
             center: this.pieCenter,
             zlevel: 3,
             silent: true,
-            label: { show: false },
-            data: [{ value: 0, itemStyle: { color: 'rgba(255,255,255, 0.1)' } }]
+            label: {show: false},
+            data: [{value: 0, itemStyle: {color: 'rgba(255,255,255, 0.1)'}}]
           },
           // 背景装饰3 半透明底盘 zlevel: 1
           {
@@ -181,8 +186,8 @@ export default {
             radius: ['0%', '65%'], // 匹配缩小后的外圈大小
             center: this.pieCenter,
             silent: true,
-            label: { show: false },
-            data: [{ value: 0, itemStyle: { color: 'rgba(255,255,255, 0.1)' } }]
+            label: {show: false},
+            data: [{value: 0, itemStyle: {color: 'rgba(255,255,255, 0.1)'}}]
           },
 
           // 数据源
@@ -196,27 +201,27 @@ export default {
             itemStyle: {
               borderRadius: 4
             },
-            data: data, // 使用传入的数据
+            data: pieData, // 使用传入的数据
             label: {
               normal: {
                 formatter: params => {
                   const percentage = params.percent.toFixed(1)
                   return (
                     '{icon|●}{name|' + params.name + '}\n{value|' +
-                  ' (' + percentage + '%)}' // 显示 值 (百分比%)
+                    ' (' + percentage + '%)}' // 显示 值 (百分比%)
                   )
                 },
                 rich: {
-                  icon: { fontSize: 16, color: 'inherit' },
-                  name: { fontSize: 18, padding: [0, 0, 0, 10], color: '#fff' },
-                  value: { fontSize: 14, padding: [10, 0, 0, 20], color: '#fff' }
+                  icon: {fontSize: 16, color: 'inherit'},
+                  name: {fontSize: 18, padding: [0, 0, 0, 10], color: '#fff'},
+                  value: {fontSize: 14, padding: [10, 0, 0, 20], color: '#fff'}
                 }
               }
             },
             labelLine: {
               length: 10,
               length2: 10,
-              lineStyle: { color: '#fff' }
+              lineStyle: {color: '#fff'}
             }
           }
         ]

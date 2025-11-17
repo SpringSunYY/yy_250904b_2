@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.process.mapper.BizProjectChangeMapper">
+    
+    <resultMap type="BizProjectChange" id="BizProjectChangeResult">
+        <result property="changeId"    column="change_id"    />
+        <result property="changeNo"    column="change_no"    />
+        <result property="choiceId"    column="choice_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="changeTime"    column="change_time"    />
+        <result property="changeType"    column="change_type"    />
+        <result property="changeReason"    column="change_reason"    />
+        <result property="changeRecord"    column="change_record"    />
+        <result property="safetyProtocolUpdated"    column="safety_protocol_updated"    />
+        <result property="safetyProtocolAttachment"    column="safety_protocol_attachment"    />
+        <result property="constructionPlanUpdated"    column="construction_plan_updated"    />
+        <result property="constructionPlanAttachment"    column="construction_plan_attachment"    />
+        <result property="remark"    column="remark"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedTime"    column="updated_time"    />
+    </resultMap>
+
+    <sql id="selectBizProjectChangeVo">
+        select change_id, change_no, choice_id, project_name, contractor_name, change_time, change_type, change_reason, change_record, safety_protocol_updated, safety_protocol_attachment, construction_plan_updated, construction_plan_attachment, remark, created_by, created_time, updated_by, updated_time from biz_project_change
+    </sql>
+
+    <select id="selectBizProjectChangeList" parameterType="BizProjectChange" resultMap="BizProjectChangeResult">
+        <include refid="selectBizProjectChangeVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="contractorName != null  and contractorName != ''"> and contractor_name like concat('%', #{contractorName}, '%')</if>
+            <if test="changeType != null  and changeType != ''"> and change_type = #{changeType}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizProjectChangeByChangeId" parameterType="Long" resultMap="BizProjectChangeResult">
+        <include refid="selectBizProjectChangeVo"/>
+        where change_id = #{changeId}
+    </select>
+
+    <insert id="insertBizProjectChange" parameterType="BizProjectChange">
+        insert into biz_project_change
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="changeId != null">change_id,</if>
+            <if test="changeNo != null">change_no,</if>
+            <if test="choiceId != null">choice_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="contractorName != null">contractor_name,</if>
+            <if test="changeTime != null">change_time,</if>
+            <if test="changeType != null">change_type,</if>
+            <if test="changeReason != null">change_reason,</if>
+            <if test="changeRecord != null">change_record,</if>
+            <if test="safetyProtocolUpdated != null">
+                safety_protocol_updated,
+            </if>
+            <if test="safetyProtocolAttachment != null">safety_protocol_attachment,</if>
+            <if test="constructionPlanUpdated != null">
+                construction_plan_updated,
+            </if>
+            <if test="constructionPlanAttachment != null">construction_plan_attachment,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedTime != null">updated_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="changeId != null">#{changeId},</if>
+            <if test="changeNo != null">#{changeNo},</if>
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="contractorName != null">#{contractorName},</if>
+            <if test="changeTime != null">#{changeTime},</if>
+            <if test="changeType != null">#{changeType},</if>
+            <if test="changeReason != null">#{changeReason},</if>
+            <if test="changeRecord != null">#{changeRecord},</if>
+            <if test="safetyProtocolUpdated != null">
+                #{safetyProtocolUpdated},
+            </if>
+            <if test="safetyProtocolAttachment != null">#{safetyProtocolAttachment},</if>
+            <if test="constructionPlanUpdated != null">
+                #{constructionPlanUpdated},
+            </if>
+            <if test="constructionPlanAttachment != null">#{constructionPlanAttachment},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizProjectChange" parameterType="BizProjectChange">
+        update biz_project_change
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="changeNo != null">change_no = #{changeNo},</if>
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="contractorName != null">contractor_name = #{contractorName},</if>
+            <if test="changeTime != null">change_time = #{changeTime},</if>
+            <if test="changeType != null">change_type = #{changeType},</if>
+            <if test="changeReason != null">change_reason = #{changeReason},</if>
+            <if test="changeRecord != null">change_record = #{changeRecord},</if>
+            <if test="safetyProtocolUpdated != null">safety_protocol_updated = #{safetyProtocolUpdated},</if>
+            <if test="safetyProtocolAttachment != null">safety_protocol_attachment = #{safetyProtocolAttachment},</if>
+            <if test="constructionPlanUpdated != null">construction_plan_updated = #{constructionPlanUpdated},</if>
+            <if test="constructionPlanAttachment != null">construction_plan_attachment = #{constructionPlanAttachment},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+        </trim>
+        where change_id = #{changeId}
+    </update>
+
+    <delete id="deleteBizProjectChangeByChangeId" parameterType="Long">
+        delete from biz_project_change where change_id = #{changeId}
+    </delete>
+
+    <delete id="deleteBizProjectChangeByChangeIds" parameterType="String">
+        delete from biz_project_change where change_id in 
+        <foreach item="changeId" collection="array" open="(" separator="," close=")">
+            #{changeId}
+        </foreach>
+    </delete>
+
+    <!-- 查询指定年份前缀的最大变更编号 -->
+    <select id="selectMaxChangeNoByYearPrefix" parameterType="String" resultType="String">
+        select MAX(change_no) from biz_project_change where change_no like concat(#{yearPrefix}, '%')
+    </select>
+</mapper>

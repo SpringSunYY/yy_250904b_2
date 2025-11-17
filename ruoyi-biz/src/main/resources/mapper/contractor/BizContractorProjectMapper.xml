@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.contractor.mapper.BizContractorProjectMapper">
+    
+    <resultMap type="BizContractorProject" id="BizContractorProjectResult">
+        <result property="projectId"    column="project_id"    />
+        <result property="projectCode"    column="project_code"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="projectContent"    column="project_content"    />
+        <result property="projectType"    column="project_type"    />
+        <result property="projectBudget"    column="project_budget"    />
+        <result property="projectLocation"    column="project_location"    />
+        <result property="plannedStartDate"    column="planned_start_date"    />
+        <result property="plannedEndDate"    column="planned_end_date"    />
+        <result property="actualStartDate"    column="actual_start_date"    />
+        <result property="actualEndDate"    column="actual_end_date"    />
+        <result property="technicalRequirements"    column="technical_requirements"    />
+        <result property="responsibleDepartment"    column="responsible_department"    />
+        <result property="projectLeader"    column="project_leader"    />
+        <result property="projectStatus"    column="project_status"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="remark"    column="remark"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizContractorProjectVo">
+        select project_id, project_code, project_name, project_content, project_type, project_budget, project_location, planned_start_date, planned_end_date, actual_start_date, actual_end_date, technical_requirements, responsible_department, project_leader, project_status, created_by, created_at, remark, updated_by, updated_at from biz_contractor_project
+    </sql>
+
+    <select id="selectBizContractorProjectList" parameterType="BizContractorProject" resultMap="BizContractorProjectResult">
+        <include refid="selectBizContractorProjectVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="projectType != null  and projectType != ''"> and project_type = #{projectType}</if>
+            <if test="responsibleDepartment != null  and responsibleDepartment != ''"> and responsible_department = #{responsibleDepartment}</if>
+            <if test="projectLeader != null  and projectLeader != ''"> and project_leader = #{projectLeader}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizContractorProjectByProjectId" parameterType="Long" resultMap="BizContractorProjectResult">
+        <include refid="selectBizContractorProjectVo"/>
+        where project_id = #{projectId}
+    </select>
+
+    <insert id="insertBizContractorProject" parameterType="BizContractorProject" useGeneratedKeys="true" keyProperty="projectId">
+        insert into biz_contractor_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectCode != null">project_code,</if>
+            <if test="projectName != null and projectName != ''">project_name,</if>
+            <if test="projectContent != null">project_content,</if>
+            <if test="projectType != null">project_type,</if>
+            <if test="projectBudget != null">project_budget,</if>
+            <if test="projectLocation != null">project_location,</if>
+            <if test="plannedStartDate != null">planned_start_date,</if>
+            <if test="plannedEndDate != null">planned_end_date,</if>
+            <if test="actualStartDate != null">actual_start_date,</if>
+            <if test="actualEndDate != null">actual_end_date,</if>
+            <if test="technicalRequirements != null">technical_requirements,</if>
+            <if test="responsibleDepartment != null">responsible_department,</if>
+            <if test="projectLeader != null">project_leader,</if>
+            <if test="projectStatus != null">project_status,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="remark != null">remark,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectCode != null">#{projectCode},</if>
+            <if test="projectName != null and projectName != ''">#{projectName},</if>
+            <if test="projectContent != null">#{projectContent},</if>
+            <if test="projectType != null">#{projectType},</if>
+            <if test="projectBudget != null">#{projectBudget},</if>
+            <if test="projectLocation != null">#{projectLocation},</if>
+            <if test="plannedStartDate != null">#{plannedStartDate},</if>
+            <if test="plannedEndDate != null">#{plannedEndDate},</if>
+            <if test="actualStartDate != null">#{actualStartDate},</if>
+            <if test="actualEndDate != null">#{actualEndDate},</if>
+            <if test="technicalRequirements != null">#{technicalRequirements},</if>
+            <if test="responsibleDepartment != null">#{responsibleDepartment},</if>
+            <if test="projectLeader != null">#{projectLeader},</if>
+            <if test="projectStatus != null">#{projectStatus},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizContractorProject" parameterType="BizContractorProject">
+        update biz_contractor_project
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectCode != null">project_code = #{projectCode},</if>
+            <if test="projectName != null and projectName != ''">project_name = #{projectName},</if>
+            <if test="projectContent != null">project_content = #{projectContent},</if>
+            <if test="projectType != null">project_type = #{projectType},</if>
+            <if test="projectBudget != null">project_budget = #{projectBudget},</if>
+            <if test="projectLocation != null">project_location = #{projectLocation},</if>
+            <if test="plannedStartDate != null">planned_start_date = #{plannedStartDate},</if>
+            <if test="plannedEndDate != null">planned_end_date = #{plannedEndDate},</if>
+            <if test="actualStartDate != null">actual_start_date = #{actualStartDate},</if>
+            <if test="actualEndDate != null">actual_end_date = #{actualEndDate},</if>
+            <if test="technicalRequirements != null">technical_requirements = #{technicalRequirements},</if>
+            <if test="responsibleDepartment != null">responsible_department = #{responsibleDepartment},</if>
+            <if test="projectLeader != null">project_leader = #{projectLeader},</if>
+            <if test="projectStatus != null">project_status = #{projectStatus},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where project_id = #{projectId}
+    </update>
+
+    <delete id="deleteBizContractorProjectByProjectId" parameterType="Long">
+        delete from biz_contractor_project where project_id = #{projectId}
+    </delete>
+
+    <delete id="deleteBizContractorProjectByProjectIds" parameterType="String">
+        delete from biz_contractor_project where project_id in 
+        <foreach item="projectId" collection="array" open="(" separator="," close=")">
+            #{projectId}
+        </foreach>
+    </delete>
+
+    <select id="selectMaxProjectCodeOfYear" parameterType="String" resultType="String">
+        SELECT project_code
+        FROM biz_contractor_project
+        WHERE project_code LIKE CONCAT('XM', #{year}, '%')
+        ORDER BY project_code DESC
+        LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.contents.mapper.BizContractorQualifiedMapper">
+
+    <resultMap type="BizContractorQualified" id="BizContractorQualifiedResult">
+        <result property="qualId"    column="qual_id"    />
+        <result property="auditId"    column="audit_id"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="projectCategories"    column="project_categories"    />
+        <result property="contactPerson"    column="contact_person"    />
+        <result property="contactPhone"    column="contact_phone"    />
+        <result property="contactAddress"    column="contact_address"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizContractorQualifiedVo">
+        select qual_id, audit_id, contractor_name, project_categories, contact_person, contact_phone, contact_address, remarks, created_by, created_at, updated_by, updated_at from biz_contractor_qualified
+    </sql>
+
+    <select id="selectBizContractorQualifiedList" parameterType="BizContractorQualified" resultMap="BizContractorQualifiedResult">
+        <include refid="selectBizContractorQualifiedVo"/>
+        <where>
+            <if test="contractorName != null  and contractorName != ''"> and contractor_name like concat('%', #{contractorName}, '%')</if>
+            <if test="projectCategories != null  and projectCategories != ''"> and FIND_IN_SET(#{projectCategories}, project_categories)</if>
+            <if test="contactPerson != null  and contactPerson != ''"> and contact_person = #{contactPerson}</if>
+        </where>
+    </select>
+
+    <select id="selectBizContractorQualifiedByQualId" parameterType="Long" resultMap="BizContractorQualifiedResult">
+        <include refid="selectBizContractorQualifiedVo"/>
+        where qual_id = #{qualId}
+    </select>
+    <select id="selectBizContractorQualifiedByAuditIds"
+            resultType="com.ruoyi.statistics.domain.ro.BizStatisticsRo">
+        select count(1) as value, audit_id as name
+        from biz_contractor_qualified
+        <where>
+            <if test="auditIds != null">
+                and audit_id in
+                <foreach item="auditId" collection="auditIds" open="(" separator="," close=")">
+                    #{auditId}
+                </foreach>
+            </if>
+        </where>
+        group by audit_id
+    </select>
+
+    <insert id="insertBizContractorQualified" parameterType="BizContractorQualified" useGeneratedKeys="true" keyProperty="qualId">
+        insert into biz_contractor_qualified
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="auditId != null">audit_id,</if>
+            <if test="contractorName != null and contractorName != ''">contractor_name,</if>
+            <if test="projectCategories != null">project_categories,</if>
+            <if test="contactPerson != null">contact_person,</if>
+            <if test="contactPhone != null">contact_phone,</if>
+            <if test="contactAddress != null">contact_address,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="auditId != null">#{auditId},</if>
+            <if test="contractorName != null and contractorName != ''">#{contractorName},</if>
+            <if test="projectCategories != null">#{projectCategories},</if>
+            <if test="contactPerson != null">#{contactPerson},</if>
+            <if test="contactPhone != null">#{contactPhone},</if>
+            <if test="contactAddress != null">#{contactAddress},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizContractorQualified" parameterType="BizContractorQualified">
+        update biz_contractor_qualified
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="auditId != null">audit_id = #{auditId},</if>
+            <if test="contractorName != null and contractorName != ''">contractor_name = #{contractorName},</if>
+            <if test="projectCategories != null">project_categories = #{projectCategories},</if>
+            <if test="contactPerson != null">contact_person = #{contactPerson},</if>
+            <if test="contactPhone != null">contact_phone = #{contactPhone},</if>
+            <if test="contactAddress != null">contact_address = #{contactAddress},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where qual_id = #{qualId}
+    </update>
+
+    <delete id="deleteBizContractorQualifiedByQualId" parameterType="Long">
+        delete from biz_contractor_qualified where qual_id = #{qualId}
+    </delete>
+
+    <delete id="deleteBizContractorQualifiedByQualIds" parameterType="String">
+        delete from biz_contractor_qualified where qual_id in
+        <foreach item="qualId" collection="array" open="(" separator="," close=")">
+            #{qualId}
+        </foreach>
+    </delete>
+</mapper>

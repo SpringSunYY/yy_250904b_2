@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.training.mapper.BizTrainingAttendanceMapper">
+
+    <resultMap type="BizTrainingAttendance" id="BizTrainingAttendanceResult">
+        <result property="id" column="id"/>
+        <result property="trainingId" column="training_id"/>
+        <result property="choiceId" column="choice_id"/>
+        <result property="trainingName" column="training_name"/>
+        <result property="personnelId" column="personnel_id"/>
+        <result property="personnelName" column="personnel_name"/>
+        <result property="examTime" column="exam_time"/>
+        <result property="examScore" column="exam_score"/>
+        <result property="assessmentResult" column="assessment_result"/>
+        <result property="examPaper" column="exam_paper"/>
+        <result property="needRetake" column="need_retake"/>
+        <result property="retakeTime" column="retake_time"/>
+        <result property="retakeScore" column="retake_score"/>
+        <result property="finalResult" column="final_result"/>
+        <result property="retakePaper" column="retake_paper"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="remark" column="remark"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="selectBizTrainingAttendanceVo">
+        select id,
+               training_id,
+               choice_id,
+               training_name,
+               personnel_id,
+               personnel_name,
+               exam_time,
+               exam_score,
+               assessment_result,
+               exam_paper,
+               need_retake,
+               retake_time,
+               retake_score,
+               final_result,
+               retake_paper,
+               created_by,
+               remark,
+               created_at,
+               updated_by,
+               updated_at
+        from biz_training_attendance
+    </sql>
+
+    <select id="selectBizTrainingAttendanceList" parameterType="BizTrainingAttendance"
+            resultMap="BizTrainingAttendanceResult">
+        <include refid="selectBizTrainingAttendanceVo"/>
+        <where>
+            <if test="trainingName != null  and trainingName != ''">and training_name like concat('%', #{trainingName},
+                '%')
+            </if>
+            <if test="personnelName != null  and personnelName != ''">and personnel_name like concat('%',
+                #{personnelName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBizTrainingAttendanceById" parameterType="Long" resultMap="BizTrainingAttendanceResult">
+        <include refid="selectBizTrainingAttendanceVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectTrainingRecordHistory" resultType="com.ruoyi.statistics.domain.ro.BizStatisticsRo">
+        select training_id as name,
+        count(*) as value
+        from biz_training_attendance
+        <where>
+            <if test="trainingIds != null and trainingIds.size() > 0 ">
+                and training_id in
+                <foreach item="item" collection="trainingIds" separator="," close=")" index="index" open="(">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        group by name
+    </select>
+
+    <insert id="insertBizTrainingAttendance" parameterType="BizTrainingAttendance" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into biz_training_attendance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="trainingId != null">training_id,</if>
+            <if test="choiceId != null">choice_id,</if>
+            <if test="trainingName != null">training_name,</if>
+            <if test="personnelId != null">personnel_id,</if>
+            <if test="personnelName != null">personnel_name,</if>
+            <if test="examTime != null">exam_time,</if>
+            <if test="examScore != null">exam_score,</if>
+            <if test="assessmentResult != null">assessment_result,</if>
+            <if test="examPaper != null">exam_paper,</if>
+            <if test="needRetake != null">need_retake,</if>
+            <if test="retakeTime != null">retake_time,</if>
+            <if test="retakeScore != null">retake_score,</if>
+            <if test="finalResult != null">final_result,</if>
+            <if test="retakePaper != null">retake_paper,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="trainingId != null">#{trainingId},</if>
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="trainingName != null">#{trainingName},</if>
+            <if test="personnelId != null">#{personnelId},</if>
+            <if test="personnelName != null">#{personnelName},</if>
+            <if test="examTime != null">#{examTime},</if>
+            <if test="examScore != null">#{examScore},</if>
+            <if test="assessmentResult != null">#{assessmentResult},</if>
+            <if test="examPaper != null">#{examPaper},</if>
+            <if test="needRetake != null">#{needRetake},</if>
+            <if test="retakeTime != null">#{retakeTime},</if>
+            <if test="retakeScore != null">#{retakeScore},</if>
+            <if test="finalResult != null">#{finalResult},</if>
+            <if test="retakePaper != null">#{retakePaper},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBizTrainingAttendance" parameterType="BizTrainingAttendance">
+        update biz_training_attendance
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="trainingId != null">training_id = #{trainingId},</if>
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="trainingName != null">training_name = #{trainingName},</if>
+            <if test="personnelId != null">personnel_id = #{personnelId},</if>
+            <if test="personnelName != null">personnel_name = #{personnelName},</if>
+            <if test="examTime != null">exam_time = #{examTime},</if>
+            <if test="examScore != null">exam_score = #{examScore},</if>
+            <if test="assessmentResult != null">assessment_result = #{assessmentResult},</if>
+            <if test="examPaper != null">exam_paper = #{examPaper},</if>
+            <if test="needRetake != null">need_retake = #{needRetake},</if>
+            <if test="retakeTime != null">retake_time = #{retakeTime},</if>
+            <if test="retakeScore != null">retake_score = #{retakeScore},</if>
+            <if test="finalResult != null">final_result = #{finalResult},</if>
+            <if test="retakePaper != null">retake_paper = #{retakePaper},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizTrainingAttendanceById" parameterType="Long">
+        delete
+        from biz_training_attendance
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteBizTrainingAttendanceByIds" parameterType="String">
+        delete from biz_training_attendance where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

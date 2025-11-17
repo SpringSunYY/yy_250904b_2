@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.contractor.mapper.BizSafetyEvaluationMapper">
+    
+    <resultMap type="BizSafetyEvaluation" id="BizSafetyEvaluationResult">
+        <result property="id"    column="id"    />
+        <result property="evaluationCode"    column="evaluation_code"    />
+        <result property="choiceId"    column="choice_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="reviewContent"    column="review_content"    />
+        <result property="evaluationDate"    column="evaluation_date"    />
+        <result property="evaluationDepartment"    column="evaluation_department"    />
+        <result property="evaluatorName"    column="evaluator_name"    />
+        <result property="score"    column="score"    />
+        <result property="evaluationConclusion"    column="evaluation_conclusion"    />
+        <result property="attachments"    column="attachments"    />
+        <result property="notes"    column="notes"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizSafetyEvaluationVo">
+        select id, evaluation_code, choice_id, project_name, contractor_name, review_content, evaluation_date, evaluation_department, evaluator_name, score, evaluation_conclusion, attachments, notes, created_by, created_at, updated_by, updated_at from biz_safety_evaluation
+    </sql>
+
+    <select id="selectBizSafetyEvaluationList" parameterType="BizSafetyEvaluation" resultMap="BizSafetyEvaluationResult">
+        <include refid="selectBizSafetyEvaluationVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="contractorName != null  and contractorName != ''"> and contractor_name like concat('%', #{contractorName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectBizSafetyEvaluationById" parameterType="Long" resultMap="BizSafetyEvaluationResult">
+        <include refid="selectBizSafetyEvaluationVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBizSafetyEvaluation" parameterType="BizSafetyEvaluation" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_safety_evaluation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="evaluationCode != null">evaluation_code,</if>
+            <if test="choiceId != null">choice_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="contractorName != null">contractor_name,</if>
+            <if test="reviewContent != null">review_content,</if>
+            <if test="evaluationDate != null">evaluation_date,</if>
+            <if test="evaluationDepartment != null">evaluation_department,</if>
+            <if test="evaluatorName != null">evaluator_name,</if>
+            <if test="score != null">score,</if>
+            <if test="evaluationConclusion != null">evaluation_conclusion,</if>
+            <if test="attachments != null">attachments,</if>
+            <if test="notes != null">notes,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="evaluationCode != null">#{evaluationCode},</if>
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="contractorName != null">#{contractorName},</if>
+            <if test="reviewContent != null">#{reviewContent},</if>
+            <if test="evaluationDate != null">#{evaluationDate},</if>
+            <if test="evaluationDepartment != null">#{evaluationDepartment},</if>
+            <if test="evaluatorName != null">#{evaluatorName},</if>
+            <if test="score != null">#{score},</if>
+            <if test="evaluationConclusion != null">#{evaluationConclusion},</if>
+            <if test="attachments != null">#{attachments},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizSafetyEvaluation" parameterType="BizSafetyEvaluation">
+        update biz_safety_evaluation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="evaluationCode != null">evaluation_code = #{evaluationCode},</if>
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="contractorName != null">contractor_name = #{contractorName},</if>
+            <if test="reviewContent != null">review_content = #{reviewContent},</if>
+            <if test="evaluationDate != null">evaluation_date = #{evaluationDate},</if>
+            <if test="evaluationDepartment != null">evaluation_department = #{evaluationDepartment},</if>
+            <if test="evaluatorName != null">evaluator_name = #{evaluatorName},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="evaluationConclusion != null">evaluation_conclusion = #{evaluationConclusion},</if>
+            <if test="attachments != null">attachments = #{attachments},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizSafetyEvaluationById" parameterType="Long">
+        delete from biz_safety_evaluation where id = #{id}
+    </delete>
+
+    <delete id="deleteBizSafetyEvaluationByIds" parameterType="String">
+        delete from biz_safety_evaluation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 查询指定年份前缀的最大评价编号 -->
+    <select id="selectMaxEvaluationCodeByYearPrefix" parameterType="String" resultType="String">
+        select MAX(evaluation_code) from biz_safety_evaluation where evaluation_code like concat(#{yearPrefix}, '%')
+    </select>
+</mapper>

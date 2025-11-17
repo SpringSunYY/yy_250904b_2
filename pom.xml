@@ -230,6 +230,11 @@
                 <artifactId>ruoyi-manage</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-biz</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.flowable</groupId>
@@ -260,6 +265,7 @@
         <module>ruoyi-common</module>
         <module>ruoyi-flowable</module>
         <module>ruoyi-manage</module>
+        <module>ruoyi-biz</module>
     </modules>
     <packaging>pom</packaging>
 

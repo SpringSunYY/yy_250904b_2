@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.personnel.mapper.BizSpecialOperationsMapper">
+    
+    <resultMap type="BizSpecialOperations" id="BizSpecialOperationsResult">
+        <result property="id"    column="id"    />
+        <result property="personnelId"    column="personnel_id"    />
+        <result property="personnelName"    column="personnel_name"    />
+        <result property="vqType"    column="vq_type"    />
+        <result property="certificate"    column="certificate"    />
+        <result property="certificateNumber"    column="certificate_number"    />
+        <result property="issueOrganization"    column="issue_organization"    />
+        <result property="issueDate"    column="issue_date"    />
+        <result property="expiryDate"    column="expiry_date"    />
+        <result property="status"    column="status"    />
+        <result property="nextTrainingDate"    column="next_training_date"    />
+        <result property="certificateScan"    column="certificate_scan"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizSpecialOperationsVo">
+        select id, personnel_id, personnel_name, vq_type, certificate, certificate_number, issue_organization, issue_date, expiry_date, status, next_training_date, certificate_scan, remarks, created_by, created_at, updated_by, updated_at from biz_special_operations
+    </sql>
+
+    <select id="selectBizSpecialOperationsList" parameterType="BizSpecialOperations" resultMap="BizSpecialOperationsResult">
+        <include refid="selectBizSpecialOperationsVo"/>
+        <where>  
+            <if test="personnelName != null  and personnelName != ''"> and personnel_name like concat('%', #{personnelName}, '%')</if>
+            <if test="vqType != null  and vqType != ''"> and vq_type = #{vqType}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizSpecialOperationsById" parameterType="Long" resultMap="BizSpecialOperationsResult">
+        <include refid="selectBizSpecialOperationsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBizSpecialOperations" parameterType="BizSpecialOperations" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_special_operations
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="personnelId != null">personnel_id,</if>
+            <if test="personnelName != null">personnel_name,</if>
+            <if test="vqType != null and vqType != ''">vq_type,</if>
+            <if test="certificate != null">certificate,</if>
+            <if test="certificateNumber != null">certificate_number,</if>
+            <if test="issueOrganization != null">issue_organization,</if>
+            <if test="issueDate != null">issue_date,</if>
+            <if test="expiryDate != null">expiry_date,</if>
+            <if test="status != null">status,</if>
+            <if test="nextTrainingDate != null">next_training_date,</if>
+            <if test="certificateScan != null">certificate_scan,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="personnelId != null">#{personnelId},</if>
+            <if test="personnelName != null">#{personnelName},</if>
+            <if test="vqType != null and vqType != ''">#{vqType},</if>
+            <if test="certificate != null">#{certificate},</if>
+            <if test="certificateNumber != null">#{certificateNumber},</if>
+            <if test="issueOrganization != null">#{issueOrganization},</if>
+            <if test="issueDate != null">#{issueDate},</if>
+            <if test="expiryDate != null">#{expiryDate},</if>
+            <if test="status != null">#{status},</if>
+            <if test="nextTrainingDate != null">#{nextTrainingDate},</if>
+            <if test="certificateScan != null">#{certificateScan},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizSpecialOperations" parameterType="BizSpecialOperations">
+        update biz_special_operations
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="personnelId != null">personnel_id = #{personnelId},</if>
+            <if test="personnelName != null">personnel_name = #{personnelName},</if>
+            <if test="vqType != null and vqType != ''">vq_type = #{vqType},</if>
+            <if test="certificate != null">certificate = #{certificate},</if>
+            <if test="certificateNumber != null">certificate_number = #{certificateNumber},</if>
+            <if test="issueOrganization != null">issue_organization = #{issueOrganization},</if>
+            <if test="issueDate != null">issue_date = #{issueDate},</if>
+            <if test="expiryDate != null">expiry_date = #{expiryDate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="nextTrainingDate != null">next_training_date = #{nextTrainingDate},</if>
+            <if test="certificateScan != null">certificate_scan = #{certificateScan},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizSpecialOperationsById" parameterType="Long">
+        delete from biz_special_operations where id = #{id}
+    </delete>
+
+    <delete id="deleteBizSpecialOperationsByIds" parameterType="String">
+        delete from biz_special_operations where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

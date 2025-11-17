@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.process.mapper.BizHazardRectificationsMapper">
+    
+    <resultMap type="BizHazardRectifications" id="BizHazardRectificationsResult">
+        <result property="id"    column="id"    />
+        <result property="rectificationCode"    column="rectification_code"    />
+        <result property="inspectionId"    column="inspection_id"    />
+        <result property="hazardDescription"    column="hazard_description"    />
+        <result property="rectificationRequirements"    column="rectification_requirements"    />
+        <result property="rectificationDeadline"    column="rectification_deadline"    />
+        <result property="hazardPhotos"    column="hazard_photos"    />
+        <result property="penaltyBasis"    column="penalty_basis"    />
+        <result property="penaltyAmount"    column="penalty_amount"    />
+        <result property="rectificationStatus"    column="rectification_status"    />
+        <result property="acceptancePerson"    column="acceptance_person"    />
+        <result property="acceptanceDate"    column="acceptance_date"    />
+        <result property="acceptanceResult"    column="acceptance_result"    />
+        <result property="acceptancePhotos"    column="acceptance_photos"    />
+        <result property="notes"    column="notes"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizHazardRectificationsVo">
+        select id, rectification_code, inspection_id, hazard_description, rectification_requirements, rectification_deadline, hazard_photos, penalty_basis, penalty_amount, rectification_status, acceptance_person, acceptance_date, acceptance_result, acceptance_photos, notes, created_by, created_at, updated_by, updated_at from biz_hazard_rectifications
+    </sql>
+
+    <select id="selectBizHazardRectificationsList" parameterType="BizHazardRectifications" resultMap="BizHazardRectificationsResult">
+        <include refid="selectBizHazardRectificationsVo"/>
+        <where>  
+            <if test="hazardDescription != null  and hazardDescription != ''"> and hazard_description like concat('%', #{hazardDescription}, '%')</if>
+            <if test="rectificationStatus != null  and rectificationStatus != ''"> and rectification_status = #{rectificationStatus}</if>
+            <if test="acceptanceResult != null  and acceptanceResult != ''"> and acceptance_result = #{acceptanceResult}</if>
+            <if test="rectificationCode != null and rectificationCode != '' and rectificationCode.endsWith('%')"> and rectification_code like #{rectificationCode}</if>
+            <if test="rectificationCode != null and rectificationCode != '' and !rectificationCode.endsWith('%')"> and rectification_code = #{rectificationCode}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizHazardRectificationsById" parameterType="Long" resultMap="BizHazardRectificationsResult">
+        <include refid="selectBizHazardRectificationsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBizHazardRectifications" parameterType="BizHazardRectifications" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_hazard_rectifications
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rectificationCode != null">rectification_code,</if>
+            <if test="inspectionId != null">inspection_id,</if>
+            <if test="hazardDescription != null">hazard_description,</if>
+            <if test="rectificationRequirements != null">rectification_requirements,</if>
+            <if test="rectificationDeadline != null">rectification_deadline,</if>
+            <if test="hazardPhotos != null">hazard_photos,</if>
+            <if test="penaltyBasis != null">penalty_basis,</if>
+            <if test="penaltyAmount != null">penalty_amount,</if>
+            <if test="rectificationStatus != null">rectification_status,</if>
+            <if test="acceptancePerson != null">acceptance_person,</if>
+            <if test="acceptanceDate != null">acceptance_date,</if>
+            <if test="acceptanceResult != null">acceptance_result,</if>
+            <if test="acceptancePhotos != null">acceptance_photos,</if>
+            <if test="notes != null">notes,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rectificationCode != null">#{rectificationCode},</if>
+            <if test="inspectionId != null">#{inspectionId},</if>
+            <if test="hazardDescription != null">#{hazardDescription},</if>
+            <if test="rectificationRequirements != null">#{rectificationRequirements},</if>
+            <if test="rectificationDeadline != null">#{rectificationDeadline},</if>
+            <if test="hazardPhotos != null">#{hazardPhotos},</if>
+            <if test="penaltyBasis != null">#{penaltyBasis},</if>
+            <if test="penaltyAmount != null">#{penaltyAmount},</if>
+            <if test="rectificationStatus != null">#{rectificationStatus},</if>
+            <if test="acceptancePerson != null">#{acceptancePerson},</if>
+            <if test="acceptanceDate != null">#{acceptanceDate},</if>
+            <if test="acceptanceResult != null">#{acceptanceResult},</if>
+            <if test="acceptancePhotos != null">#{acceptancePhotos},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizHazardRectifications" parameterType="BizHazardRectifications">
+        update biz_hazard_rectifications
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="rectificationCode != null">rectification_code = #{rectificationCode},</if>
+            <if test="inspectionId != null">inspection_id = #{inspectionId},</if>
+            <if test="hazardDescription != null">hazard_description = #{hazardDescription},</if>
+            <if test="rectificationRequirements != null">rectification_requirements = #{rectificationRequirements},</if>
+            <if test="rectificationDeadline != null">rectification_deadline = #{rectificationDeadline},</if>
+            <if test="hazardPhotos != null">hazard_photos = #{hazardPhotos},</if>
+            <if test="penaltyBasis != null">penalty_basis = #{penaltyBasis},</if>
+            <if test="penaltyAmount != null">penalty_amount = #{penaltyAmount},</if>
+            <if test="rectificationStatus != null">rectification_status = #{rectificationStatus},</if>
+            <if test="acceptancePerson != null">acceptance_person = #{acceptancePerson},</if>
+            <if test="acceptanceDate != null">acceptance_date = #{acceptanceDate},</if>
+            <if test="acceptanceResult != null">acceptance_result = #{acceptanceResult},</if>
+            <if test="acceptancePhotos != null">acceptance_photos = #{acceptancePhotos},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizHazardRectificationsById" parameterType="Long">
+        delete from biz_hazard_rectifications where id = #{id}
+    </delete>
+
+    <delete id="deleteBizHazardRectificationsByIds" parameterType="String">
+        delete from biz_hazard_rectifications where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

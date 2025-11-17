@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.process.mapper.BizProjectLogsMapper">
+    
+    <resultMap type="BizProjectLogs" id="BizProjectLogsResult">
+        <result property="logsId"    column="logs_id"    />
+        <result property="logsCode"    column="logs_code"    />
+        <result property="choiceId"    column="choice_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="logsDate"    column="logs_date"    />
+        <result property="todayWorkContent"    column="today_work_content"    />
+        <result property="workLocation"    column="work_location"    />
+        <result property="contractorSiteManager"    column="contractor_site_manager"    />
+        <result property="safetyManager"    column="safety_manager"    />
+        <result property="workersInfo"    column="workers_info"    />
+        <result property="toolId"    column="tool_id"    />
+        <result property="toolsEquipment"    column="tools_equipment"    />
+        <result property="issuesEncountered"    column="issues_encountered"    />
+        <result property="coordinationNeeds"    column="coordination_needs"    />
+        <result property="notes"    column="notes"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizProjectLogsVo">
+        select logs_id, logs_code, choice_id, project_name, contractor_name, logs_date, today_work_content, work_location, contractor_site_manager, safety_manager, workers_info, tool_id, tools_equipment, issues_encountered, coordination_needs, notes, created_by, created_at, updated_by, updated_at from biz_project_logs
+    </sql>
+
+    <select id="selectBizProjectLogsList" parameterType="BizProjectLogs" resultMap="BizProjectLogsResult">
+        <include refid="selectBizProjectLogsVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="contractorName != null  and contractorName != ''"> and contractor_name like concat('%', #{contractorName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectBizProjectLogsByLogsId" parameterType="Long" resultMap="BizProjectLogsResult">
+        <include refid="selectBizProjectLogsVo"/>
+        where logs_id = #{logsId}
+    </select>
+
+    <select id="selectMaxLogsCodeByYear" parameterType="String" resultType="String">
+        SELECT logs_code FROM biz_project_logs
+        WHERE logs_code LIKE CONCAT('XR', #{year}, '%')
+        ORDER BY logs_code DESC
+        LIMIT 1
+    </select>
+
+    <insert id="insertBizProjectLogs" parameterType="BizProjectLogs" useGeneratedKeys="true" keyProperty="logsId">
+        insert into biz_project_logs
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logsCode != null">logs_code,</if>
+            <if test="choiceId != null">choice_id,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="contractorName != null">contractor_name,</if>
+            <if test="logsDate != null">logs_date,</if>
+            <if test="todayWorkContent != null">today_work_content,</if>
+            <if test="workLocation != null">work_location,</if>
+            <if test="contractorSiteManager != null">contractor_site_manager,</if>
+            <if test="safetyManager != null">safety_manager,</if>
+            <if test="workersInfo != null">workers_info,</if>
+            <if test="toolId != null">tool_id,</if>
+            <if test="toolsEquipment != null">tools_equipment,</if>
+            <if test="issuesEncountered != null">issues_encountered,</if>
+            <if test="coordinationNeeds != null">coordination_needs,</if>
+            <if test="notes != null">notes,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logsCode != null">#{logsCode},</if>
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="contractorName != null">#{contractorName},</if>
+            <if test="logsDate != null">#{logsDate},</if>
+            <if test="todayWorkContent != null">#{todayWorkContent},</if>
+            <if test="workLocation != null">#{workLocation},</if>
+            <if test="contractorSiteManager != null">#{contractorSiteManager},</if>
+            <if test="safetyManager != null">#{safetyManager},</if>
+            <if test="workersInfo != null">#{workersInfo},</if>
+            <if test="toolId != null">#{toolId},</if>
+            <if test="toolsEquipment != null">#{toolsEquipment},</if>
+            <if test="issuesEncountered != null">#{issuesEncountered},</if>
+            <if test="coordinationNeeds != null">#{coordinationNeeds},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizProjectLogs" parameterType="BizProjectLogs">
+        update biz_project_logs
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="logsCode != null">logs_code = #{logsCode},</if>
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="contractorName != null">contractor_name = #{contractorName},</if>
+            <if test="logsDate != null">logs_date = #{logsDate},</if>
+            <if test="todayWorkContent != null">today_work_content = #{todayWorkContent},</if>
+            <if test="workLocation != null">work_location = #{workLocation},</if>
+            <if test="contractorSiteManager != null">contractor_site_manager = #{contractorSiteManager},</if>
+            <if test="safetyManager != null">safety_manager = #{safetyManager},</if>
+            <if test="workersInfo != null">workers_info = #{workersInfo},</if>
+            <if test="toolId != null">tool_id = #{toolId},</if>
+            <if test="toolsEquipment != null">tools_equipment = #{toolsEquipment},</if>
+            <if test="issuesEncountered != null">issues_encountered = #{issuesEncountered},</if>
+            <if test="coordinationNeeds != null">coordination_needs = #{coordinationNeeds},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where logs_id = #{logsId}
+    </update>
+
+    <delete id="deleteBizProjectLogsByLogsId" parameterType="Long">
+        delete from biz_project_logs where logs_id = #{logsId}
+    </delete>
+
+    <delete id="deleteBizProjectLogsByLogsIds" parameterType="String">
+        delete from biz_project_logs where logs_id in 
+        <foreach item="logsId" collection="array" open="(" separator="," close=")">
+            #{logsId}
+        </foreach>
+    </delete>
+</mapper>

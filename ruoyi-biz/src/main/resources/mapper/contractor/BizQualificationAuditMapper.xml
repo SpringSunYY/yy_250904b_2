@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.contractor.mapper.BizQualificationAuditMapper">
+
+    <resultMap type="BizQualificationAudit" id="BizQualificationAuditResult">
+        <result property="auditId" column="audit_id"/>
+        <result property="auditNumber" column="audit_number"/>
+        <result property="companyName" column="company_name"/>
+        <result property="companySize" column="company_size"/>
+        <result property="companyShortName" column="company_short_name"/>
+        <result property="registeredCapital" column="registered_capital"/>
+        <result property="legalRepresentative" column="legal_representative"/>
+        <result property="businessScope" column="business_scope"/>
+        <result property="businessAddress" column="business_address"/>
+        <result property="establishmentDate" column="establishment_date"/>
+        <result property="email" column="email"/>
+        <result property="auditType" column="audit_type"/>
+        <result property="applyDate" column="apply_date"/>
+        <result property="auditResult" column="audit_result"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="applyUserId" column="apply_user_id"/>
+        <result property="applyUserName" column="apply_user_name"/>
+        <result property="taskId" column="task_id"/>
+        <result property="processInstanceId" column="process_instance_id"/>
+        <result property="deployId" column="deploy_id"/>
+    </resultMap>
+
+    <sql id="selectBizQualificationAuditVo">
+        select audit_id,
+               audit_number,
+               company_name,
+               company_size,
+               company_short_name,
+               registered_capital,
+               legal_representative,
+               business_scope,
+               business_address,
+               establishment_date,
+               email,
+               audit_type,
+               apply_date,
+               audit_result,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               apply_user_id,
+               apply_user_name,
+               task_id,
+               process_instance_id,
+               deploy_id
+        from biz_qualification_audit
+    </sql>
+
+
+    <select id="selectBizQualificationAuditList" parameterType="BizQualificationAudit"
+            resultMap="BizQualificationAuditResult">
+        <include refid="selectBizQualificationAuditVo"/>
+        <where>
+            <if test="companyName != null  and companyName != ''">and company_name like concat('%', #{companyName},
+                '%')
+            </if>
+            <if test="auditType != null  and auditType != ''">and audit_type = #{auditType}</if>
+        </where>
+    </select>
+
+    <select id="selectBizQualificationAuditByAuditId" parameterType="Long" resultMap="BizQualificationAuditResult">
+        <include refid="selectBizQualificationAuditVo"/>
+        where audit_id = #{auditId}
+    </select>
+
+    <select id="selectMaxAuditNumberByYear" parameterType="String" resultType="String">
+        select max(audit_number)
+        from biz_qualification_audit
+        where audit_number like concat('ZG', #{year}, '%')
+    </select>
+    <select id="selectBizQualificationAuditByStatistics"
+          resultMap="BizQualificationAuditResult">
+        <include refid="selectBizQualificationAuditVo"/>
+        <where>
+            <if test="startDate != null and startDate != '' and endDate!= null and endDate != ''">
+                and create_time >= #{startDate}
+                and create_time &lt; DATE_ADD(#{endDate}, INTERVAL 1
+                <choose>
+                    <when test="dateType == 'day'">DAY</when>
+                    <when test="dateType == 'month'">MONTH</when>
+                    <when test="dateType == 'quarter'">QUARTER</when>
+                    <when test="dateType == 'year'">YEAR</when>
+                    <otherwise>DAY</otherwise>
+                </choose>
+                )
+            </if>
+        </where>
+    </select>
+
+
+    <insert id="insertBizQualificationAudit" parameterType="BizQualificationAudit" useGeneratedKeys="true"
+            keyProperty="auditId">
+        insert into biz_qualification_audit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="auditNumber != null">audit_number,</if>
+            <if test="companyName != null">company_name,</if>
+            <if test="companySize != null">company_size,</if>
+            <if test="companyShortName != null">company_short_name,</if>
+            <if test="registeredCapital != null">registered_capital,</if>
+            <if test="legalRepresentative != null">legal_representative,</if>
+            <if test="businessScope != null">business_scope,</if>
+            <if test="businessAddress != null">business_address,</if>
+            <if test="establishmentDate != null">establishment_date,</if>
+            <if test="email != null">email,</if>
+            <if test="auditType != null">audit_type,</if>
+            <if test="applyDate != null">apply_date,</if>
+            <if test="auditResult != null">audit_result,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="applyUserId != null">apply_user_id,</if>
+            <if test="applyUserName != null">apply_user_name,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="processInstanceId != null">process_instance_id,</if>
+            <if test="deployId != null">deploy_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="auditNumber != null">#{auditNumber},</if>
+            <if test="companyName != null">#{companyName},</if>
+            <if test="companySize != null">#{companySize},</if>
+            <if test="companyShortName != null">#{companyShortName},</if>
+            <if test="registeredCapital != null">#{registeredCapital},</if>
+            <if test="legalRepresentative != null">#{legalRepresentative},</if>
+            <if test="businessScope != null">#{businessScope},</if>
+            <if test="businessAddress != null">#{businessAddress},</if>
+            <if test="establishmentDate != null">#{establishmentDate},</if>
+            <if test="email != null">#{email},</if>
+            <if test="auditType != null">#{auditType},</if>
+            <if test="applyDate != null">#{applyDate},</if>
+            <if test="auditResult != null">#{auditResult},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="applyUserId != null">#{applyUserId},</if>
+            <if test="applyUserName != null">#{applyUserName},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="processInstanceId != null">#{processInstanceId},</if>
+            <if test="deployId != null">#{deployId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBizQualificationAudit" parameterType="BizQualificationAudit">
+        update biz_qualification_audit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="auditNumber != null">audit_number = #{auditNumber},</if>
+            <if test="companyName != null">company_name = #{companyName},</if>
+            <if test="companySize != null">company_size = #{companySize},</if>
+            <if test="companyShortName != null">company_short_name = #{companyShortName},</if>
+            <if test="registeredCapital != null">registered_capital = #{registeredCapital},</if>
+            <if test="legalRepresentative != null">legal_representative = #{legalRepresentative},</if>
+            <if test="businessScope != null">business_scope = #{businessScope},</if>
+            <if test="businessAddress != null">business_address = #{businessAddress},</if>
+            <if test="establishmentDate != null">establishment_date = #{establishmentDate},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="auditType != null">audit_type = #{auditType},</if>
+            <if test="applyDate != null">apply_date = #{applyDate},</if>
+            <if test="auditResult != null">audit_result = #{auditResult},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="applyUserId != null">apply_user_id = #{applyUserId},</if>
+            <if test="applyUserName != null">apply_user_name = #{applyUserName},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="processInstanceId != null">process_instance_id = #{processInstanceId},</if>
+            <if test="deployId != null">deploy_id = #{deployId},</if>
+        </trim>
+        where audit_id = #{auditId}
+    </update>
+
+    <delete id="deleteBizQualificationAuditByAuditId" parameterType="Long">
+        delete
+        from biz_qualification_audit
+        where audit_id = #{auditId}
+    </delete>
+
+    <delete id="deleteBizQualificationAuditByAuditIds" parameterType="String">
+        delete from biz_qualification_audit where audit_id in
+        <foreach item="auditId" collection="array" open="(" separator="," close=")">
+            #{auditId}
+        </foreach>
+    </delete>
+</mapper>

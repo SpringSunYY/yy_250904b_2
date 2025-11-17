@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.prepare.mapper.BizSafetyConditionMapper">
+    
+    <resultMap type="BizSafetyCondition" id="BizSafetyConditionResult">
+        <result property="conditionId"    column="condition_id"    />
+        <result property="checkCode"    column="check_code"    />
+        <result property="choiceId"    column="choice_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="contractorName"    column="contractor_name"    />
+        <result property="checkTime"    column="check_time"    />
+        <result property="checkLocation"    column="check_location"    />
+        <result property="engineeringControlsNotes"    column="engineering_controls_notes"    />
+        <result property="managementMeasuresNotes"    column="management_measures_notes"    />
+        <result property="trainingEducationNotes"    column="training_education_notes"    />
+        <result property="personalProtectionNotes"    column="personal_protection_notes"    />
+        <result property="emergencyResponseNotes"    column="emergency_response_notes"    />
+        <result property="overallAssessment"    column="overall_assessment"    />
+        <result property="identifiedRisks"    column="identified_risks"    />
+        <result property="correctiveActions"    column="corrective_actions"    />
+        <result property="rectificationDeadline"    column="rectification_deadline"    />
+        <result property="followUpRequirements"    column="follow_up_requirements"    />
+        <result property="checkDocument"    column="check_document"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectBizSafetyConditionVo">
+        select condition_id, check_code, choice_id, project_name, contractor_name, check_time, check_location, engineering_controls_notes, management_measures_notes, training_education_notes, personal_protection_notes, emergency_response_notes, overall_assessment, identified_risks, corrective_actions, rectification_deadline, follow_up_requirements, check_document, remarks, created_by, created_at, updated_by, updated_at from biz_safety_condition
+    </sql>
+
+    <select id="selectBizSafetyConditionList" parameterType="BizSafetyCondition" resultMap="BizSafetyConditionResult">
+        <include refid="selectBizSafetyConditionVo"/>
+        <where>  
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="contractorName != null  and contractorName != ''"> and contractor_name like concat('%', #{contractorName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectBizSafetyConditionByConditionId" parameterType="Long" resultMap="BizSafetyConditionResult">
+        <include refid="selectBizSafetyConditionVo"/>
+        where condition_id = #{conditionId}
+    </select>
+
+    <insert id="insertBizSafetyCondition" parameterType="BizSafetyCondition" useGeneratedKeys="true" keyProperty="conditionId">
+        insert into biz_safety_condition
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="checkCode != null and checkCode != ''">check_code,</if>
+            <if test="choiceId != null">choice_id,</if>
+            <if test="projectName != null and projectName != ''">project_name,</if>
+            <if test="contractorName != null and contractorName != ''">contractor_name,</if>
+            <if test="checkTime != null">check_time,</if>
+            <if test="checkLocation != null">check_location,</if>
+            <if test="engineeringControlsNotes != null">engineering_controls_notes,</if>
+            <if test="managementMeasuresNotes != null">management_measures_notes,</if>
+            <if test="trainingEducationNotes != null">training_education_notes,</if>
+            <if test="personalProtectionNotes != null">personal_protection_notes,</if>
+            <if test="emergencyResponseNotes != null">emergency_response_notes,</if>
+            <if test="overallAssessment != null">overall_assessment,</if>
+            <if test="identifiedRisks != null">identified_risks,</if>
+            <if test="correctiveActions != null">corrective_actions,</if>
+            <if test="rectificationDeadline != null">rectification_deadline,</if>
+            <if test="followUpRequirements != null">follow_up_requirements,</if>
+            <if test="checkDocument != null">check_document,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="checkCode != null and checkCode != ''">#{checkCode},</if>
+            <if test="choiceId != null">#{choiceId},</if>
+            <if test="projectName != null and projectName != ''">#{projectName},</if>
+            <if test="contractorName != null and contractorName != ''">#{contractorName},</if>
+            <if test="checkTime != null">#{checkTime},</if>
+            <if test="checkLocation != null">#{checkLocation},</if>
+            <if test="engineeringControlsNotes != null">#{engineeringControlsNotes},</if>
+            <if test="managementMeasuresNotes != null">#{managementMeasuresNotes},</if>
+            <if test="trainingEducationNotes != null">#{trainingEducationNotes},</if>
+            <if test="personalProtectionNotes != null">#{personalProtectionNotes},</if>
+            <if test="emergencyResponseNotes != null">#{emergencyResponseNotes},</if>
+            <if test="overallAssessment != null">#{overallAssessment},</if>
+            <if test="identifiedRisks != null">#{identifiedRisks},</if>
+            <if test="correctiveActions != null">#{correctiveActions},</if>
+            <if test="rectificationDeadline != null">#{rectificationDeadline},</if>
+            <if test="followUpRequirements != null">#{followUpRequirements},</if>
+            <if test="checkDocument != null">#{checkDocument},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizSafetyCondition" parameterType="BizSafetyCondition">
+        update biz_safety_condition
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="checkCode != null and checkCode != ''">check_code = #{checkCode},</if>
+            <if test="choiceId != null">choice_id = #{choiceId},</if>
+            <if test="projectName != null and projectName != ''">project_name = #{projectName},</if>
+            <if test="contractorName != null and contractorName != ''">contractor_name = #{contractorName},</if>
+            <if test="checkTime != null">check_time = #{checkTime},</if>
+            <if test="checkLocation != null">check_location = #{checkLocation},</if>
+            <if test="engineeringControlsNotes != null">engineering_controls_notes = #{engineeringControlsNotes},</if>
+            <if test="managementMeasuresNotes != null">management_measures_notes = #{managementMeasuresNotes},</if>
+            <if test="trainingEducationNotes != null">training_education_notes = #{trainingEducationNotes},</if>
+            <if test="personalProtectionNotes != null">personal_protection_notes = #{personalProtectionNotes},</if>
+            <if test="emergencyResponseNotes != null">emergency_response_notes = #{emergencyResponseNotes},</if>
+            <if test="overallAssessment != null">overall_assessment = #{overallAssessment},</if>
+            <if test="identifiedRisks != null">identified_risks = #{identifiedRisks},</if>
+            <if test="correctiveActions != null">corrective_actions = #{correctiveActions},</if>
+            <if test="rectificationDeadline != null">rectification_deadline = #{rectificationDeadline},</if>
+            <if test="followUpRequirements != null">follow_up_requirements = #{followUpRequirements},</if>
+            <if test="checkDocument != null">check_document = #{checkDocument},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where condition_id = #{conditionId}
+    </update>
+
+    <delete id="deleteBizSafetyConditionByConditionId" parameterType="Long">
+        delete from biz_safety_condition where condition_id = #{conditionId}
+    </delete>
+
+    <delete id="deleteBizSafetyConditionByConditionIds" parameterType="String">
+        delete from biz_safety_condition where condition_id in 
+        <foreach item="conditionId" collection="array" open="(" separator="," close=")">
+            #{conditionId}
+        </foreach>
+    </delete>
+</mapper>
